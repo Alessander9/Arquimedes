@@ -1,0 +1,140 @@
+﻿@model Arquimedes.Models.Profesor
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle Profesor</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body class="bg-gray-100 text-gray-900 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl">
+        <h1 class="text-3xl font-bold text-blue-600 mb-6 flex items-center gap-2">
+            <i class="fas fa-info-circle fa-lg text-blue-500"></i> Detalle del Profesor
+        </h1>
+        <hr class="mb-6 border-gray-300" />
+
+        <!-- Contenedor de detalles en 2 columnas -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!--IdProfesor-->
+            <div>
+                <h2 class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="fas fa-id-badge fa-lg text-blue-500"></i> Id Profesor
+                </h2>
+                <p class="text-lg font-semibold text-gray-900">@Html.DisplayFor(model => model.IdProfesor)</p>
+            </div>
+
+            <!-- NombreProfesor -->
+            <div>
+                <h2 class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="fas fa-user fa-lg text-blue-500"></i> Nombre
+                </h2>
+                <p class="text-lg font-semibold text-gray-900">@Html.DisplayFor(model => model.NombreProfesor)</p>
+            </div>
+
+            <!-- ApellidoProfesor -->
+            <div>
+                <h2 class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="fas fa-user-tag fa-lg text-blue-500"></i> Apellido
+                </h2>
+                <p class="text-lg font-semibold text-gray-900">@Html.DisplayFor(model => model.ApellidoProfesor)</p>
+            </div>
+
+            <!-- EdadProfesor -->
+            <div>
+                <h2 class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="fas fa-birthday-cake fa-lg text-blue-500"></i> Edad
+                </h2>
+                <p class="text-lg font-semibold text-gray-900">@Html.DisplayFor(model => model.EdadProfesor)</p>
+            </div>
+
+            <!-- DniProfesor -->
+            <div>
+                <h2 class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="fas fa-id-card fa-lg text-blue-500"></i> DNI
+                </h2>
+                <p class="text-lg font-semibold text-gray-900">@Html.DisplayFor(model => model.DniProfesor)</p>
+            </div>
+
+            <!-- TelefonoProfesor -->
+            <div>
+                <h2 class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="fas fa-phone fa-lg text-blue-500"></i> Teléfono
+                </h2>
+                <p class="text-lg font-semibold text-gray-900">@Html.DisplayFor(model => model.TelefonoProfesor)</p>
+            </div>
+
+            <!-- DireccionProfesor -->
+            <div>
+                <h2 class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="fas fa-map-marker-alt fa-lg text-blue-500"></i> Dirección
+                </h2>
+                <p class="text-lg font-semibold text-gray-900">@Html.DisplayFor(model => model.DireccionProfesor)</p>
+            </div>
+
+            <!-- EstadoProfesor -->
+            <div>
+                <h2 class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="fas fa-clipboard-check fa-lg text-blue-500"></i> Estado
+                </h2>
+                <p class="text-lg font-semibold text-gray-900">@Html.DisplayFor(model => model.EstadoProfesor)</p>
+            </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="flex justify-end gap-4 mt-8">
+            @Html.ActionLink("Editar", "ActualizarProfesor", new { idProfesor = Model.IdProfesor }, new { @class = "bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg shadow" })
+            @Html.ActionLink("Regresar a la Lista", "ListarProfesores", null, new { @class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow" })
+            <button id="exportPdf" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow">
+                <i class="fas fa-file-pdf fa-lg"></i> Exportar a PDF
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('exportPdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('landscape'); // Orientación horizontal para mayor espacio
+
+            // Datos del profesor en formato tabla
+            const headers = [["Campo", "Valor"]];
+            const data = [
+                ["Id Profesor", "@Model.IdProfesor"],
+                ["Nombre", "@Model.NombreProfesor"],
+                ["Apellido", "@Model.ApellidoProfesor"],
+                ["Edad", "@Model.EdadProfesor"],
+                ["DNI", "@Model.DniProfesor"],
+                ["Teléfono", "@Model.TelefonoProfesor"],
+                ["Dirección", "@Model.DireccionProfesor"],
+                ["Estado", "@Model.EstadoProfesor"]
+            ];
+
+            // Generar tabla
+            doc.autoTable({
+                head: headers,
+                body: data,
+                styles: {
+                    fontSize: 14,
+                    cellPadding: 5,
+                },
+                theme: 'grid',
+            });
+
+            // Guardar PDF
+            doc.save('DetalleProfesor.pdf');
+        });
+    </script>
+</body>
+</html>

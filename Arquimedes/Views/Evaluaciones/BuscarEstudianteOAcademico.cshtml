@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Buscar Estudiante o Académico";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="max-w-lg w-full bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-3xl font-bold text-center text-blue-600 mb-6 flex items-center justify-center gap-2">
+            <span class="material-icons text-blue-500">search</span> Buscar Estudiante o Académico
+        </h2>
+
+        @using (Html.BeginForm("BuscarEstudianteOAcademico", "Evaluaciones", FormMethod.Post, new { id = "formBuscar" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="grid grid-cols-1 gap-6">
+                <div>
+                    <label for="codigo" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">badge</span> Código:
+                    </label>
+                    <input type="text" id="codigo" name="codigo"
+                           class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300"
+                           placeholder="Ingrese el código" required>
+                </div>
+
+                <div>
+                    <label for="tipo" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">person</span> Tipo:
+                    </label>
+                    <select id="tipo" name="tipo"
+                            class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            required>
+                        <option value="Estudiante">Estudiante</option>
+                        <option value="Academico">Académico</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" id="btnBuscar"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg mt-6 mx-auto block shadow-lg flex items-center gap-2 justify-center">
+                <span class="material-icons">search</span> Buscar
+            </button>
+        }
+
+        <!-- Mensaje de error -->
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mt-4 rounded-lg">
+                <p class="font-bold">Error:</p>
+                <p>@TempData["ErrorMessage"]</p>
+            </div>
+        }
+    </div>
+
+    <script>
+        document.getElementById("btnBuscar").addEventListener("click", function () {
+            const codigo = document.getElementById("codigo").value.trim();
+            if (codigo === "") {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Por favor, ingrese un código válido.',
+                    icon: 'error',
+                    confirmButtonText: 'Entendido',
+                    confirmButtonColor: '#d33',
+                });
+            } else {
+                Swal.fire({
+                    title: '¿Está seguro?',
+                    text: "¿Desea realizar la búsqueda con los datos ingresados?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, buscar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById("formBuscar").submit();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+<

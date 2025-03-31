@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Administrador</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Registrar Administrador</h2>
+
+        <!-- Barra de progreso -->
+        <div class="mb-6">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-sm font-medium text-blue-700">Progreso</span>
+                <span id="progressPercentage" class="text-sm font-medium text-blue-700">0%</span>
+            </div>
+            <div class="w-full bg-gray-300 rounded-full h-4">
+                <div id="progressBar" class="bg-gradient-to-r from-blue-400 to-blue-600 h-4 rounded-full transition-all"></div>
+            </div>
+        </div>
+
+        <!-- Formulario -->
+        <form id="formAdministrador">
+            <div class="mb-4">
+                <label for="IdAdministrador" class="block text-sm font-medium text-gray-700">ID del Administrador</label>
+                <input type="text" id="IdAdministrador" name="IdAdministrador" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="ID del Administrador" oninput="updateProgress()">
+            </div>
+
+            <div class="mb-4">
+                <label for="NombreAdministrador" class="block text-sm font-medium text-gray-700">Nombre del Administrador</label>
+                <input type="text" id="NombreAdministrador" name="NombreAdministrador" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Nombre del Administrador" oninput="updateProgress()">
+            </div>
+
+            <div class="mb-4">
+                <label for="ApellidoAdministrador" class="block text-sm font-medium text-gray-700">Apellido del Administrador</label>
+                <input type="text" id="ApellidoAdministrador" name="ApellidoAdministrador" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Apellido del Administrador" oninput="updateProgress()">
+            </div>
+
+            <div class="mb-4">
+                <label for="TelefonoAdministrador" class="block text-sm font-medium text-gray-700">Teléfono</label>
+                <input type="text" id="TelefonoAdministrador" name="TelefonoAdministrador" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Teléfono del Administrador" oninput="updateProgress()">
+            </div>
+
+            <div class="mb-4">
+                <label for="DireccionAdministrador" class="block text-sm font-medium text-gray-700">Dirección</label>
+                <input type="text" id="DireccionAdministrador" name="DireccionAdministrador" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Dirección del Administrador" oninput="updateProgress()">
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-medium py-2 px-4 rounded-md transition">
+                Registrar Administrador
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function updateProgress() {
+            const fields = document.querySelectorAll("input[type='text']");
+            let filled = 0;
+            fields.forEach(field => {
+                if (field.value.trim() !== "") {
+                    filled++;
+                }
+            });
+
+            const progress = Math.round((filled / fields.length) * 100);
+            const progressBar = document.getElementById("progressBar");
+            const progressPercentage = document.getElementById("progressPercentage");
+
+            progressBar.style.width = `${progress}%`;
+            progressPercentage.textContent = `${progress}%`;
+        }
+
+        // Inicializar progreso al cargar
+        window.onload = updateProgress;
+    </script>
+</body>
+</html>

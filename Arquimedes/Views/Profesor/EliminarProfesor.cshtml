@@ -1,0 +1,60 @@
+﻿@model Arquimedes.Models.Profesor
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eliminar Profesor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
+        <h1 class="text-2xl font-bold text-red-600 mb-6">Eliminar Profesor</h1>
+        <p class="text-gray-700 mb-6">
+            ¿Estás seguro de que deseas eliminar al profesor <strong>@Model.NombreProfesor @Model.ApellidoProfesor</strong>?
+        </p>
+
+        @using (Html.BeginForm("EliminarProfesorConfirmed", "Profesor", FormMethod.Post, new { id = "eliminarProfesorForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.IdProfesor)
+
+            <div class="flex justify-end gap-4">
+                <a href="@Url.Action("ListarProfesores", "Profesor")" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg">
+                    Cancelar
+                </a>
+                <button type="button" id="btnEliminar" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow">
+                    Eliminar
+                </button>
+            </div>
+        }
+    </div>
+
+    <!-- Script de SweetAlert -->
+    <script>
+        document.getElementById("btnEliminar").addEventListener("click", function (event) {
+            Swal.fire({
+                title: '¿Está seguro que deseas borrar a este Profesor?',
+                text: "Esta acción no se puede deshacer.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("eliminarProfesorForm").submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

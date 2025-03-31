@@ -1,0 +1,201 @@
+﻿@{
+    ViewBag.Title = "Nosotros";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #f1c40f;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .navbar, .footer {
+            background-color: #000;
+            border-bottom: 2px solid #f1c40f;
+        }
+
+        .nav-link, .navbar-brand {
+            color: #f1c40f !important;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+            .nav-link:hover, .navbar-brand:hover {
+                color: rgba(241, 196, 15, 0.8) !important;
+                transform: scale(1.05);
+            }
+
+        .card {
+            background-color: #222;
+            color: #f1c40f;
+            border: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 20px rgba(241, 196, 15, 0.5);
+            }
+
+        .footer {
+            background-color: #111;
+            border-top: 2px solid #f1c40f;
+        }
+
+        .social-icons a {
+            color: #f1c40f;
+            margin: 0 10px;
+            font-size: 24px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+            .social-icons a:hover {
+                color: rgba(241, 196, 15, 0.8);
+                transform: rotate(10deg);
+            }
+
+        .hover-effect:hover {
+            color: rgba(241, 196, 15, 0.8);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!--BARA DE NAVEGACION-->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand hover-effect" href="#">Nosotros</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link hover-effect" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link hover-effect" href="#">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link hover-effect" href="#">Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Carrusel -->
+    <div id="imageCarousel" class="carousel slide mt-4" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+               <img src="@Url.Content("~/Content/FOTOS/Cursos.jpg")" class="d-block w-100" alt="Imagen 1">
+            </div>
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="Imagen 2">
+            </div>
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="Imagen 3">
+            </div>
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="Imagen 4">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>
+    </div>
+
+ 
+
+    <!--MAIN-->
+    <main class="container mt-5">
+        <h2 id="titulo">Quiénes Somos</h2>
+        <div class="row mt-4">
+            <div class="col-md-auto mb-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Quiénes Somos</h5>
+                        <p class="card-text">
+                            "Bienvenidos al Colegio Arquímedes, una institución educativa con más de 15 años de trayectoria, dedicada a formar personas íntegras, creativas y comprometidas con el desarrollo de sus comunidades y del mundo. Desde nuestros inicios, hemos sido un espacio de aprendizaje que combina la excelencia académica con un enfoque humanista y científico, inspirados en el legado de Arquímedes, quien nos motiva a innovar, explorar y cuestionar.
+
+                            Nuestro compromiso es brindar una educación de calidad que se adapte a los desafíos del siglo XXI, utilizando métodos pedagógicos que promuevan el pensamiento crítico, el trabajo en equipo y el liderazgo. Contamos con un equipo de docentes altamente capacitados y apasionados por enseñar, quienes guían a nuestros estudiantes en su desarrollo académico y personal, fomentando en ellos valores como la honestidad, la responsabilidad y el respeto.
+
+                            En el Colegio Arquímedes, nuestros estudiantes además de adquirir conocimientos, desarrollan habilidades para la vida, con énfasis en ciencias, tecnología, arte y deportes. A lo largo de estos años, hemos construido una comunidad sólida que involucra a estudiantes, padres de familia y docentes, todos unidos con la misión de formar personas capaces de transformar su entorno de manera positiva.
+
+                            Somos más que un colegio; somos una familia que trabaja día a día para que cada niño y joven encuentre su propio camino hacia el éxito, desarrollando su máximo potencial y aportando a la sociedad con sus talentos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nuestra Misión</h5>
+                        <p class="card-text">
+                            ¿Por qué elegir el Colegio Arquímedes?
+
+                            Con más de 15 años de experiencia, el Colegio Arquímedes se enfoca en la formación integral de cada estudiante, impulsando el desarrollo de sus capacidades cognitivas, artísticas y deportivas. Fomentamos un ambiente de cooperación y ciudadanía activa, donde nuestros estudiantes no solo aprenden, sino que también son protagonistas de su aprendizaje.
+
+                            Nuestro compromiso es formar ciudadanos con valores, sensibilidad y compromiso, preparados para enfrentar los desafíos de la vida y contribuir al desarrollo de su comunidad y nuestro país.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nuestros Valores</h5>
+                        <p class="card-text">Integridad, compromiso y pasión por lo que hacemos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sección de Imágenes -->
+        <div class="row mt-5">
+            <div class="col-md-3">
+                <img src="@Url.Content("~/Content/FOTOS/nivelPre.jpg")" class="img-fluid rounded" alt="Imagen 1">
+            </div>
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/300" class="img-fluid rounded" alt="Imagen 2">
+            </div>
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/300" class="img-fluid rounded" alt="Imagen 3">
+            </div>
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/300" class="img-fluid rounded" alt="Imagen 4">
+            </div>
+        </div>
+
+
+    </main>
+
+
+    <footer class="footer text-white mt-5 p-4 text-center">
+        <div class="social-icons mb-3">
+            <a href="#" class="text-white hover-effect"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-white hover-effect"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-white hover-effect"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-white hover-effect"><i class="bi bi-linkedin"></i></a>
+        </div>
+        <p>&copy; 2024 Nosotros. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

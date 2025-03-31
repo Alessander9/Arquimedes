@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="cadena-Web.config Connection String" description="cadena Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="server=sql8011.site4now.net; database=db_ab0838_arquimedes; uid=db_ab0838_arquimedes_admin; pwd=Cleopatra2024" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\aless\\Desktop\\ARQUIMEDES\\Arquimedes\\Arquimedes\\Arquimedes\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='cadena']/@connectionString" />
+  </parameter>
+</parameters>

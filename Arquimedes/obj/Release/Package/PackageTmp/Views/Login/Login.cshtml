@@ -1,0 +1,407 @@
+﻿@model Arquimedes.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Colegio Arquimedes</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --fondo-principal-ej1: #091C47; /* Azul Marino */
+            --texto-principal-ej1: #F0E3D1; /* Crema */
+            --botones-acento-ej1: #EF6C00; /* Naranja principal */
+            --texto-secundario-ej1: #7A7A7A; /* Gris medio */
+            --hover-detalles-ej1: #C9A200; /* Amarillo oscuro */
+            --fondos-secundarios-ej1: #4B4B4B; /* Gris oscuro */
+            --contraste-clave-ej1: #FFFFFF; /* Blanco puro */
+        }
+
+        /* Fondo de video */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Overlay semi-transparente */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+
+        /* Efecto Snap */
+        @@keyframes snap-in {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* glas Card */
+        .login-card {
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 16px; /* Bordes redondeados */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.5px);
+            -webkit-backdrop-filter: blur(7.5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+            animation: snap-in 0.6s ease-out; /* Efecto Snap */
+            text-align:center;
+        }
+
+        /* Títulos */
+       /* Contenedor del encabezado */
+.header-container {
+    text-align: center; /* Centra el texto horizontalmente */
+    color: var(--texto-principal-ej1); /* Color crema */
+    
+    padding: 20px; /* Espaciado interno */
+    border-radius: 10px; /* Bordes redondeados */
+    max-width: 600px; /* Ancho máximo */
+    margin: 30px auto; /* Centra el contenedor vertical y horizontalmente */
+    animation: fadeIn 1s ease-in-out; /* Animación de entrada */
+}
+
+/* Estilo del título principal */
+.title {
+    font-family: 'Poppins', sans-serif; /* Fuente moderna */
+    font-size: 2.5rem; /* Tamaño grande */
+    font-weight: bold; /* Negrita */
+    letter-spacing: 1.5px; /* Espaciado entre letras */
+    margin-bottom: 10px; /* Separación con el subtítulo */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra del texto */
+}
+
+/* Estilo del subtítulo */
+.subtitle {
+    font-family: 'Roboto', sans-serif; /* Fuente secundaria */
+    font-size: 1.5rem; /* Tamaño moderado */
+    font-weight: 300; /* Ligero */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); /* Sombra del texto */
+}
+
+/* Animación de entrada */
+@@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividad */
+@@media (max-width: 768px) {
+    .title {
+        font-size: 2rem; /* Reducir tamaño en pantallas pequeñas */
+    }
+
+    .subtitle {
+        font-size: 1.2rem; /* Reducir tamaño en pantallas pequeñas */
+    }
+
+    .header-container {
+        padding: 15px; /* Ajustar padding */
+    }
+}
+
+
+        .login-card-title {
+            font-size: 1.8em; /* Tamaño adecuado */
+            color: white;
+        }
+
+        /* Labels */
+        label {
+            font-size: 1.1em; /* Tamaño adecuado */
+            color: white;
+        }
+
+        /* Botones */
+        .btn-custom {
+            background: rgba(239, 108, 0, 0.52);
+            border-radius: 16px; /* Bordes redondeados */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.5px);
+            -webkit-backdrop-filter: blur(7.5px);
+            border: 1px solid rgba(9, 28, 71, 0.6);
+            color: var(--texto-principal-ej1);
+            animation: snap-in 0.6s ease-out; /* Efecto Snap */
+            font-weight: 600;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            font-size: 1.1em; /* Ajuste del tamaño de fuente */
+            padding: 0.75rem 1.5rem; /* Ajuste del padding */
+        }
+
+        .btn-custom:hover {
+            background: rgba(9, 28, 71, 0.52);
+            border: 1px solid rgba(239, 108, 0, 0.4);
+        }
+
+        /* Ajustes para la tarjeta y el contenedor */
+        .card-custom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 500px; /* Limita el ancho máximo */
+            margin: 0 auto; /* Centra la tarjeta */
+        }
+
+        .card-body-custom {
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+        }
+
+        .input-group-prepend {
+        }
+
+        /* Ajustar la altura y alineación de los input-group para selects */
+        .input-group .form-control,
+        .input-group .form-select {
+            height: auto; /* Ajusta automáticamente según el contenido */
+            line-height: normal;
+        }
+
+        .input-group-text {
+            height: 100%; /* Asegura que ocupe toda la altura del input-group */
+            display: flex;
+            align-items: center; /* Centra verticalmente el icono */
+            justify-content: center; /* Asegura el centrado horizontal */
+            padding: 0 10px; /* Ajusta el padding para que el icono no se desplace */
+        }
+
+        .input-group .form-select {
+            border-radius: 0.25rem; /* Asegura que el borde del select sea uniforme */
+        }
+
+
+        /* Responsividad */
+        @@media (max-width: 1920px) {
+            .login-card {
+                max-width: 500px;
+            }
+
+            .card-body-custom {
+                max-width: 500px;
+            }
+        }
+
+        @@media (max-width: 1200px) {
+            .login-card {
+                padding: 1.8rem; /* Reduce el padding en pantallas más pequeñas */
+            }
+
+            h4, .login-card-title, label {
+                font-size: 1.3em; /* Reduce el tamaño en pantallas pequeñas */
+            }
+
+            .btn-custom {
+                font-size: 1em;
+                padding: 0.9rem 1.8rem;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .login-card {
+                padding: 1.5rem; /* Reduce aún más el padding */
+            }
+
+            h4, .login-card-title, label {
+                font-size: 1.1em;
+            }
+
+            .btn-custom {
+                font-size: 0.95em;
+                padding: 0.8rem 1.6rem;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .login-card {
+                padding: 1.2rem;
+            }
+
+            h4, .login-card-title, label {
+                font-size: 1em;
+            }
+
+            .btn-custom {
+                font-size: 0.9em;
+                padding: 0.7rem 1.4rem;
+            }
+        }
+
+        /* Aumentar el tamaño de los inputs y selects en dispositivos grandes */
+        @@media (min-width: 992px) {
+            .form-control-custom {
+                font-size: 1.1em; /* Tamaño de fuente adecuado */
+                padding: 0.75rem 1rem; /* Tamaño de padding adecuado */
+            }
+
+            .form-group-custom {
+                width: 100%;
+            }
+        }
+
+        /* Centrar el texto de los botones */
+        .btn-block-custom {
+            text-align: center;
+        }
+
+        /* Ajustes para dispositivos muy pequeños */
+        @@media (max-width: 400px) {
+            .btn-custom {
+                padding: 0.6rem 1.2rem;
+            }
+        }
+
+        /* Icono dentro del Input Group */
+        .input-group-text {
+            background-color: transparent;
+            border: none;
+            color: var(--texto-principal-ej1);
+            font-size: 1.2em;
+        }
+
+        .form-control-custom:focus {
+            box-shadow: 0 0 0 0.2rem rgba(239, 108, 0, 0.25);
+        }
+
+        * {
+            justify-content:center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video de fondo -->
+    <video class="video-background" autoplay muted loop>
+        <source src="@Url.Content("~/Content/VIDEOS/Video2.MP4")" type="video/mp4">
+        Tu navegador no soporta la reproducción de video.
+    </video>
+
+    <!-- Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Contenedor principal -->
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="col-md-8 col-lg-6">
+            <div class="card-custom login-card">
+                <div class="card-body-custom">
+                    <div class="header-container">
+                        <h4 class="title">Iniciar Sesión</h4>
+                        <h4 class="subtittle">Colegio Arquímedes</h4>
+                    </div>
+                    <!-- Formulario de Login -->
+                    @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "mt-4" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <!-- Mostrar mensaje de error -->
+                       if (!string.IsNullOrEmpty(ViewBag.Message))
+                        {
+                            <div class="alert alert-danger text-center">@ViewBag.Message</div>
+                        }
+
+                        <!-- Validaciones del Modelo -->
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                        <!-- Campo Usuario -->
+                        <div class="form-group-custom">
+                            @Html.LabelFor(m => m.NombreUsuario, "Usuario", new { @class = "form-label" })
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                </div>
+                                @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "form-control form-control-custom", placeholder = "Ingresa tu usuario", required = "required" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.NombreUsuario, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo Contraseña -->
+                        <div class="form-group-custom">
+                            @Html.LabelFor(m => m.Contrasenia, "Contraseña", new { @class = "form-label" })
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                </div>
+                                @Html.PasswordFor(m => m.Contrasenia, new { @class = "form-control form-control-custom", placeholder = "Ingresa tu contraseña", required = "required" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Contrasenia, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo Selección de Rol -->
+                        <div class="form-group-custom">
+                            @Html.LabelFor(m => m.RolUsuario, "Rol", new { @class = "form-label" })
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
+                                </div>
+                                @Html.DropDownListFor(
+                                    m => m.RolUsuario,
+                                    new SelectList(new[]
+                                    {
+                                        new { Value = "", Text = "-- Selecciona un Rol --" },
+                                        new { Value = "Administrador", Text = "Administrador" },
+                                        new { Value = "Estudiante", Text = "Estudiante" },
+                                        new { Value = "Academico", Text = "Académico" },
+                                        new { Value = "Profesor", Text = "Profesor" },
+                                        new { Value = "Asistente", Text = "Asistente" }
+                                    }, "Value", "Text"),
+                                    new { @class = "form-control form-control-custom", required = "required" }
+                                )
+                            </div>
+                            @Html.ValidationMessageFor(m => m.RolUsuario, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Botón de Login -->
+                        <button type="submit" class="btn btn-primary btn-custom btn-block-custom mt-4">
+                            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- jQuery y Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Validaciones de cliente (opcional) -->
+    @Scripts.Render("~/bundles/jqueryval")
+</body>
+</html>

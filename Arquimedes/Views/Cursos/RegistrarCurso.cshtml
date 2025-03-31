@@ -1,0 +1,146 @@
+﻿@model Arquimedes.Models.Curso
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registrar Curso</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- CDN de Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+        @using (Html.BeginForm("RegistrarCurso", "Cursos", FormMethod.Post, new { id = "registrarCursoForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">
+                <i class="fas fa-book-open fa-lg text-blue-500 mr-2"></i> Registrar Curso
+            </h2>
+            @Html.ValidationSummary(true, "", new { @class = "text-red-500 mb-4" })
+
+            <!-- Contenedor de dos columnas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Id del Curso -->
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2 flex items-center gap-2">
+                        <i class="fas fa-id-card fa-lg text-blue-500"></i> Identificador del Curso
+                    </label>
+                    @Html.EditorFor(model => model.IdCurso, new { htmlAttributes = new { @class = "w-full border border-gray-300 p-2 rounded-lg shadow-sm focus:ring focus:ring-blue-300" } })
+                    @Html.ValidationMessageFor(model => model.IdCurso, "", new { @class = "text-red-500 text-sm" })
+                </div>
+
+                <!-- Nombre del Curso -->
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2 flex items-center gap-2">
+                        <i class="fas fa-file-alt fa-lg text-blue-500"></i> Nombre del Curso
+                    </label>
+                    @Html.EditorFor(model => model.NombreCurso, new { htmlAttributes = new { @class = "w-full border border-gray-300 p-2 rounded-lg shadow-sm focus:ring focus:ring-blue-300" } })
+                    @Html.ValidationMessageFor(model => model.NombreCurso, "", new { @class = "text-red-500 text-sm" })
+                </div>
+
+                <!-- Descripción -->
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2 flex items-center gap-2">
+                        <i class="fas fa-align-left fa-lg text-blue-500"></i> Descripción del Curso
+                    </label>
+                    @Html.EditorFor(model => model.DescripcionCurso, new { htmlAttributes = new { @class = "w-full border border-gray-300 p-2 rounded-lg shadow-sm focus:ring focus:ring-blue-300" } })
+                    @Html.ValidationMessageFor(model => model.DescripcionCurso, "", new { @class = "text-red-500 text-sm" })
+                </div>
+
+                <!-- Día -->
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2 flex items-center gap-2">
+                        <i class="fas fa-calendar-day fa-lg text-blue-500"></i> Día del Curso
+                    </label>
+                    @Html.EditorFor(model => model.Dia, new { htmlAttributes = new { @class = "w-full border border-gray-300 p-2 rounded-lg shadow-sm focus:ring focus:ring-blue-300" } })
+                    @Html.ValidationMessageFor(model => model.Dia, "", new { @class = "text-red-500 text-sm" })
+                </div>
+
+                <!-- Hora -->
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2 flex items-center gap-2">
+                        <i class="fas fa-clock fa-lg text-blue-500"></i> Hora del Curso
+                    </label>
+                    @Html.EditorFor(model => model.Hora, new { htmlAttributes = new { @class = "w-full border border-gray-300 p-2 rounded-lg shadow-sm focus:ring focus:ring-blue-300" } })
+                    @Html.ValidationMessageFor(model => model.Hora, "", new { @class = "text-red-500 text-sm" })
+                </div>
+
+                <!-- Nivel -->
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2 flex items-center gap-2">
+                        <i class="fas fa-signal fa-lg text-blue-500"></i> Nivel del Curso
+                    </label>
+                    @Html.EditorFor(model => model.Nivel, new { htmlAttributes = new { @class = "w-full border border-gray-300 p-2 rounded-lg shadow-sm focus:ring focus:ring-blue-300" } })
+                    @Html.ValidationMessageFor(model => model.Nivel, "", new { @class = "text-red-500 text-sm" })
+                </div>
+
+                <!-- Profesor -->
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2 flex items-center gap-2">
+                        <i class="fas fa-chalkboard-teacher fa-lg text-blue-500"></i> Profesor Asignado
+                    </label>
+                    @Html.DropDownList("IdProfesor", null, "Seleccione un Profesor", new { @class = "w-full border border-gray-300 p-2 rounded-lg shadow-sm focus:ring focus:ring-blue-300" })
+                    @Html.ValidationMessageFor(model => model.IdProfesor, "", new { @class = "text-red-500 text-sm" })
+                </div>
+            </div>
+
+            <!-- Botón de enviar -->
+            <div class="flex justify-end mt-6">
+                <button type="button" id="btnConfirmarRegistro" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md cursor-pointer">
+                    <i class="fas fa-save fa-lg mr-2"></i> Registrar Curso
+                </button>
+            </div>
+        }
+
+        <!-- Botón de regresar -->
+        <!-- Botones -->
+        <div class="flex justify-end mt-6">
+            @Html.ActionLink("Volver a la Lista", "ListarCursos", null, new { @class = "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow" })
+
+        </div>
+
+        <!-- Botón Volver con Gradiente Rojo a Morado -->
+        <div class="mt-4 flex justify-content-md-between space-x-2">
+            <a href="@Url.Action("vistaAdministrador", "Administrador")" class="px-4 py-2 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg shadow-md hover:from-red-600 hover:to-purple-700 flex items-center gap-2 transition-colors duration-300">
+                <span class="material-icons">arrow_back</span> Salir al menú
+            </a>
+        </div>
+    </div>
+
+    <!-- SweetAlert Script -->
+    <script>
+        document.getElementById("btnConfirmarRegistro").addEventListener("click", function () {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Deseas registrar este Curso?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, registrar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("registrarCursoForm").submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

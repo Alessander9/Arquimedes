@@ -1,0 +1,143 @@
+﻿@model Arquimedes.Models.Administrador
+@{
+    Layout = null; // Considera asignar un layout si lo deseas
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Dirección</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Eliminada la llave de cierre errónea */
+
+        .menu-button {
+            width: 100%;
+            height: auto;
+            max-width: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .menu-button:hover {
+                transform: scale(1.1);
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            }
+
+        .material-icons {
+            font-size: 48px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Menú Dirección</h1>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+            <!-- Estudiante -->
+            <a href="@Url.Action("Estudiante", "Home")"
+               class="menu-button bg-gradient-to-r from-blue-900 to-blue-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">school</span>
+                <span>Estudiante</span>
+            </a>
+
+            <!-- Académico -->
+            <a href="@Url.Action("Academico", "Home")"
+               class="menu-button bg-gradient-to-r from-yellow-800 to-yellow-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">account_circle</span>
+                <span>Académico</span>
+            </a>
+
+            <!-- Profesor -->
+            <a href="@Url.Action("Profesor", "Home")"
+               class="menu-button bg-gradient-to-r from-green-900 to-green-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">person</span>
+                <span>Profesor</span>
+            </a>
+
+            <!-- Registrar Usuario -->
+            <a href="@Url.Action("RegistrarUsuario", "Usuario")"
+               class="menu-button bg-gradient-to-r from-purple-900 to-purple-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">person_add</span>
+                <span>Registrar Usuario</span>
+            </a>
+
+            <!-- Curso -->
+            <a href="@Url.Action("cursos", "Home")"
+               class="menu-button bg-gradient-to-r from-indigo-900 to-indigo-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">menu_book</span>
+                <span>Curso</span>
+            </a>
+
+            <!-- Evaluaciones -->
+            <a href="@Url.Action("Evaluaciones", "Home")"
+               class="menu-button bg-gradient-to-r from-orange-900 to-orange-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">assessment</span>
+                <span>Evaluaciones</span>
+            </a>
+
+            <!-- Buscar Notas -->
+            <a href="@Url.Action("BuscarNotas", "Evaluaciones")"
+               class="menu-button bg-gradient-to-r from-blue-900 to-blue-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">search</span>
+                <span>Buscar Notas</span>
+            </a>
+
+            <!-- Buscar Bimestre -->
+            <a href="@Url.Action("BuscarBimestre", "Evaluaciones")"
+               class="menu-button bg-gradient-to-r from-cyan-900 to-cyan-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">event</span>
+                <span>Buscar Bimestre</span>
+            </a>
+
+            <!-- Buscar Horario Profesor -->
+            <a href="@Url.Action("VerCursosDictados", "Profesor")"
+               class="menu-button bg-gradient-to-r from-gray-900 to-gray-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">schedule</span>
+                <span>Horario Profesor</span>
+            </a>
+
+
+            <!-- Buscar Horario -->
+            <a href="@Url.Action("RegistrarHorario", "Horario")"
+               class="menu-button bg-gradient-to-r from-emerald-900 to-emerald-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">browse_gallery</span>
+                <span>Registrar Horario</span>
+            </a>
+
+            <!-- Buscar Horario -->
+            <a href="@Url.Action("BuscarHorario", "Horario")"
+               class="menu-button bg-gradient-to-r from-emerald-900 to-emerald-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">calendar_today</span>
+                <span>Buscar Horario</span>
+            </a>
+
+            <!-- Reportes -->
+            <a href="@Url.Action("BuscarPromedios", "Evaluaciones")"
+               class="menu-button bg-gradient-to-r from-purple-900 to-purple-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">bar_chart</span>
+                <span>Promedio Final</span>
+            </a>
+
+            <!-- Círculo (Estudiantes Top) -->
+            <a href="@Url.Action("BuscarTopPromedios", "Evaluaciones")"
+               class="menu-button bg-gradient-to-r from-red-900 to-red-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                <span class="material-icons text-white">leaderboard</span>
+                <span>El Círculo</span>
+            </a>
+        </div>
+
+        <!-- Salir -->
+        <div class="flex justify-center mt-8">
+            <form action="@Url.Action("Logout", "Login")" method="post" class="menu-button bg-gradient-to-r from-red-900 to-red-500 text-white font-bold py-4 px-6 rounded-lg shadow-md flex flex-col items-center justify-center gap-2">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="flex flex-col items-center justify-center">
+                    <span class="material-icons text-white">logout</span>
+                    <span>Salir</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

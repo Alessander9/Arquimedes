@@ -1,0 +1,139 @@
+﻿@model Arquimedes.Models.Academico
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle Académico</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h4 class="text-2xl font-semibold text-gray-700 mb-4">
+            <i class="fas fa-info-circle fa-lg text-blue-500"></i> Detalle Académico
+        </h4>
+        <hr class="mb-4">
+
+        <!-- Información del Académico -->
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <dt class="font-medium text-gray-600 flex items-center">
+                    <i class="fas fa-id-badge fa-lg text-blue-500 mr-2"></i> Código Académico
+                </dt>
+                <dd class="text-gray-800 font-semibold">@Html.DisplayFor(model => model.CodAcademico)</dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600 flex items-center">
+                    <i class="fas fa-user fa-lg text-blue-500 mr-2"></i> Nombre
+                </dt>
+                <dd class="text-gray-800 font-semibold">@Html.DisplayFor(model => model.NombreAcademico)</dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600 flex items-center">
+                    <i class="fas fa-user-tag fa-lg text-blue-500 mr-2"></i> Apellido
+                </dt>
+                <dd class="text-gray-800 font-semibold">@Html.DisplayFor(model => model.ApellidoAcademico)</dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600 flex items-center">
+                    <i class="fas fa-calendar-alt fa-lg text-blue-500 mr-2"></i> Edad
+                </dt>
+                <dd class="text-gray-800 font-semibold">@Html.DisplayFor(model => model.EdadAcademico)</dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600 flex items-center">
+                    <i class="fas fa-calendar fa-lg text-blue-500 mr-2"></i> Periodo Académico
+                </dt>
+                <dd class="text-gray-800 font-semibold">@Html.DisplayFor(model => model.PeriodoAcademico)</dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600 flex items-center">
+                    <i class="fas fa-phone fa-lg text-blue-500 mr-2"></i> Teléfono
+                </dt>
+                <dd class="text-gray-800 font-semibold">@Html.DisplayFor(model => model.TelefonoAcademico)</dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600 flex items-center">
+                    <i class="fas fa-map-marker-alt fa-lg text-blue-500 mr-2"></i> Dirección
+                </dt>
+                <dd class="text-gray-800 font-semibold">@Html.DisplayFor(model => model.DireccionAcademico)</dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600 flex items-center">
+                    <i class="fas fa-toggle-on fa-lg text-blue-500 mr-2"></i> Estado
+                </dt>
+                <dd class="text-gray-800 font-semibold">@Html.DisplayFor(model => model.EstadoAcademico)</dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600 flex items-center">
+                    <i class="fas fa-id-card fa-lg text-blue-500 mr-2"></i> DNI
+                </dt>
+                <dd class="text-gray-800 font-semibold">@Html.DisplayFor(model => model.DniAcademico)</dd>
+            </div>
+        </dl>
+
+        <!-- Botones -->
+        <div class="mt-6 flex justify-between">
+            @Html.ActionLink("Editar", "ActualizarAcademico", new { codAcademico = Model.CodAcademico }, new { @class = "px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600" })
+            @Html.ActionLink("Volver a la Lista", "ListarAcademicos", null, new { @class = "px-4 py-2 bg-gray-300 text-gray-800 rounded-lg shadow hover:bg-gray-400" })
+            <button id="exportPdf" class="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600">
+                Exportar a PDF
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('exportPdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Datos del Académico
+            const academicData = [
+                { campo: "Código Académico", valor: "@Model.CodAcademico" },
+                { campo: "Nombre", valor: "@Model.NombreAcademico" },
+                { campo: "Apellido", valor: "@Model.ApellidoAcademico" },
+                { campo: "Edad", valor: "@Model.EdadAcademico" },
+                { campo: "Periodo Académico", valor: "@Model.PeriodoAcademico" },
+                { campo: "Teléfono", valor: "@Model.TelefonoAcademico" },
+                { campo: "Dirección", valor: "@Model.DireccionAcademico" },
+                { campo: "Estado", valor: "@Model.EstadoAcademico" },
+                { campo: "DNI", valor: "@Model.DniAcademico" }
+            ];
+
+            // Encabezados
+            const headers = [["Campo", "Valor"]];
+
+            // Cuerpo de la tabla
+            const rows = academicData.map(item => [item.campo, item.valor]);
+
+            // Generar el PDF con autoTable
+            doc.autoTable({
+                head: headers,
+                body: rows,
+                startY: 20,
+                theme: 'grid',
+                styles: { fontSize: 10, cellPadding: 4 },
+                didDrawPage: function (data) {
+                    doc.setFontSize(14);
+                    doc.text("Detalle Académico", data.settings.margin.left, 15);
+                }
+            });
+
+            // Guardar el PDF
+            doc.save('Detalle_Academico.pdf');
+        });
+    </script>
+</body>
+</html>

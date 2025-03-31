@@ -1,0 +1,97 @@
+﻿@model Arquimedes.Models.Curso
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Eliminar Curso</title>
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="max-w-3xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-bold text-red-600 mb-4 text-center">¿Está seguro que desea eliminar este curso?</h3>
+        <div>
+            <h4 class="text-lg font-bold mb-4 text-center">Detalle del Curso</h4>
+            <hr class="mb-6">
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Nombre del Curso -->
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Nombre del Curso</dt>
+                    <dd class="text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.NombreCurso)</dd>
+                </div>
+
+                <!-- Descripción -->
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Descripción</dt>
+                    <dd class="text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.DescripcionCurso)</dd>
+                </div>
+
+                <!-- Día -->
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Día</dt>
+                    <dd class="text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.Dia)</dd>
+                </div>
+
+                <!-- Hora -->
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Hora</dt>
+                    <dd class="text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.Hora)</dd>
+                </div>
+
+                <!-- Nivel -->
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Nivel</dt>
+                    <dd class="text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.Nivel)</dd>
+                </div>
+
+                <!-- Profesor -->
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Profesor</dt>
+                    <dd class="text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.IdProfesor)</dd>
+                </div>
+            </dl>
+        </div>
+
+        <!-- Botones -->
+        <div class="mt-6 flex justify-center space-x-4">
+            @using (Html.BeginForm("EliminarCursoConfirmado", "Cursos", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="idCurso" value="@Model.IdCurso" />
+                <button type="button" id="btnEliminar" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                    Eliminar
+                </button>
+            }
+            @Html.ActionLink("Cancelar", "ListarCursos", null, new { @class = "bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded" })
+        </div>
+    </div>
+
+    <!-- SweetAlert Script -->
+    <script>
+        document.getElementById("btnEliminar").addEventListener("click", function (event) {
+            Swal.fire({
+                title: '¿Está seguro que desea eliminar este curso?',
+                text: "Esta acción no se puede deshacer.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.querySelector("form").submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

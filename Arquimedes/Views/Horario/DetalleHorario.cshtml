@@ -1,0 +1,105 @@
+﻿@model Arquimedes.Models.Horario
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle Horario</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="container mx-auto px-6 py-12 bg-white rounded-lg shadow-md mt-8">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-6 flex items-center justify-center gap-2">
+            <span class="material-icons text-blue-500">schedule</span>
+            Detalle del Horario
+        </h1>
+
+        <div class="bg-gray-100 rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4 text-blue-700">
+                <span class="material-icons text-blue-500">info</span> Detalles del Horario
+            </h2>
+            <p class="mb-2"><strong class="text-gray-700">Horario:</strong> @Model.IdHorario</p>
+            <p class="mb-2"><strong class="text-gray-700">Tipo Inscripción:</strong> @Model.TipoInscripcion</p>
+            @if (Model.CodEstudiante != null)
+            {
+                <p class="mb-2"><strong class="text-gray-700">Código Estudiante:</strong> @Model.CodEstudiante</p>
+            }
+            @if (Model.CodAcademico != null)
+            {
+                <p class="mb-2"><strong class="text-gray-700">Código Académico:</strong> @Model.CodAcademico</p>
+            }
+            <p class="mb-2"><strong class="text-gray-700">Curso:</strong> @Model.IdCurso</p>
+        </div>
+
+        <div class="flex justify-between mt-6">
+            <a href="@Url.Action("ListarHorarios", "Horario")" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg flex items-center gap-2">
+                <span class="material-icons">arrow_back</span> Volver a la Lista
+            </a>
+            <button id="exportPdf" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-2">
+                <span class="material-icons">download</span> Exportar a PDF
+            </button>
+            <a href="@Url.Action("ActualizarHorario", "Horario", new { idHorario = Model.IdHorario })" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-2">
+                <span class="material-icons">edit</span> Editar
+            </a>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById("exportPdf").addEventListener("click", function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Agregar título
+        doc.setFontSize(16);
+        doc.text("Detalle del Horario", 105, 10, { align: "center" });
+
+        // Datos dinámicos para la tabla
+        const horarioData = [];
+        horarioData.push(["Horario", "@Model.IdHorario"]);
+        horarioData.push(["Tipo Inscripción", "@Model.TipoInscripcion"]);
+        if (Model.CodEstudiante != null)
+        {
+            horarioData.push(["Código Estudiante", "@Model.CodEstudiante"]);
+        }
+        if (Model.CodAcademico != null)
+        {
+            horarioData.push(["Código Académico", "@Model.CodAcademico"]);
+        }
+        horarioData.push(["Curso", "@Model.IdCurso"]);
+
+        // Generar tabla con autoTable
+        doc.autoTable({
+            startY: 20,
+            head: [["Campo", "Detalle"]],
+            body: horarioData,
+            styles: {
+                fontSize: 12,
+                cellPadding: 5,
+                halign: "center", // Alineación horizontal
+                valign: "middle", // Alineación vertical
+            },
+            headStyles: {
+                fillColor: [41, 128, 185], // Color del encabezado
+                textColor: [255, 255, 255],
+                fontSize: 14,
+            },
+            alternateRowStyles: {
+                fillColor: [240, 248, 255], // Color alternativo en filas
+            },
+            margin: { top: 20 },
+        });
+
+        // Descargar PDF
+        doc.save("DetalleHorario.pdf");
+    });
+    </script>
+
+
+</body>
+</html>

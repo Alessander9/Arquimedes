@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Buscar Notas";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-bold text-center text-blue-600 mb-6 flex items-center gap-2">
+            <span class="material-icons text-blue-500">search</span> Buscar Notas
+        </h2>
+
+        @using (Html.BeginForm("BuscarNotas", "Evaluaciones", FormMethod.Post))
+        {
+            <!-- Código -->
+            <div class="mb-4">
+                <label for="codigo" class="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">badge</span> Código
+                </label>
+                <input type="text" id="codigo" name="codigo"
+                       class="w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500"
+                       placeholder="Ingrese su código" required />
+            </div>
+
+            <!-- Tipo -->
+            <div class="mb-4">
+                <label for="tipo" class="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">group</span> Tipo
+                </label>
+                <select id="tipo" name="tipo"
+                        class="w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="Estudiante">Estudiante</option>
+                    <option value="Academico">Académico</option>
+                </select>
+            </div>
+
+            <!-- Botón -->
+            <button type="submit"
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md flex items-center justify-center gap-2">
+                <span class="material-icons">search</span> Buscar
+            </button>
+        }
+
+        <!-- Salir -->
+        <div class="flex justify-center mt-8">
+            <form action="@Url.Action("Logout", "Login")" method="post" class="bg-gradient-to-r from-red-900 to-red-500 text-white font-bold py-2 px-6 rounded-lg shadow-md flex items-center gap-2">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="flex items-center gap-2">
+                    <span class="material-icons text-white">logout</span> Cerrar Sesión
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

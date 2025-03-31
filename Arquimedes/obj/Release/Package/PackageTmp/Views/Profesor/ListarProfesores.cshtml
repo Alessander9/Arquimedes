@@ -1,0 +1,173 @@
+﻿@model IEnumerable<Arquimedes.Models.Profesor>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Listar Profesores</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+
+        h1 {
+            color: snow;
+        }
+
+        div#profesoresTable_info.dataTables_info {
+            color: white;
+        }
+
+        div#profesores_ Table_length.dataTables_length {
+            color: white;
+        }
+    </style>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.tailwind.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.5/css/dataTables.tailwind.min.css" rel="stylesheet">
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body class="bg-gray-100 text-gray-900 flex items-center justify-center min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6 text-center">Lista de Profesores</h1>
+
+        <div class="mb-4 flex justify-end">
+            @Html.ActionLink("Registrar Nuevo Docente", "RegistrarProfesor", null, new { @class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow" })
+            <button id="exportPdf" class="ml-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
+                Exportar a PDF
+            </button>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table id="profesoresTable" class="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden text-center">
+                <thead class="bg-blue-800 text-white">
+                    <tr>
+                        <th class="px-4 py-2">Id Profesor</th>
+                        <th class="px-4 py-2">Nombre</th>
+                        <th class="px-4 py-2">Apellido</th>
+                        <th class="px-4 py-2">Edad</th>
+                        <th class="px-4 py-2">DNI</th>
+                        <th class="px-4 py-2">Teléfono</th>
+                        <th class="px-4 py-2">Dirección</th>
+                        <th class="px-4 py-2">Estado</th>
+                        <th class="px-4 py-2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var profesor in Model)
+                    {
+                        <tr class="border-b hover:bg-gray-100">
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => profesor.IdProfesor)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => profesor.NombreProfesor)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => profesor.ApellidoProfesor)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => profesor.EdadProfesor)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => profesor.DniProfesor)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => profesor.TelefonoProfesor)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => profesor.DireccionProfesor)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => profesor.EstadoProfesor)</td>
+                            <td class="px-4 py-2 flex justify-center space-x-2">
+                                @Html.ActionLink("Actualizar", "ActualizarProfesor", new { idProfesor = profesor.IdProfesor }, new { @class = "text-blue-600 hover:underline" })
+                                <span>|</span>
+                                @Html.ActionLink("Detalle", "DetalleProfesor", new { idProfesor = profesor.IdProfesor }, new { @class = "text-green-500 hover:underline" })
+                                <span>|</span>
+                                @Html.ActionLink("Eliminar", "EliminarProfesor", new { idProfesor = profesor.IdProfesor }, new { @class = "text-red-500 hover:underline" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- Botón Volver con Gradiente Rojo a Morado -->
+            <div class="mt-4 flex justify-end space-x-2">
+
+                <a href="@Url.Action("vistaAdministrador", "Administrador")" class="px-4 py-2 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg shadow-md hover:from-red-600 hover:to-purple-700 flex items-center gap-2 transition-colors duration-300">
+                    <span class="material-icons">arrow_back</span> Salir al menú
+                </a>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Inicializar DataTables
+            $('#profesoresTable').DataTable({
+                responsive: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+                },
+                dom: "<'flex justify-between items-center mb-4'<'dataTables_length'l><'dataTables_filter'f>>" +
+                    "<'overflow-x-auto't>" +
+                    "<'flex justify-between items-center mt-4'<'dataTables_info'i><'dataTables_paginate'p>>"
+            });
+
+            // Exportar a PDF
+            $('#exportPdf').on('click', function () {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('landscape'); // Orientación horizontal para más espacio
+
+                // Encabezados de la tabla
+                const headers = [["Id Profesor", "Nombre", "Apellido", "Edad", "DNI", "Teléfono", "Dirección", "Estado"]];
+
+                // Extraer datos de la tabla
+                const rows = [];
+                $('#profesoresTable tbody tr').each(function () {
+                    const row = [];
+                    $(this).find('td').not(':last-child').each(function () {
+                        row.push($(this).text());
+                    });
+                    rows.push(row);
+                });
+
+                // Calcular el ancho total de la tabla
+                const pageWidth = doc.internal.pageSize.width; // Ancho total de la página
+                const tableWidth = 250; // Ancho estimado de la tabla en el PDF
+                const marginLeft = (pageWidth - tableWidth) / 2; // Margen izquierdo para centrar horizontalmente
+
+                // Generar la tabla en el PDF
+                doc.autoTable({
+                    head: headers,
+                    body: rows,
+                    styles: {
+                        fontSize: 12, // Tamaño de la fuente
+                        cellPadding: 2, // Espaciado dentro de las celdas
+                        valign: 'middle', // Centra verticalmente el contenido dentro de las celdas
+                        halign: 'center', // Centra horizontalmente el contenido dentro de las celdas
+                    },
+                    columnStyles: {
+                        0: { cellWidth: 20 }, // Ancho de la columna para Id Profesor
+                        1: { cellWidth: 45 }, // Ancho de la columna para Nombre
+                        2: { cellWidth: 45 }, // Ancho de la columna para Apellido
+                        3: { cellWidth: 20 }, // Ancho de la columna para Edad
+                        4: { cellWidth: 30 }, // Ancho de la columna para DNI
+                        5: { cellWidth: 30 }, // Ancho de la columna para Teléfono
+                        6: { cellWidth: 50 }, // Ancho de la columna para Dirección
+                        7: { cellWidth: 20 }  // Ancho de la columna para Estado
+                    },
+                    margin: { top: 20, left: marginLeft }, // Margen superior fijo y margen izquierdo calculado
+                    theme: 'grid',
+                    pageBreak: 'auto', // Divide automáticamente si la tabla excede la página
+                });
+
+                // Guardar el PDF
+                doc.save('ListaProfesores.pdf');
+            });
+        });
+    </script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+﻿@model List<Arquimedes.Models.PromedioViewModel>
+
+@{
+    ViewBag.Title = "Resultados de Promedios";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <!-- CDN de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- CDN de Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- CDN de jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- CDN de autoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex justify-center items-center py-10">
+
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-7xl">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Resultados de Promedios</h2>
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg flex items-center gap-3">
+                <span class="material-icons text-yellow-500 text-2xl">warning</span>
+                <span class="text-lg">No se encontraron resultados para los criterios proporcionados.</span>
+            </div>
+        }
+        else
+        {
+            <div class="overflow-x-auto">
+                <table id="resultadosTable" class="w-full bg-white border border-gray-300 rounded-lg shadow-sm text-left">
+                    <thead class="bg-blue-600 text-white">
+                        <tr>
+                            <th class="px-6 py-3">Código</th>
+                            <th class="px-6 py-3">Nombre</th>
+                            <th class="px-6 py-3">Año Escolar</th>
+                            <th class="px-6 py-3">Grado Académico</th>
+                            <th class="px-6 py-3">Curso</th>
+                            <th class="px-6 py-3 text-center">1er Bimestre</th>
+                            <th class="px-6 py-3 text-center">2do Bimestre</th>
+                            <th class="px-6 py-3 text-center">3er Bimestre</th>
+                            <th class="px-6 py-3 text-center">4to Bimestre</th>
+                            <th class="px-6 py-3 text-center">Promedio Final</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="border-t hover:bg-gray-50">
+                                <td class="px-6 py-3 text-gray-700">@item.CodEstudiante_CodAcademico</td>
+                                <td class="px-6 py-3 text-gray-700">@item.NombreEstudiante_Academico</td>
+                                <td class="px-6 py-3 text-gray-700">@item.AnioEscolar</td>
+                                <td class="px-6 py-3 text-gray-700">@item.GradoAcademico</td>
+                                <td class="px-6 py-3 text-gray-700">@item.Curso</td>
+
+                                <!-- 1er Bimestre con color -->
+                                <td class="px-6 py-3 text-center border-l border-gray-300 @(
+                                    item.PrimerBimestre?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                                    item.PrimerBimestre?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                                    item.PrimerBimestre?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                                    "text-red-600 font-bold"
+                                )">
+                                    @item.PrimerBimestre
+                                </td>
+
+                                <!-- 2do Bimestre con color -->
+                                <td class="px-6 py-3 text-center border-l border-gray-300 @(
+                                    item.SegundoBimestre?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                                    item.SegundoBimestre?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                                    item.SegundoBimestre?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                                    "text-red-600 font-bold"
+                                )">
+                                    @item.SegundoBimestre
+                                </td>
+
+                                <!-- 3er Bimestre con color -->
+                                <td class="px-6 py-3 text-center border-l border-gray-300 @(
+                                    item.TercerBimestre?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                                    item.TercerBimestre?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                                    item.TercerBimestre?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                                    "text-red-600 font-bold"
+                                )">
+                                    @item.TercerBimestre
+                                </td>
+
+                                <!-- 4to Bimestre con color -->
+                                <td class="px-6 py-3 text-center border-l border-gray-300 @(
+                                    item.CuartoBimestre?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                                    item.CuartoBimestre?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                                    item.CuartoBimestre?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                                    "text-red-600 font-bold"
+                                )">
+                                    @item.CuartoBimestre
+                                </td>
+
+                                <!-- Promedio Final con color -->
+                                <td class="px-6 py-3 text-center border-l border-gray-300 font-semibold @(
+                                    item.PromedioFinal?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                                    item.PromedioFinal?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                                    item.PromedioFinal?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                                    "text-red-600 font-bold"
+                                )">
+                                    @item.PromedioFinal
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-8 text-center flex justify-center gap-4">
+                <a href="@Url.Action("BuscarPromedios", "Evaluaciones")"
+                   class="bg-gray-300 text-gray-800 px-6 py-3 rounded-lg shadow-sm hover:bg-gray-400 inline-flex items-center gap-2">
+                    <span class="material-icons text-gray-600">search</span> Nueva Búsqueda
+                </a>
+                <button onclick="exportPDF()"
+                        class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-sm hover:bg-blue-600 inline-flex items-center gap-2">
+                    <span class="material-icons text-white">picture_as_pdf</span> Exportar PDF
+                </button>
+            </div>
+        }
+
+    </div>
+
+    <script>
+        async function exportPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'l',    // horizontal
+                unit: 'pt',          // puntos para mayor control
+                format: 'a4'         // tamaño A4 horizontal
+            });
+
+            // Tu imagen en base64 (la cadena que adjuntaste)
+            const base64Img =
+                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAJFAZwDASIAAhEBAxEB/8QAHQABAAEFAQEBAAAAAAAAAAAAAAcBAwQFBgIICf/EAD0QAQACAQIEAgcGBAUDBQAAAAABAgMEEQUGEiExQQcTIlFhcYEyQlKRocEUsdHwFSMzYuEIosIlQ3Ky0v/EABoBAQACAwEAAAAAAAAAAAAAAAADBAECBQb/xAAyEQEAAgECBAIJAwQDAAAAAAAAAQIDESEEEjFBBVETImFxgZGhwfAjMrEUM9HhQlJy/9oADAMBAAIRAxEAPwD9UwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUBUAAAAAAAAAAAAAAAAAAAAAAHjLlpgx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" 
+            // A4 horizontal = 842pt x 595pt aprox. (Ancho x Alto)
+            let pageWidth = doc.internal.pageSize.getWidth();
+            let pageHeight = doc.internal.pageSize.getHeight();
+
+            // Función para determinar el color según la letra
+            function getColorForNota(nota) {
+                if (!nota) return [0, 0, 0]; // negro por defecto
+                nota = nota.trim().toUpperCase();
+                // Colores según el código HTML en la vista
+                // text-green-600 (#16a34a) -> [22,163,74]
+                // text-blue-600 (#2563eb) -> [37,99,235]
+                // text-yellow-600 (#ca8a04) -> [202,138,4]
+                // text-red-600 (#dc2626) -> [220,38,38]
+
+                if (nota === "AD") return [22, 163, 74];      // verde
+                else if (nota === "A") return [37, 99, 235];  // azul
+                else if (nota === "B") return [202, 138, 4];  // amarillo
+                else return [220, 38, 38];                    // rojo para C u otra
+            }
+
+            // Agregar la imagen de fondo a toda la página
+            doc.addImage(base64Img, 'PNG', 0, 0, pageWidth, pageHeight);
+
+            // Ajustar estilo del título
+            doc.setFontSize(20);
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(0, 0, 128); // Texto en color azul
+            doc.text("Libreta Anual de Promedios", 40, 50); // Mover más abajo y a la derecha
+
+            // Ajustar la tabla
+            doc.autoTable({
+                html: '#resultadosTable',
+                startY: 80, // la tabla comenzará a 80pt desde el tope
+                tableWidth: pageWidth - 80, // Dejar margen a los lados
+                margin: { top: 80, right: 40, left: 40 },
+                styles: {
+                    fontSize: 12,
+                    cellPadding: 8,    // Más espacio interno en las celdas
+                    halign: 'center'
+                },
+                headStyles: {
+                    fillColor: [63, 81, 181],
+                    textColor: [255, 255, 255],
+                    fontSize: 12,
+                    fontStyle: 'bold'
+                },
+                bodyStyles: {
+                    fontSize: 11,
+                    textColor: [0, 0, 0]
+                },
+                alternateRowStyles: {
+                    fillColor: [230, 230, 250] // color suave para filas alternas
+                },
+            });
+
+            // Descargar PDF
+            doc.save("ResultadosPromedios.pdf");
+        }
+    </script>
+
+</body>
+</html>

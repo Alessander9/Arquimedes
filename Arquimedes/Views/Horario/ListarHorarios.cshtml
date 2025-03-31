@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Arquimedes.Models.Horario>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="color:snow">Listar Horarios</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+    <!-- Incluye DataTables, Tailwind CSS, jsPDF y autoTable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-6" style="color:snow">Lista de Horarios</h1>
+
+        <p class="mb-4">
+            @Html.ActionLink("Registrar Horario", "RegistrarHorario", null, new { @class = "bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600" })
+        </p>
+
+        <div class="bg-white shadow-md rounded-lg p-4">
+            <!-- Botón para exportar PDF -->
+            <div class="flex justify-end mb-4">
+                <button id="exportPdf" class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">
+                    Exportar como PDF
+                </button>
+            </div>
+
+            <table id="horariosTable" class="min-w-full border border-gray-200">
+                <thead class="bg-blue-800 text-white">
+                    <tr>
+                        <th class="px-4 py-2">ID Horario</th>
+                        <th class="px-4 py-2">Tipo de Inscripción</th>
+                        <th class="px-4 py-2">Código Estudiante</th>
+                        <th class="px-4 py-2">Código Académico</th>
+                        <th class="px-4 py-2">ID Curso</th>
+                        <th class="px-4 py-2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-blue-100">
+                            <td class="px-4 py-2">@item.IdHorario</td>
+                            <td class="px-4 py-2">@item.TipoInscripcion</td>
+                            <td class="px-4 py-2">@item.CodEstudiante</td>
+                            <td class="px-4 py-2">@item.CodAcademico</td>
+                            <td class="px-4 py-2">@item.IdCurso</td>
+                            <td class="px-4 py-2">
+                                @Html.ActionLink("Modificar", "ActualizarHorario", new { idHorario = item.IdHorario }, new { @class = "text-yellow-600 hover:text-yellow-700" }) |
+                                @Html.ActionLink("Detalles", "DetalleHorario", new { idHorario = item.IdHorario }, new { @class = "text-blue-600 hover:text-blue-700" }) |
+                                @Html.ActionLink("Eliminar", "EliminarHorario", new { idHorario = item.IdHorario }, new { @class = "text-red-600 hover:text-red-700" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Script para DataTables y jsPDF -->
+    <script>
+        $(document).ready(function () {
+            $('#horariosTable').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                language: { url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json" }
+            });
+
+            document.getElementById("exportPdf").addEventListener("click", function () {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Obtener datos de la tabla
+                const table = document.getElementById("horariosTable");
+                const rows = [...table.rows];
+                const headers = [...rows[0].cells].map(header => header.innerText).slice(0, -1); // Excluir "Acciones"
+                const data = rows.slice(1).map(row => [...row.cells].slice(0, -1).map(cell => cell.innerText)); // Excluir "Acciones"
+
+                // Agregar el título al PDF
+                doc.text("Lista de Horarios", 10, 10);
+
+                // Usar autoTable para agregar la tabla
+                doc.autoTable({
+                    head: [headers],
+                    body: data,
+                    startY: 20,
+                    styles: { fontSize: 10 },
+                    headStyles: { fillColor: [41, 128, 185] },
+                    theme: 'grid'
+                });
+
+                // Descargar el PDF
+                doc.save("Lista_Horarios.pdf");
+            });
+        });
+    </script>
+</body>
+</html>

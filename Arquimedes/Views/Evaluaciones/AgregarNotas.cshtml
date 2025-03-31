@@ -1,0 +1,143 @@
+﻿@model Arquimedes.Models.Evaluacion
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Notas</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="max-w-5xl w-full bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-3xl font-bold text-center text-blue-600 mb-6 flex items-center justify-center gap-2">
+            <span class="material-icons text-blue-500">note_add</span> Agregar Notas
+        </h2>
+
+        @using (Html.BeginForm("AgregarNotas", "Evaluaciones", FormMethod.Post, new { id = "formNotas" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <!-- Formulario con diseño de 2 columnas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="IdEvaluacion" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">badge</span> ID Evaluación:
+                    </label>
+                    @Html.TextBoxFor(model => model.IdEvaluacion, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", placeholder = "Ingrese el ID de Evaluación" })
+                </div>
+
+                <div>
+                    <label for="CodEstudiante" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">person</span> Estudiante:
+                    </label>
+                    @Html.DropDownListFor(model => model.CodEstudiante, (SelectList)ViewBag.CodEstudianteOptions, "-- Seleccione un Estudiante --", new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300" })
+                </div>
+
+                <div>
+                    <label for="CodAcademico" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">school</span> Académico:
+                    </label>
+                    @Html.DropDownListFor(model => model.CodAcademico, (SelectList)ViewBag.CodAcademicoOptions, "-- Seleccione un Académico --", new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300" })
+                </div>
+
+                <div>
+                    <label for="IdCurso" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">book</span> Curso:
+                    </label>
+                    @Html.DropDownListFor(model => model.IdCurso, (SelectList)ViewBag.Cursos, "-- Seleccione un Curso --", new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300" })
+                </div>
+
+                <div>
+                    <label for="Bimestre" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">event</span> Bimestre:
+                    </label>
+                    @Html.TextBoxFor(model => model.Bimestre, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", placeholder = "Ingrese el número de Bimestre", type = "number", min = 1, max = 4 })
+                </div>
+
+                <!-- Notas -->
+                <div>
+                    <label for="T1" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">grading</span> Nota T1:
+                    </label>
+                    @Html.TextBoxFor(model => model.T1, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", placeholder = "Ingrese nota (AD, A, B, C)" })
+                </div>
+
+                <div>
+                    <label for="T2" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">grading</span> Nota T2:
+                    </label>
+                    @Html.TextBoxFor(model => model.T2, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", placeholder = "Ingrese nota (AD, A, B, C)" })
+                </div>
+
+                <div>
+                    <label for="T3" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">grading</span> Nota T3:
+                    </label>
+                    @Html.TextBoxFor(model => model.T3, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", placeholder = "Ingrese nota (AD, A, B, C)" })
+                </div>
+
+                <div>
+                    <label for="T4" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">grading</span> Nota T4:
+                    </label>
+                    @Html.TextBoxFor(model => model.T4, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", placeholder = "Ingrese nota (AD, A, B, C)" })
+                </div>
+
+                <div>
+                    <label for="T5" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">grading</span> Nota T5:
+                    </label>
+                    @Html.TextBoxFor(model => model.T5, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", placeholder = "Ingrese nota (AD, A, B, C)" })
+                </div>
+            </div>
+
+            <!-- Botón de enviar -->
+            <button type="button" id="btnGuardar" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg mt-6 mx-auto block shadow-lg flex items-center gap-2 justify-center">
+                <span class="material-icons">save</span> Guardar Notas
+            </button>
+        }
+
+        <!-- Mensajes de éxito o error -->
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-4 rounded-lg">
+                <p class="font-bold">Éxito:</p>
+                <p>@TempData["Mensaje"]</p>
+            </div>
+        }
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mt-4 rounded-lg">
+                <p class="font-bold">Error:</p>
+                <p>@ViewBag.ErrorMessage</p>
+            </div>
+        }
+    </div>
+
+    <script>
+        document.getElementById("btnGuardar").addEventListener("click", function () {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Deseas guardar estas notas?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, guardar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("formNotas").submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

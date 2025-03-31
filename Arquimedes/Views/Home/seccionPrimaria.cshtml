@@ -1,0 +1,415 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sección Primaria</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --fondo-principal-ej1: #091C47; /* Azul Marino */
+            --texto-principal-ej1: #F0E3D1; /* Crema */
+            --botones-acento-ej1: #EF6C00; /* Naranja principal */
+            --texto-secundario-ej1: #7A7A7A; /* Gris medio */
+            --hover-detalles-ej1: #C9A200; /* Amarillo oscuro */
+            --fondos-secundarios-ej1: #4B4B4B; /* Gris oscuro */
+            --contraste-clave-ej1: #FFFFFF; /* Blanco puro */
+        }
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+            color: white;
+        }
+
+        /* Navbar inicio */
+        .navbar {
+            width: 100%; /* Asegura que ocupe todo el ancho */
+            z-index: 999; /* Garantiza que esté sobre otros elementos */
+            background-color: rgba(9, 28, 71, 0.85); /* Color de fondo con transparencia */
+            transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+            backdrop-filter: blur(10px); /* Agrega un desenfoque para efecto elegante */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para destacarla */
+        }
+
+            .navbar:hover {
+                background-color: rgba(9, 28, 71, 1); /* Fondo opaco al pasar el ratón */
+            }
+
+        .navbar-brand, .navbar-nav .nav-link {
+            color: var(--texto-principal-ej1) !important;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+            .navbar-nav .nav-link:hover {
+                background-color: var(--botones-acento-ej1);
+                color: var(--contraste-clave-ej1) !important;
+                border-radius: 5px; /* Bordes redondeados para el hover */
+            }
+
+        .dropdown-menu {
+            background-color: #091C47 !important; /* Azul sólido igual al navbar */
+            border: none; /* Sin bordes */
+            border-radius: 5px; /* Bordes redondeados */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+        }
+
+        .dropdown-item {
+            color: #F0E3D1 !important; /* Texto crema */
+            padding: 10px; /* Espaciado interno */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+            .dropdown-item:hover {
+                background-color: #EF6C00 !important; /* Naranja al pasar el ratón */
+                color: #FFFFFF !important; /* Blanco */
+                border-radius: 5px; /* Bordes redondeados en hover */
+            }
+
+
+
+        .navbar-toggler {
+            border-color: var(--contraste-clave-ej1);
+            border-radius: 5px;
+        }
+
+        .navbar-toggler-icon {
+            border-radius: 5px;
+        }
+
+        .login-btn {
+            color: var(--text-color);
+            border: 1px solid var(--text-color);
+            transition: 0.3s;
+        }
+
+            .login-btn:hover {
+                background-color: var(--hover-color);
+                color: var(--hover-text-color);
+            }
+
+        /* Ocultar el menú desplegable por defecto */
+        .nav-item.dropdown .dropdown-menu {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Mostrar el menú cuando se pasa el ratón sobre el padre */
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            position: absolute; /* Asegura que se muestre sobre otros elementos */
+            z-index: 1000;
+            background-color: var(--fondos-secundarios-ej1); /* Estilo del fondo */
+        }
+        /*Aqui acaba el codigo de navegacion*/
+
+        .header {
+            background-color: #004774;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .section-card {
+            background-color: white;
+            color: black;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 2rem;
+        }
+
+        footer {
+            background-color: #091C47;
+            padding: 1rem;
+            text-align: center;
+            color: white;
+        }
+
+        #whatsapp-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 25px;
+            background-color: rgba(37, 211, 102, 0.8);
+            color: white;
+            border-radius: 100%;
+            width: 50px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+            #whatsapp-btn img {
+                width: 80px;
+                height: 90px;
+                border-radius: 100%;
+                opacity: 10;
+                background-color: red;
+            }
+
+            #whatsapp-btn:hover {
+                transform: scale(1.1);
+                background-color: rgba(37, 211, 102, 1);
+            }
+
+        #home-btn {
+            position: fixed;
+            bottom: 100px; /* Alineado con el botón de WhatsApp */
+            right: 25px; /* Posición al lado izquierdo */
+            background-color: rgba(37, 211, 102, 0.8); /* Color verde similar al botón de WhatsApp */
+            color: white;
+            border-radius: 100%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+            #home-btn:hover {
+                transform: scale(1.1);
+                background-color: rgba(37, 211, 102, 1); /* Color más oscuro al pasar el ratón */
+            }
+
+            #home-btn i {
+                font-size: 24px; /* Tamaño del ícono */
+            }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--fondo-principal-ej1);">
+        <div class="container-fluid">
+            <!-- Botón de Login -->
+            <a href="~/Login/Login" class="btn login-btn d-flex align-items-center" style="background-color: var(--botones-acento-ej1); color: var(--contraste-clave-ej1); font-weight: bold; border-radius: 20px; padding: 10px 20px;">
+                <i class="bi bi-person-circle me-2"></i> Intranet Arquimedes
+            </a>
+
+            <!-- Botón Hamburguesa -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Menú Navegación -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center flex-nowrap">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="~/Home/FormularioMatricula">
+                            <i class="material-icons me-1" style="vertical-align: middle;">school</i> Matrícula 2025
+                        </a>
+                    </li>
+                    <!--<li class="nav-item">
+                    <a class="nav-link text-white" href="/Home/Vacaciones">
+                        <i class="material-icons me-1" style="vertical-align: middle;">sunny</i> Vacaciones útiles
+                    </a>
+                </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/Home/Historia">
+                            <i class="material-icons me-1" style="vertical-align: middle;">history</i> Nuestra historia
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/Home/Reglamento">
+                            <i class="material-icons me-1" style="vertical-align: middle;">gavel</i> Reglamento Interno
+                        </a>
+                    </li>
+                    <!-- Dropdown visible solo en pantallas grandes
+                <li class="nav-item dropdown d-none d-lg-block">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="sistemaEducativoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="material-icons me-1" style="vertical-align: middle;">menu_book</i> Sistema Educativo
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item text-white" href="/home/PlanAcademico">
+                                <i class="material-icons me-1" style="vertical-align: middle;">library_books</i> Plan Académico
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-white" href="/home/PerfilEstudiante">
+                                <i class="material-icons me-1" style="vertical-align: middle;">account_circle</i> Perfil del Estudiante
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Opciones de Plan Académico y Perfil del Estudiante visibles solo en pantallas pequeñas
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link text-white" href="/home/PlanAcademico">
+                        <i class="material-icons me-1" style="vertical-align: middle;">library_books</i> Plan Académico
+                    </a>
+                </li>
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link text-white" href="/home/PerfilEstudiante">
+                        <i class="material-icons me-1" style="vertical-align: middle;">account_circle</i> Perfil del Estudiante
+                    </a>
+                </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="header">
+        <h1><span class="material-icons">school</span> Nivel Primaria</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mt-5 pt-5">
+        <!-- Section: Importancia -->
+        <section class="section-card">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="~/Content/FOTOS/SeccionPrimaria1.jpg" class="card-img-top" alt="Habilidades Básicas">
+                </div>
+                <div class="col-md-6">
+                    <h2 class="text-primary fw-bold mb-3">
+                        <span class="material-icons">stars</span> Importancia
+                    </h2>
+                    <p>
+                        En el Colegio Arquímedes, la educación primaria está diseñada para brindar a los estudiantes una base sólida de conocimientos y habilidades que les permita desarrollarse de manera integral.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Razones -->
+        <section class="section-card">
+            <h2 class="text-center text-primary fw-bold mb-4">Razones por las que la Educación Primaria es Importante</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <img src="~/Content/FOTOS/primariax.jpg" class="card-img-top" alt="Habilidades Básicas">
+                        <div class="card-body">
+                            <h5 class="card-title">Importancia del nivel primaria</h5>
+                            <ul>
+                                <li> Base para el aprendizaje continuo.</li>
+                                <li> Desarrollo de habilidades cognitivas.</li>
+                                <li> Fortalecimiento de habilidades sociales.</li>
+                            </ul>
+                            <h5 class="card-title">Enfoque del Colegio Arquímedes:</h5>
+                            <ul>
+                                <li>
+                                    En el Colegio Arquímedes, hemos diseñado un programa educativo innovador que prioriza el aprendizaje significativo y personalizado para cada estudiante.
+                                </li>
+                            </ul>
+                            <h5 class="card-title">¿Qué nos diferencia?</h5>
+                            <ul>
+                                <li>
+                                    <strong>Enseñanza moderna e interactiva:</strong></br>
+                                    Usamos estrategias como aprendizaje basado en proyectos, tecnología educativa y juegos didácticos.
+                                </li></br>
+                                <li>
+                                    <strong>Fomento de valores y habilidades emocionales:</strong></br>
+                                    Preparamos a los estudiantes para ser personas empáticas, responsables y resilientes.
+                                </li></br>
+                                <li>
+                                    <strong>Profesores capacitados y motivadores:</strong></br>
+                                    Nuestro equipo docente inspira a los estudiantes a alcanzar su máximo potencial.
+                                </li></br>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <video autoplay muted loop class="w-100 rounded">
+                            <source src="@Url.Content("~/Content/VIDEOS/videoPrimaria.MP4")" type="video/mp4">
+                            Tu navegador no soporta videos HTML5.
+                        </video>
+                        <div class="card-body">
+                            <h5 class="card-title">Áreas curriculares en primaria que establece el Ministerio de Educación (MINEDU):</h5>
+                            <br />
+                            <p>
+                                <strong>Para cumplir con los objetivos de formación integral, las áreas incluyen:</strong>
+                            </p>
+                            <ul>
+                                <li>
+                                    <strong>Comunicación:</strong> Desarrollo de habilidades en lectura, escritura y expresión oral.
+                                </li></br>
+                                <li>
+                                    <strong>Matemática:</strong> Razonamiento lógico y resolución de problemas.
+                                </li></br>
+                                <li>
+                                    <strong>Ciencia y Tecnología:</strong> Promoción de la curiosidad y el pensamiento crítico sobre el entorno natural y tecnológico.
+                                </li></br>
+                                <li>
+                                    <strong>Personal Social:</strong> Identidad cultural y valores ciudadanos.
+                                </li></br>
+                                <li>
+                                    <strong>Arte y Cultura:</strong> Creatividad y valoración del patrimonio cultural.
+                                </li></br>
+                                <li>
+                                    <strong>Educación Física:</strong> Hábitos saludables y desarrollo motriz.
+                                </li></br>
+                                <li>
+                                    <strong>Inglés:</strong> Competencias básicas en una lengua extranjera.
+                                </li></br>
+                                <li>
+                                    <strong>Educación Religiosa (opcional):</strong> Formación en valores éticos y espirituales.
+                                </li></br>
+                                <li>
+                                    <strong>Tutoría y Orientación Educativa:</strong> Acompañamiento socioemocional.
+                                </li></br>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Colegio Arquímedes -->
+        <section class="section-card">
+            <h2 class="text-primary fw-bold mb-4">La Enseñanza en el Colegio Arquímedes</h2>
+            <ul>
+                <li><strong>Enseñanza interactiva:</strong> Métodos modernos como aprendizaje basado en proyectos.</li>
+                <li><strong>Fomento de habilidades socioemocionales:</strong> Gestión de emociones y relaciones positivas.</li>
+                <li><strong>Profesores capacitados:</strong> Educación de calidad centrada en el alumno.</li>
+                <li><strong>Ambiente motivador:</strong> Entorno seguro y motivador.</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Sección Primaria - Todos los derechos reservados.</p>
+    </footer>
+
+    <a href="/Home/index" id="home-btn" target="_self">
+        <i class="material-icons">home</i>
+    </a>
+
+    <a href="https://wa.me/51969600013?text=Hola%20colegio%20Arquimedes,%20solicito%20informacion%20sobre%20el%20proceso%20de%20matricula,%20gracias."
+       id="whatsapp-btn"
+       target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp" style="width: 50px; height: 50px;">
+    </a>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbarToggler = document.querySelector('.navbar-toggler'); // Botón de la hamburguesa
+            const navbarCollapse = document.querySelector('#navbarNav'); // Menú desplegable
+            // Cerrar el menú si se hace clic fuera de él
+            document.addEventListener('click', function (event) {
+                if (!navbarToggler.contains(event.target) && !navbarCollapse.contains(event.target)) {
+                    navbarCollapse.classList.remove('show');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

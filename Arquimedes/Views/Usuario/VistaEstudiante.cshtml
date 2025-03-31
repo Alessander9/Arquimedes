@@ -1,0 +1,191 @@
+﻿@model Arquimedes.Models.Usuario
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Estudiante</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --fondo-principal-ej1: #091C47;
+            --texto-principal-ej1: #F0E3D1;
+            --botones-acento-ej1: #EF6C00;
+            --texto-secundario-ej1: #7A7A7A;
+            --hover-detalles-ej1: #C9A200;
+            --fondos-secundarios-ej1: #4B4B4B;
+            --contraste-clave-ej1: #FFFFFF;
+        }
+
+        p, h2, h3 {
+            color: black;
+        }
+
+
+        .accordion-content {
+            overflow: hidden;
+            transition: height 0.4s ease, opacity 0.4s ease;
+            height: 0;
+            opacity: 0;
+        }
+
+            .accordion-content.open {
+                height: auto;
+                opacity: 1;
+            }
+    </style>
+    <script>
+        function toggleAccordion(id) {
+            const element = document.getElementById(id);
+            if (element.classList.contains('open')) {
+                element.style.height = "0";
+                element.classList.remove('open');
+            } else {
+                element.style.height = element.scrollHeight + "px";
+                element.classList.add('open');
+            }
+        }
+    </script>
+
+</head>
+<body class="min-h-screen flex bg-gray-100">
+    <!-- Panel Administrativo -->
+    <div id="admin-panel" class="w-64 bg-[var(--fondos-secundarios-ej1)] text-[var(--contraste-clave-ej1)] p-6 shadow-lg">
+        <h3 class="text-lg font-bold mb-6 text-center border-b border-gray-500 pb-2">Panel Administrativo</h3>
+        <ul class="space-y-6">
+            <li>
+                <h4 class="font-semibold">Horario</h4>
+                <p class="text-[var(--texto-secundario-ej1)]">8:00 AM - 4:00 PM</p>
+            </li>
+            <li>
+                <h4 class="font-semibold">Cursos</h4>
+                <p class="text-[var(--texto-secundario-ej1)]">Matemáticas, Ciencias, Lenguaje</p>
+            </li>
+        </ul>
+        <div class="mt-8 space-y-4">
+            <a href="/Evaluaciones/BuscarNotas"
+               class="block bg-[var(--botones-acento-ej1)] hover:bg-[var(--hover-detalles-ej1)] text-[var(--contraste-clave-ej1)] font-semibold py-2 px-4 rounded-lg text-center shadow-md">
+                Buscar Notas
+            </a>
+            <a href="/Evaluaciones/BuscarBimestre"
+               class="block bg-[var(--botones-acento-ej1)] hover:bg-[var(--hover-detalles-ej1)] text-[var(--contraste-clave-ej1)] font-semibold py-2 px-4 rounded-lg text-center shadow-md">
+                Buscar Bimestre
+            </a>
+            <a href="/Horario/BuscarHorario"
+               class="block bg-[var(--botones-acento-ej1)] hover:bg-[var(--hover-detalles-ej1)] text-[var(--contraste-clave-ej1)] font-semibold py-2 px-4 rounded-lg text-center shadow-md">
+                Buscar Horario
+            </a>
+        </div>
+        <button onclick="hidePanel()"
+                id="hide-button"
+                class="mt-6 bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg shadow w-full">
+            Ocultar Panel
+        </button>
+    </div>
+
+    <!-- Botón para mostrar el panel -->
+    <button id="show-button"
+            onclick="showPanel()"
+            class="fixed bottom-4 left-4 bg-[var(--botones-acento-ej1)] hover:bg-[var(--hover-detalles-ej1)] text-white p-3 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--hover-detalles-ej1)] hidden">
+        Mostrar Panel
+    </button>
+
+    <!-- Contenido Principal -->
+    <div class="flex-grow p-8">
+        <div class="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-6 text-center">Vista de Estudiante</h2>
+
+            <!-- Acordeones en 2 columnas -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Acordeón 1 -->
+                <div>
+                    <button onclick="toggleAccordion('accordion1')"
+                            class="w-full text-left font-bold py-2 px-4 rounded-lg focus:outline-none bg-gradient-to-r from-blue-500 to-blue-700 text-white flex items-center gap-2">
+                        <span class="material-icons">person</span> Información Personal
+                    </button>
+                    <div id="accordion1" class="hidden mt-2">
+                        <p class="text-base p-4 bg-gray-100 rounded-lg">
+                            Aquí puedes agregar información personal del estudiante.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Acordeón 2 -->
+                <div>
+                    <button onclick="toggleAccordion('accordion2')"
+                            class="w-full text-left font-bold py-2 px-4 rounded-lg focus:outline-none bg-gradient-to-r from-green-500 to-green-700 text-white flex items-center gap-2">
+                        <span class="material-icons">history</span> Historial Académico
+                    </button>
+                    <div id="accordion2" class="hidden mt-2">
+                        <p class="text-base p-4 bg-gray-100 rounded-lg">
+                            Aquí puedes mostrar el historial académico del estudiante.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Acordeón 3 -->
+                <div>
+                    <button onclick="toggleAccordion('accordion3')"
+                            class="w-full text-left font-bold py-2 px-4 rounded-lg focus:outline-none bg-gradient-to-r from-purple-500 to-purple-700 text-white flex items-center gap-2">
+                        <span class="material-icons">book</span> Cursos Inscritos
+                    </button>
+                    <div id="accordion3" class="hidden mt-2">
+                        <p class="text-base p-4 bg-gray-100 rounded-lg">
+                            Listado de los cursos actuales inscritos por el estudiante.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Acordeón 4 -->
+                <div>
+                    <button onclick="toggleAccordion('accordion4')"
+                            class="w-full text-left font-bold py-2 px-4 rounded-lg focus:outline-none bg-gradient-to-r from-orange-500 to-orange-700 text-white flex items-center gap-2">
+                        <span class="material-icons">assignment</span> Evaluaciones Pendientes
+                    </button>
+                    <div id="accordion4" class="hidden mt-2">
+                        <p class="text-base p-4 bg-gray-100 rounded-lg">
+                            Información sobre las evaluaciones pendientes del estudiante.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAccordion(id) {
+            const element = document.getElementById(id);
+            if (element.classList.contains('hidden')) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
+
+        function showPanel() {
+            const panel = document.getElementById("admin-panel");
+            const showButton = document.getElementById("show-button");
+            const hideButton = document.getElementById("hide-button");
+
+            panel.classList.remove("hidden");
+            showButton.classList.add("hidden");
+            hideButton.classList.remove("hidden");
+        }
+
+        function hidePanel() {
+            const panel = document.getElementById("admin-panel");
+            const showButton = document.getElementById("show-button");
+            const hideButton = document.getElementById("hide-button");
+
+            panel.classList.add("hidden");
+            hideButton.classList.add("hidden");
+            showButton.classList.remove("hidden");
+        }
+    </script>
+
+</body>
+</html>

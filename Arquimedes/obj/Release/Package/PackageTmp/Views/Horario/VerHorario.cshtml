@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Arquimedes.Controllers.HorarioDetalle>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Titulo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">@ViewBag.Titulo</h1>
+
+        <div class="overflow-x-auto">
+            <table id="horariosTable" class="table-auto w-full bg-white shadow-lg rounded-lg">
+                <thead>
+                    <tr class="bg-blue-600 text-white text-sm uppercase tracking-wide">
+                        <th class="px-4 py-3 text-left">Código Horario</th>
+                        <th class="px-4 py-3 text-left">Curso</th>
+                        <th class="px-4 py-3 text-left">Día</th>
+                        <th class="px-4 py-3 text-left">Hora</th>
+                        <th class="px-4 py-3 text-left">Nivel</th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var horario in Model)
+                    {
+                        <tr class="border-t hover:bg-gray-100">
+                            <td class="px-4 py-3 text-gray-700">@horario.CodigoHorario</td>
+                            <td class="px-4 py-3 text-gray-700">@horario.NombreCurso</td>
+                            <td class="px-4 py-3 text-gray-700">@horario.Dia</td>
+                            <td class="px-4 py-3 text-gray-700">@horario.Hora</td>
+                            <td class="px-4 py-3 text-gray-700">@horario.Nivel</td>
+                           
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-6 flex gap-4">
+            <a href="@Url.Action("BuscarHorario", "Horario")" class="px-6 py-3 bg-green-500 text-white font-medium rounded-lg shadow hover:bg-green-600 transition duration-200">
+                Buscar Otro Horario
+            </a>
+
+            <button id="exportPDF" class="px-6 py-3 bg-red-500 text-white font-medium rounded-lg shadow hover:bg-red-600 transition duration-200">
+                Exportar a PDF
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('exportPDF').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+
+            // Crear una instancia de jsPDF
+            const doc = new jsPDF();
+
+            // Título del PDF
+            doc.setFontSize(18);
+            doc.text('Horarios Exportados', 14, 20);
+
+            // Usar autoTable para generar la tabla
+            doc.autoTable({
+                html: '#horariosTable', // Pasar la tabla por ID
+                startY: 30, // Comenzar debajo del título
+                styles: {
+                    fontSize: 10, // Ajustar el tamaño de fuente
+                    cellPadding: 4 // Ajustar el padding de las celdas
+                },
+                headStyles: {
+                    fillColor: [41, 128, 185], // Cambiar color de encabezado
+                    textColor: 255 // Cambiar color del texto del encabezado
+                },
+                bodyStyles: {
+                    textColor: 50 // Cambiar color del texto del cuerpo
+                }
+            });
+
+            // Descargar el PDF
+            doc.save('Horarios.pdf');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="color:snow">Listar Evaluaciones</title>
+    <style>
+
+        /* Estilo adicional para tablas responsivas */
+        .responsive-table-wrapper {
+            overflow-x: auto;
+        }
+
+        .bg-white.shadow-md {
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            border-radius: 1rem; /* Esquinas redondeadas */
+            margin-bottom: 2rem; /* Espaciado inferior */
+            padding: 1.5rem; /* Espaciado interno */
+            width: 100%; /* Ocupa todo el ancho disponible */
+            max-width: 1200px; /* Limita el ancho máximo */
+            overflow-x: auto; /* Habilita scroll horizontal si es necesario */
+        }
+
+        .responsive-table-wrapper {
+            width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
+            overflow-x: auto; /* Scroll horizontal para tablas grandes */
+            -webkit-overflow-scrolling: touch; /* Scroll más suave en móviles */
+        }
+
+        table {
+            width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
+            border-collapse: collapse; /* Estilo de tabla compacto */
+        }
+
+        th, td {
+            padding: 0.1rem; /* Espaciado dentro de las celdas */
+            text-align: left; /* Alineación de texto */
+        }
+
+        th {
+            background-color: darkblue; /* Fondo azul oscuro para encabezados */
+            color: white;
+            text-align: center;
+        }
+
+        td {
+            border: 0.5px solid #000; /* Bordes entre las celdas */
+            text-align: center;
+        }
+
+        @@media screen and (max-width: 768px) {
+            .bg-white.shadow-md {
+                padding: 1rem; /* Reduce el padding en pantallas pequeñas */
+            }
+
+            table th, table td {
+                font-size: 0.875rem; /* Reduce el tamaño de la fuente en pantallas pequeñas */
+            }
+        }
+    </style>
+    <!-- Incluye DataTables y Tailwind CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <h1 class="text-3xl font-bold mb-6" style="color:snow">Lista de Evaluaciones</h1>
+
+        <p class="mb-4">
+            @Html.ActionLink("Registrar Nueva Evaluación", "RegistrarEvaluacion", null, new { @class = "bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600" })
+        </p>
+
+        <!-- Tabla de Evaluaciones de Estudiantes -->
+        <div class="bg-white shadow-md rounded-lg mb-8 p-4">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">Evaluaciones de Estudiantes</h2>
+            <!-- Botón Volver con Gradiente Rojo a Morado -->
+            <div class="mt-4 flex justify-content-md-start space-x-2">
+
+                <a href="@Url.Action("vistaAdministrador", "Administrador")" class="px-4 py-2 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg shadow-md hover:from-red-600 hover:to-purple-700 flex items-center gap-2 transition-colors duration-300">
+                    <span class="material-icons">arrow_back</span> Salir al menú
+                </a>
+            </div>
+            <table id="evaluacionesEstudiantesTable" class="min-w-full border border-gray-200">
+                <!-- Botón para exportar PDF -->
+                <div class="flex justify-end mb-4">
+                    <button id="exportEstudiantesPDF" class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600 mr-4">Exportar Estudiantes PDF</button>
+                    <button id="exportAcademicosPDF" class="bg-orange-500 text-white px-4 py-2 rounded shadow hover:bg-orange-600">Exportar Académicos PDF</button>
+
+                </div>
+                <thead class="bg-gradient-to-r from-green-400 to-blue-500 text-white">
+                    <tr>
+                        <th class="px-4 py-2">ID Evaluación</th>
+                        <th class="px-4 py-2">Nombre Estudiante</th>
+                        <th class="px-4 py-2">Grado Académico</th>
+                        <th class="px-4 py-2">Año</th>
+                        <th class="px-4 py-2">Sección</th>
+                        <th class="px-4 py-2">Curso</th>
+                        <th class="px-4 py-2">Bimestre</th>
+                        <th class="px-4 py-2">T1</th>
+                        <th class="px-4 py-2">T2</th>
+                        <th class="px-4 py-2">T3</th>
+                        <th class="px-4 py-2">T4</th>
+                        <th class="px-4 py-2">T5</th>
+
+                        <th class="px-4 py-2">Promedio</th>
+                        <th class="px-4 py-2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var evaluacion in ViewBag.EvaluacionesEstudiantes)
+                    {
+                        <tr class="hover:bg-blue-100">
+                            <td class="px-4 py-2">@evaluacion.IdEvaluacion</td>
+                            <td class="px-4 py-2">@evaluacion.NombreEstudiante</td>
+                            <td class="px-4 py-2">@evaluacion.GradoAcademico</td>
+                            <td class="px-4 py-2">@evaluacion.AnioEstudiante</td>
+                            <td class="px-4 py-2">@evaluacion.SeccionEstudiante</td>
+                            <td class="px-4 py-2">@evaluacion.IdCurso</td>
+                            <td class="px-4 py-2">@evaluacion.Bimestre</td>
+                            <td class="px-4 py-2 @(
+                evaluacion.T1?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                evaluacion.T1?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                evaluacion.T1?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                "text-red-600 font-bold"
+            )">
+                                @evaluacion.T1
+                            </td>
+                            <td class="px-4 py-2 @(
+                evaluacion.T2?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                evaluacion.T2?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                evaluacion.T2?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                "text-red-600 font-bold"
+            )">
+                                @evaluacion.T2
+                            </td>
+                            <td class="px-4 py-2 @(
+                evaluacion.T3?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                evaluacion.T3?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                evaluacion.T3?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                "text-red-600 font-bold"
+            )">
+                                @evaluacion.T3
+                            </td>
+                            <td class="px-4 py-2 @(
+                evaluacion.T4?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                evaluacion.T4?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                evaluacion.T4?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                "text-red-600 font-bold"
+            )">
+                                @evaluacion.T4
+                            </td>
+                            <td class="px-4 py-2 @(
+                evaluacion.T5?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                evaluacion.T5?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                evaluacion.T5?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                "text-red-600 font-bold"
+            )">
+                                @evaluacion.T5
+                            </td>
+                            <td class="px-4 py-2 font-semibold @(
+                evaluacion.PromedioLetra?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+                evaluacion.PromedioLetra?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+                evaluacion.PromedioLetra?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+                "text-red-600 font-bold"
+            )">
+                                @evaluacion.PromedioLetra
+                            </td>
+                            <td class="px-4 py-2">
+                                @Html.ActionLink("Editar", "ActualizarEvaluacion", new { idEvaluacion = evaluacion.IdEvaluacion }, new { @class = "text-green-600 hover:text-yellow-700 font-bold" })
+                                @Html.ActionLink("Detalles", "DetalleEvaluacion", new { idEvaluacion = evaluacion.IdEvaluacion }, new { @class = "text-blue-600 hover:text-blue-700 font-bold" })
+                                @Html.ActionLink("Eliminar", "EliminarEvaluacion", new { idEvaluacion = evaluacion.IdEvaluacion }, new { @class = "text-red-600 hover:text-red-700 font-bold" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- Tabla de Evaluaciones de Académicos -->
+        <div class="bg-white shadow-md rounded-lg p-4">
+            <h2 class="text-2xl font-bold text-orange-800 mb-4">Evaluaciones de Académicos</h2>
+            <table id="evaluacionesAcademicosTable" class="min-w-full border border-gray-200">
+                <thead class="bg-orange-800 text-white">
+                    <tr>
+                        <th class="px-4 py-2">ID Evaluación</th>
+                        <th class="px-4 py-2">Nombre Académico</th>
+                        <th class="px-4 py-2">Curso</th>
+                        <th class="px-4 py-2">Bimestre</th>
+                        <th class="px-4 py-2">T1</th>
+                        <th class="px-4 py-2">T2</th>
+                        <th class="px-4 py-2">T3</th>
+                        <th class="px-4 py-2">T4</th>
+                        <th class="px-4 py-2">T5</th>
+                        <th class="px-4 py-2">Promedio</th>
+                        <th class="px-4 py-2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var evaluacion in ViewBag.EvaluacionesAcademicos)
+                    {
+                        <tr class="hover:bg-purple-100">
+                            <td class="px-4 py-2">@evaluacion.IdEvaluacion</td>
+                            <td class="px-4 py-2">@evaluacion.NombreAcademico</td>
+                            <td class="px-4 py-2">@evaluacion.IdCurso</td>
+                            <td class="px-4 py-2">@evaluacion.Bimestre</td>
+                            <td class="px-4 py-2 @(
+    evaluacion.T1?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+    evaluacion.T1?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+    evaluacion.T1?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+    "text-red-600 font-bold"
+)">
+                                @evaluacion.T1
+                            </td>
+                            <td class="px-4 py-2 @(
+    evaluacion.T2?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+    evaluacion.T2?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+    evaluacion.T2?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+    "text-red-600 font-bold"
+)">
+                                @evaluacion.T2
+                            </td>
+                            <td class="px-4 py-2 @(
+    evaluacion.T3?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+    evaluacion.T3?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+    evaluacion.T3?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+    "text-red-600 font-bold"
+)">
+                                @evaluacion.T3
+                            </td>
+                            <td class="px-4 py-2 @(
+    evaluacion.T4?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+    evaluacion.T4?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+    evaluacion.T4?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+    "text-red-600 font-bold"
+)">
+                                @evaluacion.T4
+                            </td>
+                            <td class="px-4 py-2 @(
+    evaluacion.T5?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+    evaluacion.T5?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+    evaluacion.T5?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+    "text-red-600 font-bold"
+)">
+                                @evaluacion.T5
+                            </td>
+                            <td class="px-4 py-2 font-semibold @(
+    evaluacion.PromedioLetra?.Trim().ToUpper() == "AD" ? "text-green-600 font-bold" :
+    evaluacion.PromedioLetra?.Trim().ToUpper() == "A" ? "text-blue-600 font-bold" :
+    evaluacion.PromedioLetra?.Trim().ToUpper() == "B" ? "text-yellow-600 font-bold" :
+    "text-red-600 font-bold"
+)">
+                                @evaluacion.PromedioLetra
+                            </td>
+                            <td class="px-4 py-2">
+                                @Html.ActionLink("Editar", "ActualizarEvaluacion", new { idEvaluacion = evaluacion.IdEvaluacion }, new { @class = "text-green-600 hover:text-yellow-700" }) |
+                                @Html.ActionLink("Detalles", "DetalleEvaluacion", new { idEvaluacion = evaluacion.IdEvaluacion }, new { @class = "text-blue-600 hover:text-blue-700" }) |
+                                @Html.ActionLink("Eliminar", "EliminarEvaluacion", new { idEvaluacion = evaluacion.IdEvaluacion }, new { @class = "text-red-600 hover:text-red-700" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- Botón Volver con Gradiente Rojo a Morado -->
+            <div class="mt-4 flex justify-end space-x-2">
+
+                <a href="@Url.Action("vistaAdministrador", "Administrador")" class="px-4 py-2 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg shadow-md hover:from-red-600 hover:to-purple-700 flex items-center gap-2 transition-colors duration-300">
+                    <span class="material-icons">arrow_back</span> Salir al menú
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Clasificación personalizada para "Promedio"
+        $.fn.dataTable.ext.type.order['custom-grade-desc'] = function (a, b) {
+            const orderMap = { 'AD': 4, 'A': 3, 'B': 2, 'C': 1 };
+            return (orderMap[b?.trim()?.toUpperCase()] || 0) - (orderMap[a?.trim()?.toUpperCase()] || 0);
+        };
+
+        $.fn.dataTable.ext.type.order['custom-grade-asc'] = function (a, b) {
+            const orderMap = { 'AD': 4, 'A': 3, 'B': 2, 'C': 1 };
+            return (orderMap[a?.trim()?.toUpperCase()] || 0) - (orderMap[b?.trim()?.toUpperCase()] || 0);
+        };
+
+        $(document).ready(function () {
+            $('#evaluacionesEstudiantesTable').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                columnDefs: [
+                    { targets: 12, type: 'custom-grade' } // Aplica la clasificación personalizada a la columna Promedio (índice 12)
+                ],
+                order: [[12, 'desc']], // Orden inicial descendente
+                language: { url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json" }
+            });
+
+            $('#evaluacionesAcademicosTable').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                columnDefs: [
+                    { targets: 9, type: 'custom-grade' } // Aplica la clasificación personalizada a la columna Promedio (índice 9)
+                ],
+                order: [[9, 'desc']], // Orden inicial descendente
+                language: { url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json" }
+            });
+        });
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable"></script>
+
+<!-- Script para exportar tablas -->
+<script>
+    document.getElementById("exportEstudiantesPDF").addEventListener("click", function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Título del documento
+        doc.setFontSize(16);
+        doc.text("Evaluaciones de Estudiantes", 10, 10);
+
+        // Obtener datos de la tabla
+        const table = document.querySelector("#evaluacionesEstudiantesTable");
+        const data = [];
+        const headers = Array.from(table.querySelectorAll("thead th")).map(th => th.textContent.trim());
+        data.push(headers);
+
+        Array.from(table.querySelectorAll("tbody tr")).forEach(row => {
+            const rowData = Array.from(row.querySelectorAll("td")).map(td => td.textContent.trim());
+            data.push(rowData);
+        });
+
+        // Agregar la tabla usando autoTable
+        doc.autoTable({
+            head: [headers],
+            body: data.slice(1), // Excluye el encabezado ya que está en head
+            startY: 20,
+            styles: { fontSize: 8 },
+            headStyles: { fillColor: [41, 128, 185] },
+        });
+
+        // Descargar el PDF
+        doc.save("Evaluaciones_Estudiantes.pdf");
+    });
+
+    document.getElementById("exportAcademicosPDF").addEventListener("click", function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Título del documento
+        doc.setFontSize(16);
+        doc.text("Evaluaciones de Académicos", 10, 10);
+
+        // Obtener datos de la tabla
+        const table = document.querySelector("#evaluacionesAcademicosTable");
+        const data = [];
+        const headers = Array.from(table.querySelectorAll("thead th")).map(th => th.textContent.trim());
+        data.push(headers);
+
+        Array.from(table.querySelectorAll("tbody tr")).forEach(row => {
+            const rowData = Array.from(row.querySelectorAll("td")).map(td => td.textContent.trim());
+            data.push(rowData);
+        });
+
+        // Agregar la tabla usando autoTable
+        doc.autoTable({
+            head: [headers],
+            body: data.slice(1), // Excluye el encabezado ya que está en head
+            startY: 20,
+            styles: { fontSize: 8 },
+            headStyles: { fillColor: [211, 84, 0] },
+        });
+
+        // Descargar el PDF
+        doc.save("Evaluaciones_Academicos.pdf");
+    });
+</script>
+
+</body>
+</html>

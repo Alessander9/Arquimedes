@@ -1,0 +1,142 @@
+﻿@model Arquimedes.Models.Evaluacion
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Detalle Evaluación</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 flex items-center gap-2">
+            <span class="material-icons text-blue-500">assignment</span> Detalle Evaluación
+        </h1>
+        <div class="grid grid-cols-2 gap-6">
+            <div>
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">assignment_turned_in</span> ID de Evaluación:
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.IdEvaluacion)</span>
+            </div>
+            <div>
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">person</span> Código Estudiante:
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.CodEstudiante)</span>
+            </div>
+            <div>
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">school</span> Código Académico:
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.CodAcademico)</span>
+            </div>
+            <div>
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">book</span> ID Curso:
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.IdCurso)</span>
+            </div>
+            <div>
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">date_range</span> Bimestre:
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.Bimestre)</span>
+            </div>
+            <div>
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">task_alt</span> Tarea 1 (T1):
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.T1)</span>
+            </div>
+            <div>
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">task_alt</span> Tarea 2 (T2):
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.T2)</span>
+            </div>
+            <div>
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">task_alt</span> Tarea 3 (T3):
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.T3)</span>
+            </div>
+            <div>
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">task_alt</span> Tarea 4 (T4):
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.T4)</span>
+            </div>
+            <div>
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">task_alt</span> Tarea 5 (T5):
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.T5)</span>
+            </div>
+            <div class="col-span-2">
+                <span class="block text-gray-700 font-medium mb-1 flex items-center gap-2">
+                    <span class="material-icons text-blue-500">grading</span> Promedio en Letras:
+                </span>
+                <span class="block bg-gray-50 p-2 rounded border border-gray-300">@Html.DisplayFor(model => model.PromedioLetra)</span>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="mt-6 flex justify-between">
+            <a href="@Url.Action("ActualizarEvaluacion", new { idEvaluacion = Model.IdEvaluacion })" class="px-6 py-2 bg-yellow-500 text-white font-bold rounded-lg shadow-md hover:bg-yellow-600 transition flex items-center gap-2">
+                <span class="material-icons">edit</span> Editar
+            </a>
+            <a href="@Url.Action("ListarEvaluaciones")" class="px-6 py-2 bg-gray-300 text-gray-800 rounded-lg shadow-md hover:bg-gray-400 transition flex items-center gap-2">
+                <span class="material-icons">arrow_back</span> Volver a la Lista
+            </a>
+            <button id="exportPdf" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-lg shadow-md hover:bg-blue-600 transition flex items-center gap-2">
+                <span class="material-icons">picture_as_pdf</span> Exportar a PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Script para generar PDF -->
+    <script>
+        document.getElementById('exportPdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Datos a incluir en la tabla
+            const data = [
+                ["ID de Evaluación", "@Model.IdEvaluacion"],
+                ["Código Estudiante", "@Model.CodEstudiante"],
+                ["Código Académico", "@Model.CodAcademico"],
+                ["ID Curso", "@Model.IdCurso"],
+                ["Bimestre", "@Model.Bimestre"],
+                ["Tarea 1 (T1)", "@Model.T1"],
+                ["Tarea 2 (T2)", "@Model.T2"],
+                ["Tarea 3 (T3)", "@Model.T3"],
+                ["Tarea 4 (T4)", "@Model.T4"],
+                ["Tarea 5 (T5)", "@Model.T5"],
+                ["Promedio en Letras", "@Model.PromedioLetra"]
+            ];
+
+            // Usar autoTable para generar la tabla
+            doc.autoTable({
+                head: [["Campo", "Valor"]],
+                body: data,
+                startY: 20,
+                styles: { fontSize: 10 },
+                theme: 'striped',
+            });
+
+            // Descargar el PDF
+            doc.save('DetalleEvaluacion.pdf');
+        });
+    </script>
+</body>
+</html>

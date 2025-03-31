@@ -1,0 +1,68 @@
+﻿@model List<Arquimedes.Models.Nota>
+
+@{
+    ViewBag.Title = "Resultados de Notas";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-bold text-blue-600 flex items-center gap-2 mb-6">
+            <i class="fas fa-book-open"></i> Resultados de Notas
+        </h2>
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4">
+                <p class="font-bold">Aviso:</p>
+                <p>No se encontraron notas.</p>
+            </div>
+        }
+        else
+        {
+            <div class="overflow-x-auto">
+                <table class="table-auto w-full border-collapse bg-white shadow-lg rounded-lg">
+                    <thead class="bg-blue-500 text-white">
+                        <tr>
+                            <th class="px-4 py-2 text-left font-medium uppercase">Curso <i class="fas fa-book"></i></th>
+                            <th class="px-4 py-2 text-left font-medium uppercase">Bimestre <i class="fas fa-calendar-alt"></i></th>
+                            <th class="px-4 py-2 text-left font-medium uppercase">T1 <i class="fas fa-clipboard-check"></i></th>
+                            <th class="px-4 py-2 text-left font-medium uppercase">T2 <i class="fas fa-clipboard-check"></i></th>
+                            <th class="px-4 py-2 text-left font-medium uppercase">T3 <i class="fas fa-clipboard-check"></i></th>
+                            <th class="px-4 py-2 text-left font-medium uppercase">T4 <i class="fas fa-clipboard-check"></i></th>
+                            <th class="px-4 py-2 text-left font-medium uppercase">T5 <i class="fas fa-clipboard-check"></i></th>
+                            <th class="px-4 py-2 text-left font-medium uppercase">Promedio <i class="fas fa-chart-line"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-300">
+                        @foreach (var nota in Model)
+                        {
+                            <tr class="hover:bg-gray-100">
+                                <td class="px-4 py-2">@nota.NombreCurso</td>
+                                <td class="px-4 py-2">@nota.Bimestre</td>
+                                <td class="px-4 py-2">@nota.T1</td>
+                                <td class="px-4 py-2">@nota.T2</td>
+                                <td class="px-4 py-2">@nota.T3</td>
+                                <td class="px-4 py-2">@nota.T4</td>
+                                <td class="px-4 py-2">@nota.T5</td>
+                                <td class="px-4 py-2 font-bold @(nota.PromedioLetra == "AD" ? "text-green-500" : nota.PromedioLetra == "A" ? "text-blue-500" : nota.PromedioLetra == "B" ? "text-yellow-500" : nota.PromedioLetra == "C" ? "text-red-500" : "text-gray-800")">
+                                    @nota.PromedioLetra
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</body>
+</html>

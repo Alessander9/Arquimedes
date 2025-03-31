@@ -1,0 +1,196 @@
+﻿@model Estudiante
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrar Estudiante</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+
+        #botones {
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="container mx-auto px-4 py-8">
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="bg-white shadow-lg rounded-lg p-8">
+            <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">
+                <i class="fas fa-user-graduate fa-lg text-blue-500"></i> Registrar Estudiante
+            </h1>
+            @Html.ValidationSummary(true, "", new { @class = "text-red-500 mb-4" })
+
+            <!-- Contenedor en dos columnas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Código del Estudiante -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-id-badge fa-lg mr-2 text-blue-500"></i> Código del Estudiante
+                    </label>
+                    @Html.EditorFor(model => model.CodEstudiante, new { htmlAttributes = new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" } })
+                    @Html.ValidationMessageFor(model => model.CodEstudiante, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Nombre -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-user fa-lg mr-2 text-blue-500"></i> Nombre
+                    </label>
+                    @Html.EditorFor(model => model.NombreEstudiante, new { htmlAttributes = new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" } })
+                    @Html.ValidationMessageFor(model => model.NombreEstudiante, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Apellido -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-user-tag fa-lg mr-2 text-blue-500"></i> Apellido
+                    </label>
+                    @Html.EditorFor(model => model.ApellidoEstudiante, new { htmlAttributes = new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" } })
+                    @Html.ValidationMessageFor(model => model.ApellidoEstudiante, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Edad -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-calendar-alt fa-lg mr-2 text-blue-500"></i> Edad
+                    </label>
+                    @Html.EditorFor(model => model.EdadEstudiante, new { htmlAttributes = new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" } })
+                    @Html.ValidationMessageFor(model => model.EdadEstudiante, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Año -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-graduation-cap fa-lg mr-2 text-blue-500"></i> Año
+                    </label>
+                    @Html.DropDownListFor(
+                        model => model.AnioEstudiante,
+                        new SelectList(new[]
+                        {
+                            new { Value = 1, Text = "1° Grado" },
+                            new { Value = 2, Text = "2° Grado" },
+                            new { Value = 3, Text = "3° Grado" },
+                            new { Value = 4, Text = "4° Grado" },
+                            new { Value = 5, Text = "5° Grado" },
+                            new { Value = 6, Text = "6° Grado" }
+                        }, "Value", "Text"),
+                        "-- Seleccione un año --",
+                        new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" }
+                    )
+                    @Html.ValidationMessageFor(model => model.AnioEstudiante, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Sección -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-layer-group fa-lg mr-2 text-blue-500"></i> Sección
+                    </label>
+                    @Html.DropDownListFor(
+                        model => model.SeccionEstudiante,
+                        new SelectList(new[] { "A", "B", "C", "D" }),
+                        "-- Seleccione una sección --",
+                        new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" }
+                    )
+                    @Html.ValidationMessageFor(model => model.SeccionEstudiante, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Grado Académico -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-school fa-lg mr-2 text-blue-500"></i> Grado Académico
+                    </label>
+                    @Html.DropDownListFor(
+                        model => model.GradoAcademico,
+                        new SelectList(new[] { "Inicial", "Primaria", "Secundaria", "Academico" }),
+                        "-- Seleccione un grado académico --",
+                        new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" }
+                    )
+                    @Html.ValidationMessageFor(model => model.GradoAcademico, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Teléfono -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-phone fa-lg mr-2 text-blue-500"></i> Teléfono
+                    </label>
+                    @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500", maxlength = "9", pattern = "[0-9]{9}", title = "Debe contener 9 dígitos numéricos" } })
+                    @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Dirección -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-map-marker-alt fa-lg mr-2 text-blue-500"></i> Dirección
+                    </label>
+                    @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" } })
+                    @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Estado -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-toggle-on fa-lg mr-2 text-blue-500"></i> Estado
+                    </label>
+                    @Html.DropDownListFor(
+                        model => model.EstadoEstudiante,
+                        new SelectList(new[] { "Activo", "Inactivo" }),
+                        "-- Seleccione un estado --",
+                        new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" }
+                    )
+                    @Html.ValidationMessageFor(model => model.EstadoEstudiante, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- DNI -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-user fa-lg mr-2 text-blue-500"></i> DNI
+                    </label>
+                    @Html.EditorFor(model => model.DniEstudiante, new { htmlAttributes = new { @class = "w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" } })
+                    @Html.ValidationMessageFor(model => model.DniEstudiante, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+            </div>
+            <br />
+
+            <!-- Botones Mejorados -->
+            <div class="flex justify-end space-x-4 mt-8" id="botones">
+                <input type="submit" value="Registrar" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow" />
+                <a href="@Url.Action("ListarEstudiantes")"
+                   class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600">
+                    Volver a la Lista
+                </a>
+            </div>
+
+
+            <!-- Botón Volver con Gradiente Rojo a Morado -->
+            <div class="mt-4 flex justify-end space-x-2">
+
+                <a href="@Url.Action("vistaAdministrador", "Administrador")" class="px-4 py-2 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg shadow-md hover:from-red-600 hover:to-purple-700 flex items-center gap-2 transition-colors duration-300">
+                    <span class="material-icons">arrow_back</span> Salir al menú
+                </a>
+            </div>
+
+
+        </div>
+        }
+    </div>
+
+
+</body>
+</html>

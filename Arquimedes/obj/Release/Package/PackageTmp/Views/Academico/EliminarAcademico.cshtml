@@ -1,0 +1,117 @@
+﻿@model Arquimedes.Models.Academico
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Eliminar Académico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-2xl font-bold text-gray-700 mb-6">¿Estás seguro de que deseas eliminar este Académico?</h3>
+
+        <!-- Información del Académico -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- CodAcademico -->
+            <div>
+                <span class="block text-sm font-medium text-gray-600">Código Académico</span>
+                <span class="block text-lg font-semibold text-gray-800">@Html.DisplayFor(model => model.CodAcademico)</span>
+            </div>
+
+            <!-- Nombre -->
+            <div>
+                <span class="block text-sm font-medium text-gray-600">Nombre</span>
+                <span class="block text-lg font-semibold text-gray-800">@Html.DisplayFor(model => model.NombreAcademico)</span>
+            </div>
+
+            <!-- Apellido -->
+            <div>
+                <span class="block text-sm font-medium text-gray-600">Apellido</span>
+                <span class="block text-lg font-semibold text-gray-800">@Html.DisplayFor(model => model.ApellidoAcademico)</span>
+            </div>
+
+            <!-- Edad -->
+            <div>
+                <span class="block text-sm font-medium text-gray-600">Edad</span>
+                <span class="block text-lg font-semibold text-gray-800">@Html.DisplayFor(model => model.EdadAcademico)</span>
+            </div>
+
+            <!-- Periodo Académico -->
+            <div>
+                <span class="block text-sm font-medium text-gray-600">Periodo Académico</span>
+                <span class="block text-lg font-semibold text-gray-800">@Html.DisplayFor(model => model.PeriodoAcademico)</span>
+            </div>
+
+            <!-- Teléfono -->
+            <div>
+                <span class="block text-sm font-medium text-gray-600">Teléfono</span>
+                <span class="block text-lg font-semibold text-gray-800">@Html.DisplayFor(model => model.TelefonoAcademico)</span>
+            </div>
+
+            <!-- Dirección -->
+            <div>
+                <span class="block text-sm font-medium text-gray-600">Dirección</span>
+                <span class="block text-lg font-semibold text-gray-800">@Html.DisplayFor(model => model.DireccionAcademico)</span>
+            </div>
+
+            <!-- Estado -->
+            <div>
+                <span class="block text-sm font-medium text-gray-600">Estado</span>
+                <span class="block text-lg font-semibold text-gray-800">@Html.DisplayFor(model => model.EstadoAcademico)</span>
+            </div>
+
+            <!-- DNI -->
+            <div>
+                <span class="block text-sm font-medium text-gray-600">DNI</span>
+                <span class="block text-lg font-semibold text-gray-800">@Html.DisplayFor(model => model.DniAcademico)</span>
+            </div>
+        </div>
+
+        <!-- Botón de eliminación -->
+        @using (Html.BeginForm("EliminarAcademicoConfirmado", "Academico", FormMethod.Post))
+        {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="codAcademico" value="@Model.CodAcademico" />
+        <button type="button" class="bg-red-500 text-white font-bold py-2 px-6 rounded-lg shadow hover:bg-red-600" onclick="confirmDelete()">
+            Eliminar
+        </button>
+        }
+
+        <!-- Botón Cancelar -->
+        <div class="mt-4">
+            <a href="/Academico/ListarAcademicos" class="text-blue-500 hover:underline">Cancelar y Volver</a>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelete() {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás deshacer esta acción.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#EF6C00',
+                cancelButtonColor: '#091C47',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.querySelector('form').submit();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

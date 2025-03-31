@@ -1,0 +1,82 @@
+﻿@model Arquimedes.Models.Asistente
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vista Asistente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Función para mostrar el panel
+        function showPanel() {
+            const panel = document.getElementById("admin-panel");
+            const showButton = document.getElementById("show-button");
+            const hideButton = document.getElementById("hide-button");
+
+            panel.classList.remove("hidden");
+            showButton.classList.add("hidden");
+            hideButton.classList.remove("hidden");
+        }
+
+        // Función para ocultar el panel
+        function hidePanel() {
+            const panel = document.getElementById("admin-panel");
+            const showButton = document.getElementById("show-button");
+            const hideButton = document.getElementById("hide-button");
+
+            panel.classList.add("hidden");
+            hideButton.classList.add("hidden");
+            showButton.classList.remove("hidden");
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="flex h-screen">
+        <!-- Panel Administrativo -->
+        <div id="admin-panel" class="w-64 bg-gray-800 text-white p-6 shadow-lg">
+            <h3 class="text-lg font-bold mb-4">Panel Administrativo</h3>
+            <ul class="space-y-4">
+                <li>
+                    <h4 class="font-semibold text-white">Horario</h4>
+                    <p class="text-gray-300 text-sm">Lunes a Viernes: 8:00 AM - 4:00 PM</p>
+                </li>
+                <li>
+                    <h4 class="font-semibold text-white">Cursos</h4>
+                    <p class="text-gray-300 text-sm">Matemáticas, Ciencias, Lenguaje</p>
+                </li>
+            </ul>
+            <button onclick="hidePanel()"
+                    id="hide-button"
+                    class="mt-6 bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg shadow w-full">
+                Ocultar Panel
+            </button>
+        </div>
+
+        <!-- Contenido Principal -->
+        <div class="flex-grow p-8">
+            <h2 class="text-2xl font-bold mb-4">Esta es la vista de un ASISTENTE</h2>
+            <p class="text-gray-700 mb-4">
+                Aquí puedes agregar información relevante sobre el estudiante y mostrar detalles específicos.
+            </p>
+            <div class="bg-white shadow rounded-lg p-4">
+                <h3 class="text-lg font-bold text-gray-700">Contenido Principal</h3>
+                <p class="text-gray-600">
+                    Aquí aparecerán los datos principales del estudiante.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para mostrar el panel -->
+    <button id="show-button"
+            onclick="showPanel()"
+            class="fixed bottom-4 left-4 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300 hidden">
+        Mostrar Panel
+    </button>
+</body>
+</html>
+

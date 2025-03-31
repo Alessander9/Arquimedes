@@ -1,0 +1,125 @@
+﻿@model Arquimedes.Models.Curso
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detalle Curso</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+        <h4 class="text-2xl font-bold text-center mb-6 flex items-center justify-center gap-2">
+            <i class="fas fa-info-circle fa-lg text-blue-500"></i> Detalle del Curso
+        </h4>
+        <hr class="mb-6">
+
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Nombre del Curso -->
+            <div>
+                <dt class="text-sm font-medium text-gray-500 flex items-center gap-2">
+                    <i class="fas fa-file-alt fa-lg text-blue-500"></i> Nombre del Curso
+                </dt>
+                <dd class="mt-1 text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.NombreCurso)</dd>
+            </div>
+
+            <!-- Descripción -->
+            <div>
+                <dt class="text-sm font-medium text-gray-500 flex items-center gap-2">
+                    <i class="fas fa-align-left fa-lg text-blue-500"></i> Descripción
+                </dt>
+                <dd class="mt-1 text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.DescripcionCurso)</dd>
+            </div>
+
+            <!-- Día -->
+            <div>
+                <dt class="text-sm font-medium text-gray-500 flex items-center gap-2">
+                    <i class="fas fa-calendar-day fa-lg text-blue-500"></i> Día
+                </dt>
+                <dd class="mt-1 text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.Dia)</dd>
+            </div>
+
+            <!-- Hora -->
+            <div>
+                <dt class="text-sm font-medium text-gray-500 flex items-center gap-2">
+                    <i class="fas fa-clock fa-lg text-blue-500"></i> Hora
+                </dt>
+                <dd class="mt-1 text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.Hora)</dd>
+            </div>
+
+            <!-- Nivel -->
+            <div>
+                <dt class="text-sm font-medium text-gray-500 flex items-center gap-2">
+                    <i class="fas fa-signal fa-lg text-blue-500"></i> Nivel
+                </dt>
+                <dd class="mt-1 text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.Nivel)</dd>
+            </div>
+
+            <!-- Profesor -->
+            <div>
+                <dt class="text-sm font-medium text-gray-500 flex items-center gap-2">
+                    <i class="fas fa-chalkboard-teacher fa-lg text-blue-500"></i> Profesor
+                </dt>
+                <dd class="mt-1 text-lg font-semibold text-gray-700">@Html.DisplayFor(model => model.IdProfesor)</dd>
+            </div>
+        </dl>
+
+        <!-- Botones de acción -->
+        <div class="mt-6 flex justify-between">
+            @Html.ActionLink("Editar", "ActualizarCurso", new { idCurso = Model.IdCurso }, new { @class = "bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2" })
+            <a href="@Url.Action("ListarCursos")" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i> Volver a la Lista
+            </a>
+            <button id="exportPdf" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2">
+                <i class="fas fa-file-pdf"></i> Exportar PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- jsPDF Script -->
+    <script>
+        document.getElementById('exportPdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Datos de la tabla
+            const tableData = [
+                ["Campo", "Valor"],
+                ["Nombre del Curso", "@Model.NombreCurso"],
+                ["Descripción", "@Model.DescripcionCurso"],
+                ["Día", "@Model.Dia"],
+                ["Hora", "@Model.Hora"],
+                ["Nivel", "@Model.Nivel"],
+                ["Profesor", "@Model.IdProfesor"]
+            ];
+
+            // Configurar y agregar la tabla
+            doc.autoTable({
+                head: [tableData[0]],
+                body: tableData.slice(1),
+                theme: 'grid',
+                styles: { fontSize: 10, cellPadding: 5 },
+                margin: { top: 20 },
+            });
+
+            // Guardar el PDF
+            doc.save('DetalleCurso.pdf');
+        });
+    </script>
+</body>
+</html>

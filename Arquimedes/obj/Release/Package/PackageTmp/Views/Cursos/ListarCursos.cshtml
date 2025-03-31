@@ -1,0 +1,144 @@
+﻿@model IEnumerable<Arquimedes.Models.Curso>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Lista de Cursos</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Incluye DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    <!-- Incluye jQuery y DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="container mx-auto p-4">
+        <h2 class="text-2xl font-bold text-white mb-4 text-center">Lista de Cursos</h2>
+        <p class="mb-4 flex justify-between">
+            @Html.ActionLink("Registrar Nuevo Curso", "RegistrarCurso", null, new { @class = "bg-green-500 text-white font-semibold px-4 py-2 rounded hover:bg-green-600 transition" })
+            <button id="exportPdf" class="bg-blue-500 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 transition">
+                Exportar a PDF
+            </button>
+        </p>
+        <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+            <table id="cursosTable" class="min-w-full bg-white divide-y divide-gray-300">
+                <thead class="bg-blue-700 text-center">
+                    <tr>
+                        <th class="px-4 py-2 text-sm font-medium text-white uppercase tracking-wider">Nombre del Curso</th>
+                        <th class="px-4 py-2 text-sm font-medium text-white uppercase tracking-wider">Descripción</th>
+                        <th class="px-4 py-2 text-sm font-medium text-white uppercase tracking-wider">Día</th>
+                        <th class="px-4 py-2 text-sm font-medium text-white uppercase tracking-wider">Hora</th>
+                        <th class="px-4 py-2 text-sm font-medium text-white uppercase tracking-wider">Nivel</th>
+                        <th class="px-4 py-2 text-sm font-medium text-white uppercase tracking-wider">Profesor</th>
+                        <th class="px-4 py-2 text-sm font-medium text-white uppercase tracking-wider text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-300">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.NombreCurso)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.DescripcionCurso)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.Dia)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.Hora)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.Nivel)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.IdProfesor)</td>
+                            <td class="px-4 py-2 flex justify-center space-x-2">
+                                <a href="@Url.Action("ActualizarCurso", new { idCurso = item.IdCurso })"
+                                   class="inline-flex items-center px-4 py-2 bg-yellow-500 text-white font-bold text-sm rounded shadow hover:bg-yellow-600 transition">
+                                    <i class="fas fa-edit mr-2"></i> Editar
+                                </a>
+                                <a href="@Url.Action("DetalleCurso", new { idCurso = item.IdCurso })"
+                                   class="inline-flex items-center px-4 py-2 bg-blue-500 text-white font-bold text-sm rounded shadow hover:bg-blue-600 transition">
+                                    <i class="fas fa-info-circle mr-2"></i> Detalles
+                                </a>
+                                <a href="@Url.Action("EliminarCurso", new { idCurso = item.IdCurso })"
+                                   class="inline-flex items-center px-4 py-2 bg-red-500 text-white font-bold text-sm rounded shadow hover:bg-red-600 transition">
+                                    <i class="fas fa-trash mr-2"></i> Eliminar
+                                </a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Botón Volver con Gradiente Rojo a Morado -->
+        <div class="mt-4 flex justify-end space-x-2">
+
+            <a href="@Url.Action("vistaAdministrador", "Administrador")" class="px-4 py-2 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg shadow-md hover:from-red-600 hover:to-purple-700 flex items-center gap-2 transition-colors duration-300">
+                <span class="material-icons">arrow_back</span> Salir al menú
+            </a>
+        </div>
+    </div>
+
+    <!-- Script para inicializar DataTables -->
+    <script>
+        $(document).ready(function () {
+            $('#cursosTable').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: [],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+                }
+            });
+        });
+
+        // Exportar tabla a PDF
+        document.getElementById('exportPdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Obtener datos de la tabla
+            const tableRows = [];
+            const tableHeaders = [
+                "Nombre del Curso",
+                "Descripción",
+                "Día",
+                "Hora",
+                "Nivel",
+                "Profesor"
+            ];
+
+            $('#cursosTable tbody tr').each(function () {
+                const row = [];
+                $(this).find('td').each(function () {
+                    row.push($(this).text());
+                });
+                tableRows.push(row);
+            });
+
+            // Generar PDF con jsPDF y autoTable
+            doc.autoTable({
+                head: [tableHeaders],
+                body: tableRows,
+                startY: 20,
+                styles: { fontSize: 10 },
+                theme: 'grid'
+            });
+
+            doc.save('ListaCursos.pdf');
+        });
+    </script>
+</body>
+</html>

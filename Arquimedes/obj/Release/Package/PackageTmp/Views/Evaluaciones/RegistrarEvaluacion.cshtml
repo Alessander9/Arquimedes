@@ -1,0 +1,108 @@
+﻿@model Arquimedes.Models.Evaluacion
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Registrar Evaluación</title>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6 flex items-center gap-2">
+            <span class="material-icons text-blue-500">list_alt</span> Registrar Evaluación
+        </h2>
+
+        @using (Html.BeginForm("RegistrarEvaluacion", "Evaluaciones", FormMethod.Post, new { id = "formEvaluacion" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- ID Evaluación -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">badge</span> ID Evaluación
+                    </label>
+                    @Html.TextBoxFor(m => m.IdEvaluacion, new { @class = "w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-blue-300" })
+                </div>
+
+                <!-- Estudiante -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">person</span> Estudiante
+                    </label>
+                    @Html.DropDownList("CodEstudiante", ViewBag.CodEstudianteOptions as SelectList, "Seleccione un estudiante", new { @class = "w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-blue-300" })
+                </div>
+
+                <!-- Académico -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">school</span> Académico
+                    </label>
+                    @Html.DropDownList("CodAcademico", ViewBag.CodAcademicoOptions as SelectList, "Seleccione un académico", new { @class = "w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-blue-300" })
+                </div>
+
+                <!-- Curso -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">menu_book</span> Curso
+                    </label>
+                    @Html.DropDownList("IdCurso", ViewBag.CodCursoOptions as SelectList, "Seleccione un curso", new { @class = "w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-blue-300" })
+                </div>
+
+                <!-- Bimestre -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">calendar_today</span> Bimestre
+                    </label>
+                    @Html.DropDownList("Bimestre", ViewBag.BimestreOptions as SelectList, "Seleccione un bimestre", new { @class = "w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-blue-300" })
+                </div>
+
+             </div>
+
+            <!-- Botones -->
+    <div class="mt-4 flex justify-between">
+        <button type="button" id="submitButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow flex items-center gap-2">
+            <span class="material-icons">save</span> Registrar
+        </button>
+       
+        <a href="@Url.Action("ListarEvaluaciones")"
+           class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow hover:bg-yellow-600 flex items-center gap-2">
+            <span class="material-icons">arrow_back</span> Volver a la Lista
+        </a>
+        
+    <!-- Botón Volver con Gradiente Rojo a Morado -->
+        <div class="mt-4 flex justify-content-md-between space-x-2">
+            <a href="@Url.Action("vistaAdministrador", "Administrador")" class="px-4 py-2 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg shadow-md hover:from-red-600 hover:to-purple-700 flex items-center gap-2 transition-colors duration-300">
+                <span class="material-icons">arrow_back</span> Salir al menú
+            </a>
+        </div>
+
+    </div>
+        }
+
+        <!-- Script SweetAlert -->
+        <script>
+            document.getElementById("submitButton").addEventListener("click", function () {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¿Deseas registrar esta evaluación?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, registrar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById("formEvaluacion").submit();
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

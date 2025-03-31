@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Ventas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        input[type="number"], input[type="text"] {
+            width: 70%;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
+
+        .grand-total {
+            text-align: right;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+    <!-- jsPDF and jsPDF-AutoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Ventas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto (Editable)</th>
+                    <th>Precio (Editable)</th>
+                    <th>Cantidad (Editable)</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="productTable">
+                <!-- Product rows will be dynamically generated -->
+            </tbody>
+        </table>
+        <div class="grand-total">Total General: $<span id="grandTotal">0.00</span></div>
+        <button class="btn" onclick="exportToPDF()">Exportar a PDF</button>
+    </div>
+
+    <script>
+        // Sample product data
+        const products = [
+            { name: "Producto 1", price: 10, quantity: 0 },
+            { name: "Producto 2", price: 20, quantity: 0 },
+            { name: "Producto 3", price: 30, quantity: 0 },
+            { name: "Producto 4", price: 40, quantity: 0 },
+            { name: "Producto 5", price: 50, quantity: 0 },
+            { name: "Producto 6", price: 60, quantity: 0 },
+        ];
+
+        const productTable = document.getElementById("productTable");
+        const grandTotal = document.getElementById("grandTotal");
+
+        function updateGrandTotal() {
+            let total = 0;
+            document.querySelectorAll(".product-total").forEach((cell) => {
+                total += parseFloat(cell.textContent || 0);
+            });
+            grandTotal.textContent = total.toFixed(2);
+        }
+
+        function updateProductTotal(rowIndex) {
+            const nameInput = document.getElementById(`name-${rowIndex}`);
+            const priceInput = document.getElementById(`price-${rowIndex}`);
+            const quantityInput = document.getElementById(`quantity-${rowIndex}`);
+            const totalCell = document.getElementById(`total-${rowIndex}`);
+
+            const price = parseFloat(priceInput.value) || 0;
+            const quantity = parseInt(quantityInput.value) || 0;
+
+            const total = price * quantity;
+            totalCell.textContent = total.toFixed(2);
+
+            updateGrandTotal();
+        }
+
+        function renderTable() {
+            productTable.innerHTML = products
+                .map((product, index) => {
+                    return `
+                            <tr>
+                                <td>
+                                    <input
+                                        type="text"
+                                        id="name-${index}"
+                                        value="${product.name}"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        id="price-${index}"
+                                        value="${product.price}"
+                                        min="0"
+                                        step="0.01"
+                                        onchange="updateProductTotal(${index})"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        id="quantity-${index}"
+                                        value="${product.quantity}"
+                                        min="0"
+                                        step="1"
+                                        onchange="updateProductTotal(${index})"
+                                    />
+                                </td>
+                                <td class="product-total" id="total-${index}">0.00</td>
+                            </tr>
+                        `;
+                })
+                .join("");
+        }
+
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+
+            const doc = new jsPDF();
+            doc.text("Calculadora de Ventas", 14, 10);
+
+            const rows = [];
+            products.forEach((product, index) => {
+                const name = document.getElementById(`name-${index}`).value || "";
+                const price = document.getElementById(`price-${index}`).value || 0;
+                const quantity = document.getElementById(`quantity-${index}`).value || 0;
+                const total = document.getElementById(`total-${index}`).textContent || 0;
+
+                rows.push([name, `$${price}`, quantity, `$${total}`]);
+            });
+
+            doc.autoTable({
+                head: [["Producto", "Precio", "Cantidad", "Total"]],
+                body: rows,
+                startY: 20,
+            });
+
+            doc.save("ventas_productos.pdf");
+        }
+
+        renderTable();
+    </script>
+</body>
+</html>

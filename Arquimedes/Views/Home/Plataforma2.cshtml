@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Ingresos para Profesores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        input[type="number"], input[type="text"] {
+            width: 70%;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
+
+        .grand-total {
+            text-align: right;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+    <!-- jsPDF and jsPDF-AutoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Ingresos para Profesores</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Profesor (Editable)</th>
+                    <th>Tarifa por Hora (Editable)</th>
+                    <th>Horas Trabajadas (Editable)</th>
+                    <th>Ingresos Totales</th>
+                </tr>
+            </thead>
+            <tbody id="professorTable">
+                <!-- Professor rows will be dynamically generated -->
+            </tbody>
+        </table>
+        <div class="grand-total">Ingresos Totales Generales: $<span id="grandTotal">0.00</span></div>
+        <button class="btn" onclick="exportToPDF()">Exportar a PDF</button>
+    </div>
+
+    <script>
+        // Sample professor data
+        const professors = [
+            { name: "Profesor 1", rate: 25, hours: 0 },
+            { name: "Profesor 2", rate: 30, hours: 0 },
+            { name: "Profesor 3", rate: 35, hours: 0 },
+            { name: "Profesor 4", rate: 40, hours: 0 },
+            { name: "Profesor 5", rate: 45, hours: 0 },
+            { name: "Profesor 6", rate: 50, hours: 0 },
+        ];
+
+        const professorTable = document.getElementById("professorTable");
+        const grandTotal = document.getElementById("grandTotal");
+
+        function updateGrandTotal() {
+            let total = 0;
+            document.querySelectorAll(".professor-total").forEach((cell) => {
+                total += parseFloat(cell.textContent || 0);
+            });
+            grandTotal.textContent = total.toFixed(2);
+        }
+
+        function updateProfessorTotal(rowIndex) {
+            const rateInput = document.getElementById(`rate-${rowIndex}`);
+            const hoursInput = document.getElementById(`hours-${rowIndex}`);
+            const totalCell = document.getElementById(`total-${rowIndex}`);
+
+            const rate = parseFloat(rateInput.value) || 0;
+            const hours = parseInt(hoursInput.value) || 0;
+
+            const total = rate * hours;
+            totalCell.textContent = total.toFixed(2);
+
+            updateGrandTotal();
+        }
+
+        function renderTable() {
+            professorTable.innerHTML = professors
+                .map((professor, index) => {
+                    return `
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            id="name-${index}"
+                                            value="${professor.name}"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            id="rate-${index}"
+                                            value="${professor.rate}"
+                                            min="0"
+                                            step="0.01"
+                                            onchange="updateProfessorTotal(${index})"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            id="hours-${index}"
+                                            value="${professor.hours}"
+                                            min="0"
+                                            step="1"
+                                            onchange="updateProfessorTotal(${index})"
+                                        />
+                                    </td>
+                                    <td class="professor-total" id="total-${index}">0.00</td>
+                                </tr>
+                            `;
+                })
+                .join("");
+        }
+
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+
+            const doc = new jsPDF();
+            doc.text("Calculadora de Ingresos para Profesores", 14, 10);
+
+            const rows = [];
+            professors.forEach((professor, index) => {
+                const name = document.getElementById(`name-${index}`).value || "";
+                const rate = document.getElementById(`rate-${index}`).value || 0;
+                const hours = document.getElementById(`hours-${index}`).value || 0;
+                const total = document.getElementById(`total-${index}`).textContent || 0;
+
+                rows.push([name, `$${rate}`, hours, `$${total}`]);
+            });
+
+            doc.autoTable({
+                head: [["Profesor", "Tarifa por Hora", "Horas Trabajadas", "Ingresos Totales"]],
+                body: rows,
+                startY: 20,
+            });
+
+            doc.save("ingresos_profesores.pdf");
+        }
+
+        renderTable();
+    </script>
+</body>
+</html>

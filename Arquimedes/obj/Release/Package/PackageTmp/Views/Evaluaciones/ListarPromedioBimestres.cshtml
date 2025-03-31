@@ -1,0 +1,91 @@
+﻿@model List<Arquimedes.Models.AcumuladoBimestre>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promedio de Bimestres</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="max-w-6xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+            <i class="fas fa-chart-bar text-blue-500 mr-3"></i>Promedio de Bimestres
+        </h2>
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 flex items-center">
+                <i class="fas fa-exclamation-triangle text-yellow-600 mr-3"></i>
+                <p>No se encontraron promedios para el código proporcionado.</p>
+            </div>
+        }
+        else
+        {
+            <div class="overflow-x-auto">
+                <table class="table-auto w-full border-collapse border border-gray-300 bg-white rounded-lg shadow">
+                    <thead class="bg-blue-600 text-white text-sm uppercase tracking-wide">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-3 text-left">
+                                <i class="fas fa-book mr-2"></i>Curso
+                            </th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">
+                                <i class="fas fa-calendar-alt mr-2"></i>Bimestre
+                            </th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">
+                                <i class="fas fa-check-circle mr-2"></i>T1
+                            </th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">
+                                <i class="fas fa-check-circle mr-2"></i>T2
+                            </th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">
+                                <i class="fas fa-check-circle mr-2"></i>T3
+                            </th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">
+                                <i class="fas fa-check-circle mr-2"></i>T4
+                            </th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">
+                                <i class="fas fa-check-circle mr-2"></i>T5
+                            </th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">
+                                <i class="fas fa-star mr-2"></i>Promedio
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white text-sm">
+                        @foreach (var acumulado in Model)
+                        {
+                            <tr class="border-t hover:bg-gray-100 transition duration-200">
+                                <td class="border border-gray-300 px-4 py-3 text-gray-700">@acumulado.IdCurso</td>
+                                <td class="border border-gray-300 px-4 py-3 text-gray-700">@acumulado.Bimestre</td>
+                                <td class="border border-gray-300 px-4 py-3 text-gray-700">@acumulado.T1</td>
+                                <td class="border border-gray-300 px-4 py-3 text-gray-700">@acumulado.T2</td>
+                                <td class="border border-gray-300 px-4 py-3 text-gray-700">@acumulado.T3</td>
+                                <td class="border border-gray-300 px-4 py-3 text-gray-700">@acumulado.T4</td>
+                                <td class="border border-gray-300 px-4 py-3 text-gray-700">@acumulado.T5</td>
+                                <td class="border border-gray-300 px-4 py-3 font-semibold
+    @(
+        acumulado.PromedioLetra.Trim().ToUpper() == "AD" ? "text-green-600" :
+        acumulado.PromedioLetra.Trim().ToUpper() == "A" ? "text-blue-600" :
+        acumulado.PromedioLetra.Trim().ToUpper() == "B" ? "text-yellow-600" :
+        "text-red-600"
+    )">
+                                    @acumulado.PromedioLetra
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</body>
+</html>

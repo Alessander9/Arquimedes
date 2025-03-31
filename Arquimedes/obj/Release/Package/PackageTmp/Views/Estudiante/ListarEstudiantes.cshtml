@@ -1,0 +1,230 @@
+﻿@model IEnumerable<Estudiante>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Estudiantes</title>
+
+    <!-- Scripts y Estilos -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.7/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.7/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.7/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.5/css/dataTables.tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        .dataTables_wrapper .dataTables_filter {
+            margin-bottom: 1rem;
+        }
+
+        .dataTables_wrapper .dataTables_paginate {
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .dataTables_wrapper .dataTables_length {
+            margin-bottom: 1rem;
+        }
+
+        .dataTables_paginate {
+            position: relative;
+            display: flex;
+            justify-content: left;
+            gap: 100px; /* Espacio entre números y botones */
+        }
+
+            .dataTables_paginate span.paginate_button {
+                display: inline-block;
+                align-items: center;
+                justify-content: center;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                font-size: 1rem;
+                background-color: #8b5cf6; /* Morado */
+                color: white;
+                cursor: pointer;
+            }
+
+
+
+            .dataTables_paginate .paginate_numbers {
+                position: absolute;
+                top: -20px; /* Mover hacia arriba */
+                font-size: 1rem;
+                font-weight: bold;
+                color: #4a5568; /* Gris oscuro */
+                text-align: center;
+                margin-bottom: 5px;
+            }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto mt-10">
+        <div class="flex justify-between items-center mb-5">
+            <h1 class="text-2xl font-bold">Lista de Estudiantes</h1>
+            <div class="flex items-center space-x-4">
+                <a href="@Url.Action("RegistrarEstudiante")" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Crear Nuevo</a>
+                <button id="exportPdf" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-purple-600">Exportar PDF</button>
+            </div>
+
+
+        </div>
+        <table id="estudiantesTable" class="min-w-full bg-white rounded-lg shadow-md border-collapse table-auto">
+            <thead>
+                <tr class="bg-blue-500 text-white">
+                    <th class="px-4 py-2">Nombre</th>
+                    <th class="px-4 py-2">Apellido</th>
+                    <th class="px-4 py-2">Edad</th>
+                    <th class="px-4 py-2">Año</th>
+                    <th class="px-4 py-2">Sección</th>
+                    <th class="px-4 py-2">Grado Académico</th>
+                    <th class="px-4 py-2">Teléfono</th>
+                    <th class="px-4 py-2">Dirección</th>
+                    <th class="px-4 py-2">Estado</th>
+                    <th class="px-4 py-2">DNI</th>
+                    <th class="px-4 py-2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="border-t">
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.NombreEstudiante)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.ApellidoEstudiante)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.EdadEstudiante)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.AnioEstudiante)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.SeccionEstudiante)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.GradoAcademico)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.Telefono)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.Direccion)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.EstadoEstudiante)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.DniEstudiante)</td>
+                        <td class="px-4 py-2">
+                            <div class="flex justify-center space-x-2">
+                                <!-- Botón Detalles -->
+                                <a href="@Url.Action("DetalleEstudiante", new { codEstudiante = item.CodEstudiante })"
+                                   class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 flex items-center">
+                                    <i class="fas fa-info-circle fa-lg mr-1 text-white"></i> Detalles
+                                </a>
+                                <!-- Botón Actualizar -->
+                                <a href="@Url.Action("ActualizarEstudiante", new { codEstudiante = item.CodEstudiante })"
+                                   class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 flex items-center">
+                                    <i class="fas fa-edit fa-lg mr-1 text-white"></i> Actualizar
+                                </a>
+                                <!-- Botón Eliminar -->
+                                <a href="@Url.Action("EliminarEstudiante", new { codEstudiante = item.CodEstudiante })"
+                                   class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 flex items-center">
+                                    <i class="fas fa-trash-alt fa-lg mr-1 text-white"></i> Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+
+
+        </table>
+        <!-- Botón Volver con Gradiente Rojo a Morado -->
+        <div class="mt-4 flex justify-end space-x-2">
+
+            <a href="@Url.Action("vistaAdministrador", "Administrador")" class="px-4 py-2 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg shadow-md hover:from-red-600 hover:to-purple-700 flex items-center gap-2 transition-colors duration-300">
+                <span class="material-icons">arrow_back</span> Salir al menú
+            </a>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#estudiantesTable').DataTable({
+                responsive: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
+                    paginate: {
+                        previous: "<span class='bg-green-600 text-white px-3 py-2 rounded-lg cursor-pointer hover:bg-purple-600'>Anterior</span>",
+                        next: "<span class='bg-green-600 text-white px-3 py-2 rounded-lg cursor-pointer hover:bg-purple-600'>Siguiente</span>"
+                    }
+                },
+                dom: "<'flex justify-between items-center mb-4'<'dataTables_length'l><'dataTables_filter'f>>" +
+                    "B<'overflow-x-auto't>" +
+                    "<'flex flex-col items-center mt-4'<'dataTables_info'i><'dataTables_paginate pagination-above-buttons'p><'buttons-container flex space-x-2'>>",
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        text: 'Copiar',
+                        className: 'bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Excel',
+                        className: 'bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'PDF',
+                        className: 'bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600',
+                        orientation: 'landscape',
+                        pageSize: 'A4'
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Imprimir',
+                        className: 'bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600'
+                    }
+                ]
+            });
+
+            // Exportar a PDF con jsPDF
+            $('#exportPdf').on('click', function () {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('landscape'); // Orientación horizontal
+
+                // Encabezados de la tabla
+                const headers = [["Nombre", "Apellido", "Edad", "Año", "Sección", "Grado Académico", "Teléfono", "Dirección", "Estado", "DNI"]];
+
+                // Extraer datos de la tabla
+                const rows = [];
+                $('#estudiantesTable tbody tr').each(function () {
+                    const row = [];
+                    $(this).find('td').each(function () {
+                        row.push($(this).text().trim());
+                    });
+                    rows.push(row);
+                });
+
+                // Generar la tabla en el PDF
+                doc.autoTable({
+                    head: headers,
+                    body: rows,
+                    styles: {
+                        fontSize: 10,
+                        cellPadding: 4,
+                    },
+                    margin: { top: 20 },
+                    theme: 'grid',
+                    didDrawPage: function (data) {
+                        doc.setFontSize(14);
+                        doc.text("Lista de Estudiantes", data.settings.margin.left, 15);
+                    },
+                });
+
+                // Guardar el archivo
+                doc.save('ListaEstudiantes.pdf');
+            });
+        });
+
+    </script>
+</body>
+</html>

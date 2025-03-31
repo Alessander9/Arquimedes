@@ -1,0 +1,125 @@
+﻿
+
+@{
+    ViewBag.Title = "Oratoria Estratégica";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sección Primaria</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.5px);
+            -webkit-backdrop-filter: blur(7.5px);
+            border: 1px solid rgba(255, 255, 255, 0.46);
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <header class="bg-blue-900   text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold text-center">Oratoria Estratégica</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+        <!-- Sección de Importancia -->
+        <section>
+            <div class="flex flex-col md:flex-row items-center gap-8 bg-white shadow-lg rounded-lg p-6">
+                <video autoplay muted loop class="rounded-lg w-full md:w-1/2 object-cover">
+                    <source src="@Url.Content("~/Content/VIDEOS/Video4.MP4")" type="video/mp4">
+                    Tu navegador no soporta videos HTML5.
+                </video>                <div>
+                                            <h2 class="text-3xl font-bold text-blue-900 mb-4">
+                                                Oratoria Estratégica: Una Habilidad Clave para el Éxito
+                                            </h2>
+                                            <p class="text-gray-800 leading-relaxed">
+                                                En el Colegio Arquímedes creemos firmemente que la oratoria estratégica es una herramienta transformadora para nuestros estudiantes. Les permite comunicar ideas con claridad, confianza y persuasión, desarrollando habilidades fundamentales para su futuro.
+
+                                            </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Razones -->
+        <section>
+            <br />
+            <h2 class="text-3xl font-bold text-center text-blue-100 mb-8">
+                ¿Qué es la Oratoria Estratégica?
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Razón 1 -->
+                <div class="flex flex-col items-center gap-6 bg-white shadow-lg rounded-lg p-6">
+                    <img src="~/Content/FOTOS/SeccionPrimaria1.jpg" alt="Habilidades Básicas" class="rounded-lg w-full object-cover">
+                    <h3 class="text-2xl font-semibold text-blue-900 mb-2">1. Desarrollo de habilidades básicas</h3>
+                    <p class="text-gray-600 text-center">
+                        La oratoria estratégica es el arte de comunicarse en público de manera planificada y efectiva. Combina técnicas específicas que ayudan a captar la atención del público, transmitir ideas con claridad y alcanzar objetivos definidos. Es mucho más que hablar en público: es persuadir, liderar y conectar.
+
+                    </p>
+                </div>
+
+                <!-- Razón 2 -->
+                <div class="flex flex-col items-center gap-6 bg-white shadow-lg rounded-lg p-6">
+                    <img src="~/Content/FOTOS/FotoArquimedes1.jpg" alt="Formación de Valores" class="rounded-lg w-full object-cover">
+                    <h3 class="text-2xl font-semibold text-blue-900 mb-2">
+                        2.  Importancia de la Oratoria Estratégica
+                    </h3>
+                    <p class="text-gray-600 text-center">
+                        Desarrollo de habilidades comunicativas: Los estudiantes aprenden a expresar ideas con confianza y claridad.
+                        Fomento del pensamiento crítico: Estructuran argumentos sólidos y analizan diversas perspectivas.
+                        Fortalecimiento de la autoestima: Hablar en público mejora la seguridad personal y fomenta el liderazgo.
+                        Técnicas Específicas para el Éxito en Oratoria
+                        Aquí te presentamos tres técnicas clave con ejemplos concretos que aplicamos en nuestras sesiones de entrenamiento:
+
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección del Colegio Arquímedes -->
+        <section class="mt-12">
+            <div class="bg-blue-100 shadow-lg rounded-lg p-8">
+                <h2 class="text-3xl font-bold text-blue-600 mb-6">La Enseñanza en el Colegio Arquímedes</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    En el Colegio Arquímedes, nos esforzamos por realzar estas características con un enfoque innovador y personalizado. Aquí está cómo lo hacemos:
+                </p>
+                <ul class="list-disc list-inside space-y-4 text-gray-700">
+                    <li>
+                        <span class="font-bold text-blue-600">Enseñanza interactiva:</span> Usamos métodos modernos como aprendizaje basado en proyectos y tecnología para que los estudiantes se involucren activamente en su educación.
+                    </li>
+                    <li>
+                        <span class="font-bold text-blue-600">Fomento de habilidades socioemocionales:</span> Enseñamos más allá de los libros, ayudando a los estudiantes a gestionar sus emociones y relacionarse positivamente con los demás.
+                    </li>
+                    <li>
+                        <span class="font-bold text-blue-600">Profesores altamente capacitados:</span> Nuestro equipo docente está comprometido en ofrecer una educación de calidad y centrada en las necesidades de cada alumno.
+                    </li>
+                    <li>
+                        <span class="font-bold text-blue-600">Ambiente motivador:</span> Creamos un entorno donde los estudiantes se sientan seguros y motivados para explorar, aprender y crecer.
+                    </li>
+                </ul>
+                <p class="mt-6 text-gray-700">
+                    El nivel primaria en el Colegio Arquímedes no solo forma estudiantes, sino futuros líderes y ciudadanos comprometidos con la sociedad.
+                    <strong class="text-blue-600">¡Enseñamos para transformar vidas!</strong>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-blue-900 text-white py-4">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">© 2024 Sección Primaria - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

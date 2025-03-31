@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Top 10 Promedios";
+    var topPromedios = ViewBag.TopPromedios as List<dynamic>;
+}
+
+<h2>Top 10 Promedios de Secundaria</h2>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Grado</th>
+            <th>Promedio</th>
+            <th>Año</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (topPromedios != null && topPromedios.Count > 0)
+        {
+            foreach (var estudiante in topPromedios)
+            {
+                <tr>
+                    <td>@estudiante.Codigo</td>
+                    <td>@estudiante.Nombre</td>
+                    <td>@estudiante.Apellido</td>
+                    <td>@estudiante.Grado</td>
+                    <td>@estudiante.Promedio</td>
+                    <td>@estudiante.Anio</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">No hay datos disponibles</td>
+            </tr>
+        }
+    </tbody>
+</table>

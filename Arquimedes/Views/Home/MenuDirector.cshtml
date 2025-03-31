@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Director</title>
+    <style>
+        #btn-salir {
+            padding-top:190px;
+            padding-left:1126px;
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Menú del Director</h1>
+
+        <!-- Botones -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Estudiante -->
+            <a href="~/Home/Estudiante"
+               class="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:bg-blue-600 flex items-center justify-center gap-2">
+                <i class="fas fa-user-graduate text-white text-lg"></i>
+                Estudiante
+                </a>
+
+                <!-- Académico -->
+                <button class="bg-gray-700 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:bg-gray-800 flex items-center justify-center gap-2">
+                    <i class="fas fa-chalkboard-teacher text-white text-lg"></i>
+                    Académico
+                </button>
+
+                <!-- Profesor -->
+                <button class="bg-green-600 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:bg-green-700 flex items-center justify-center gap-2">
+                    <i class="fas fa-chalkboard text-white text-lg"></i>
+                    Profesor
+                </button>
+
+                <!-- Curso -->
+                <button class="bg-indigo-600 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:bg-indigo-700 flex items-center justify-center gap-2">
+                    <i class="fas fa-book text-white text-lg"></i>
+                    Curso
+                </button>
+
+                <!-- Horario -->
+                <button class="bg-teal-600 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:bg-teal-700 flex items-center justify-center gap-2">
+                    <i class="fas fa-calendar-alt text-white text-lg"></i>
+                    Horario
+                </button>
+
+                <!-- Evaluaciones -->
+                <button class="bg-orange-500 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:bg-orange-600 flex items-center justify-center gap-2">
+                    <i class="fas fa-clipboard-check text-white text-lg"></i>
+                    Evaluaciones
+                </button>
+
+                <a href="~/Evaluaciones/BuscarNotas" class="bg-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:bg-blue-800 flex items-center justify-center gap-2">
+                    <i class="fas fa-search text-white text-lg"></i>
+                    Buscar Notas
+                </a>
+
+                <!-- Buscar Notas por Bimestre -->
+                <a href="~/Evaluaciones/BuscarBimestre" class="bg-yellow-500 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:bg-yellow-600 flex items-center justify-center gap-2">
+                    <i class="fas fa-calendar-check text-white text-lg"></i>
+                    Buscar Notas por Bimestre
+                </a>
+
+                <!-- Salir -->
+                <div id="btn-salir">
+                    <button class="bg-red-600 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:bg-red-700 flex items-center justify-center gap-2">
+                        <i class="fas fa-sign-out-alt text-white text-lg"></i>
+                        Salir
+                    </button>
+                </div>
+        </div>
+    </div>
+</body>
+</html>

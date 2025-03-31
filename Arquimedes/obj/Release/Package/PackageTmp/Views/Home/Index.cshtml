@@ -1,0 +1,1534 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I.E.P Arquimedes</title>
+    <link href="~/Content/ArquimedesStyle.css" rel="stylesheet" />
+    
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --fondo-principal-ej1: #091C47; /* Azul Marino */
+            --texto-principal-ej1: #F0E3D1; /* Crema */
+            --botones-acento-ej1: #EF6C00; /* Naranja principal */
+            --texto-secundario-ej1: #7A7A7A; /* Gris medio */
+            --hover-detalles-ej1: #C9A200; /* Amarillo oscuro */
+            --fondos-secundarios-ej1: #4B4B4B; /* Gris oscuro */
+            --contraste-clave-ej1: #FFFFFF; /* Blanco puro */
+        }
+
+        /* Ajustes globales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* Evita el desplazamiento horizontal */
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252);
+        }
+
+        /* Navbar inicio */
+        .navbar {
+            position: fixed; /* Fija la barra de navegación en la parte superior */
+            top: 0; /* Ubícala al inicio de la pantalla */
+            width: 100%; /* Asegura que ocupe todo el ancho */
+            z-index: 999; /* Garantiza que esté sobre otros elementos */
+            background-color: rgba(9, 28, 71, 0.85); /* Color de fondo con transparencia */
+            transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+            backdrop-filter: blur(10px); /* Agrega un desenfoque para efecto elegante */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para destacarla */
+        }
+
+            .navbar:hover {
+                background-color: rgba(9, 28, 71, 1); /* Fondo opaco al pasar el ratón */
+            }
+
+        .navbar-brand, .navbar-nav .nav-link {
+            color: var(--texto-principal-ej1) !important;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+            .navbar-nav .nav-link:hover {
+                background-color: var(--botones-acento-ej1);
+                color: var(--contraste-clave-ej1) !important;
+                border-radius: 5px; /* Bordes redondeados para el hover */
+            }
+
+        .dropdown-menu {
+            background-color: #091C47 !important; /* Azul sólido igual al navbar */
+            border: none; /* Sin bordes */
+            border-radius: 5px; /* Bordes redondeados */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+        }
+
+        .dropdown-item {
+            color: #F0E3D1 !important; /* Texto crema */
+            padding: 10px; /* Espaciado interno */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+            .dropdown-item:hover {
+                background-color: #EF6C00 !important; /* Naranja al pasar el ratón */
+                color: #FFFFFF !important; /* Blanco */
+                border-radius: 5px; /* Bordes redondeados en hover */
+            }
+
+        
+
+        .navbar-toggler {
+            border-color: var(--contraste-clave-ej1);
+            border-radius: 5px;
+        }
+
+        .navbar-toggler-icon {
+            border-radius: 5px;
+        }
+
+        .login-btn {
+            color: var(--text-color);
+            border: 1px solid var(--text-color);
+            transition: 0.3s;
+        }
+
+            .login-btn:hover {
+                background-color: var(--fondo-principal-ej1);
+                color: var(--texto-principal-ej1);
+            }
+
+        /* Ocultar el menú desplegable por defecto */
+        .nav-item.dropdown .dropdown-menu {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Mostrar el menú cuando se pasa el ratón sobre el padre */
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            position: absolute; /* Asegura que se muestre sobre otros elementos */
+            z-index: 1000;
+            background-color: var(--fondos-secundarios-ej1); /* Estilo del fondo */
+        }
+        /*Aqui acaba el codigo de navegacion*/
+
+        /* Header y Carrusel principal */
+        header {
+            width: 100%;
+            height: 99.7vh; /* Ocupa toda la altura de la ventana */
+            overflow: hidden;
+            position: relative;
+            background-color: var(--fondos-secundarios-ej1);
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+            .carousel .slides {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+                width: 100%;
+                height: 100%;
+            }
+
+            .carousel .slide {
+                min-width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center;
+            }
+
+        .video-background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(9, 28, 71, 0.47);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--contraste-clave-ej1);
+        }
+
+            .overlay h2 {
+                color: var(--texto-principal-ej1);
+                font-size: 3rem;
+                margin-bottom: 20px;
+            }
+
+        .parrafo-overlay {
+            margin-top: 20px;
+            color: white;
+            max-width: 55%;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-matricula {
+            text-decoration: none; /* Quita el subrayado de enlace */
+            color: var(--texto-principal-ej1); /* Mantén el color del texto definido */
+            display: inline-block; /* Asegura que se comporte como un botón */
+            background-color: var(--botones-acento-ej1); /* Color de fondo */
+            border: none; /* Sin bordes */
+            padding: 10px 20px; /* Espaciado interno */
+            font-size: 1.2em; /* Tamaño del texto */
+            font-weight: bold; /* Negrita */
+            border-radius: 15px; /* Bordes redondeados */
+            cursor: pointer; /* Cambia el cursor al estilo de botón */
+            transition: background-color 0.3s; /* Efecto de transición */
+        }
+
+            .btn-matricula:hover {
+                background-color: var(--fondo-principal-ej1); /* Color al pasar el ratón */
+                text-decoration: none; /* Asegura que no reaparezca el subrayado */
+                color:var(--texto-principal-ej1);
+            }
+
+
+        .controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+            .controls button {
+                background-color: var(--botones-acento-ej1);
+                color: var(--texto-principal-ej1);
+                border: none;
+                font-size: 2rem;
+                cursor: pointer;
+                padding: 10px;
+                transition: background 0.3s;
+            }
+
+                .controls button:hover {
+                    background-color: rgba(0, 0, 0, 0.8);
+                }
+
+        /* Sección gradient-bg */
+        .gradient-bg {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+            color: var(--contraste-clave-ej1);
+            padding: 50px 20px;
+        }
+
+            .gradient-bg h2 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+        .news-cards-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            transition: gap 0.6s ease; /* Transición para el cambio de gap */
+        }
+
+
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            text-align: center;
+            width: 300px;
+            transition: transform 0.4s ease, box-shadow 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .zoom {
+            transform: scale(1.1);
+        }
+
+        .glass-card.zoom {
+            transform: scale3d(1.2);
+            z-index: 5; /* Asegura que la tarjeta escalada esté por encima de otras */
+        }
+
+        .glass-card img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease; /* Añade una transición suave */
+        }
+
+        .glass-card h3 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: white;
+        }
+
+        .glass-card p {
+            padding: 10px;
+            color: white;
+        }
+
+        .btn-card {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 10px 20px;
+            color: var(--texto-principal-ej1);
+            background-color: var(--botones-acento-ej1);
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .btn-card:hover {
+                background-color: var(--fondo-principal-ej1);
+                color: var(--texto-principal-ej1);
+            }
+
+        /* Responsividad de las tarjetas */
+        @@media (max-width: 768px) {
+            .news-cards-wrapper {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .glass-card {
+                width: 100%;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .news-cards-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .glass-card {
+                width: 100%;
+            }
+
+                .glass-card h3 {
+                    font-size: 1.2rem;
+                }
+
+                .glass-card p {
+                    font-size: 0.9rem;
+                }
+        }
+
+        .news-slider-wrapper .glass-card {
+            transition: none; /* Elimina transiciones */
+            transform: none; /* Asegura que no haya efectos de zoom */
+            width: 300px; /* Tamaño ajustado según diseño */
+            flex-shrink: 0; /* Mantiene el tamaño de cada tarjeta */
+        }
+
+            /* Barra Animada */
+            .barra-animada {
+            width: 100%;
+            height: 50px;
+            background-color: orangered;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+        }
+
+            .mensaje {
+            position: absolute;
+            white-space: nowrap;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            animation: desplazamiento 15s linear infinite;
+        }
+
+        /* Animación del mensaje */
+        @@keyframes desplazamiento {
+            0% {
+                transform: translateX(150%);
+            }
+            100% {
+                transform: translateX(-350%);
+            }
+        }
+
+        div.slides {
+            height: 100%;
+        }
+
+        div.slider-container {
+            height: 94.6vh; /* Ahora ocupa todo el largo */
+        }
+        /* Ajuste para que el slider ocupe todo el ancho */
+        .slider-container {
+            position: relative;
+            /* width: 100%;
+            height: 95.7vh; /* Ahora ocupa todo el largo */
+            /*margin: 0; /* Ajusta el margen superior e inferior a tu gusto */
+           /* overflow: hidden;*/
+          /*  border-radius: 0; /* Opcional: si no quieres bordes redondeados, déjalo en 0 */
+           /* box-shadow: none; /* Opcional: si no quieres sombra, puedes quitarla */
+           /* height: 180px; /* Ajusta la altura según tus necesidades */
+           /* background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        */   
+        }
+
+            /* Ocultar las miniaturas por defecto */
+            .slider-container .thumbnail-item {
+                opacity: 0;
+                visibility:initial;
+                transform: translateY(20px);
+                transition: opacity 3.0s ease, transform 3.0s ease;
+            }
+
+            .slider-container .thumbnail-item:nth-child(1) {
+                transition-delay: 3.3s;
+            }
+
+            .slider-container .thumbnail-item:nth-child(2) {
+                transition-delay: 3.9s;
+            }
+
+
+            .slider-container .thumbnail-item:nth-child(3) {
+                transition-delay: 3.6s;
+            }
+
+            .slider-container .thumbnails {
+                position: absolute;
+                bottom: 10px; /* Ajusta según sea necesario */
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 10px; /* Espacio entre miniaturas */
+                z-index: 10; /* Asegura que las miniaturas estén por encima de otros elementos */
+            }
+
+            /* Mostrar las miniaturas al pasar el cursor sobre el slider */
+            .slider-container:hover .thumbnail-item {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+                /* Aplicar retrasos individuales a cada miniatura */
+                .slider-container:hover .thumbnail-item:nth-child(1) {
+                    transition-delay: 0.3s;
+                }
+
+                .slider-container:hover .thumbnail-item:nth-child(2) {
+                    transition-delay: 0.9s;
+                }
+
+
+                .slider-container:hover .thumbnail-item:nth-child(3) {
+                    transition-delay: 0.6s;
+                }
+  
+
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide-item {
+            min-width: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            height: 100%;
+        }
+
+            .slide-item.active {
+                opacity: 1;
+                z-index: 10;
+            }
+
+        .video-background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-content {
+            position: relative;
+            margin-top:-50px;
+            left: 50px;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+       /* .slider-arrows {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .arrow-btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .arrow-btn:hover {
+                background-color: rgba(0, 0, 0, 0.8);
+            }
+            */
+            .thumbnails {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+            position: relative;
+            z-index: 11;
+            bottom: 300px;
+        }
+
+        .thumbnail-item {
+            width: 100px;
+            height: 60px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            overflow: hidden;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+
+            .thumbnail-item.active {
+                border-color: #EF6C00; /* Color de acento */
+            }
+
+            .thumbnail-item img,
+            .thumbnail-item video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        @@media (max-width: 768px) {
+            .slide-content {
+                left: 20px;
+                right: 20px;
+                margin-top:-20px;
+            }
+
+            /*.arrow-btn {
+                font-size: 1.5rem;
+                padding: 8px 12px;
+            }*/
+
+            .thumbnail-item {
+                width: 80px;
+                height: 50px;
+            }
+
+
+
+
+
+        }
+
+        @@media (max-width: 480px) {
+            .slide-content {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+
+            /*.arrow-btn {
+                font-size: 1.2rem;
+                padding: 6px 10px;
+            }*/
+
+            .thumbnail-item {
+                width: 60px;
+                height: 40px;
+            }
+
+            .slide-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .slide-content p {
+                font-size: 0.9rem;
+            }
+        }
+
+        .separador {
+            width: 100%;
+            height: 30px;
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Footer */
+        footer {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+            color: white;
+            padding: 50px 20px;
+        }
+
+        .footer-top {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+            .footer-top .contact-info,
+            .footer-top .social-icons {
+                flex: 1 1 300px;
+                margin: 10px;
+            }
+
+                .footer-top .contact-info h3,
+                .footer-top .social-icons h3 {
+                    margin-bottom: 15px;
+                    font-size: 1.5rem;
+                    text-align: center;
+                }
+
+            .footer-top .contact-info,
+            .footer-top .social-icons {
+                margin: 5px;
+            }
+
+            .footer-top .contact-info,
+            .footer-top .social-icons {
+                margin: 0; /* Para que gap sea quien maneje el espacio */
+            }
+
+        .contact-info p {
+            margin: 5px 0;
+            line-height: 1.6;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+            .social-icons a img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .social-icons a:hover img {
+                transform: scale(1.2);
+            }
+
+        /* Mapa */
+        .mapa {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+            .mapa h3 {
+                margin-bottom: 15px;
+                font-size: 1.5rem;
+            }
+
+            .mapa iframe {
+                width: 100%;
+                max-width: 800px;
+                height: 400px; /* Tamaño ajustado */
+                border: 0;
+                border-radius: 10px;
+            }
+
+        /* Responsividad */
+        @@media (max-width: 768px) {
+            .footer-top {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .mapa iframe {
+                height: 300px;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .footer-top .contact-info h3,
+            .footer-top .social-icons h3,
+            .mapa h3 {
+                font-size: 1.2rem;
+            }
+
+            .social-icons a img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .mapa iframe {
+                height: 200px;
+            }
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+
+        /* Botón Flotante de WhatsApp */
+        #whatsapp-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 25px;
+            background-color: rgba(37, 211, 102, 0.8);
+            color: white;
+            border-radius: 100%;
+            width: 50px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+            #whatsapp-btn img {
+                width: 80px;
+                height: 90px;
+                border-radius: 100%;
+                opacity: 10;
+                background-color: red;
+            }
+
+            #whatsapp-btn:hover {
+                transform: scale(1.1);
+                background-color: rgba(37, 211, 102, 1);
+            }
+
+        .slider-container .slides .slide-content {
+            position: absolute;
+            left: 10%;
+            top: 10%;
+            width: 500px;
+            max-width: 80%;
+            z-index: 1;
+        }
+
+            .slider-container .slides .slide-content p:nth-child(1) {
+                text-transform: uppercase;
+                letter-spacing: 10px;
+            }
+
+            .slider-container .slides .slide-content h2 {
+                font-size: 100px;
+                margin: 0;
+            }
+
+        section.slider-seccion {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--fondo-principal-ej1);">
+        <div class="container-fluid">
+            <!-- Botón de Login -->
+            <a href="~/Login/Login" class="btn login-btn d-flex align-items-center" style="background-color: var(--botones-acento-ej1); color: var(--contraste-clave-ej1); font-weight: bold; border-radius: 20px; padding: 10px 20px;">
+                <i class="bi bi-person-circle me-2"></i> Intranet Arquímedes
+            </a>
+
+            <!-- Botón Hamburguesa -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Menú Navegación -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center flex-nowrap">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="~/Home/FormularioMatricula">
+                            <i class="material-icons me-1" style="vertical-align: middle;">school</i> Matrícula 2025
+                        </a>
+                    </li>
+                    <!--<li class="nav-item">
+                        <a class="nav-link text-white" href="/Home/Vacaciones">
+                            <i class="material-icons me-1" style="vertical-align: middle;">sunny</i> Vacaciones útiles
+                        </a>
+                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/Home/Historia">
+                            <i class="material-icons me-1" style="vertical-align: middle;">history</i> Nuestra historia
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/Home/Reglamento">
+                            <i class="material-icons me-1" style="vertical-align: middle;">gavel</i> Reglamento Interno
+                        </a>
+                    </li>
+                    <!-- Dropdown visible solo en pantallas grandes
+                    <li class="nav-item dropdown d-none d-lg-block">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="sistemaEducativoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="material-icons me-1" style="vertical-align: middle;">menu_book</i> Sistema Educativo
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item text-white" href="/home/PlanAcademico">
+                                    <i class="material-icons me-1" style="vertical-align: middle;">library_books</i> Plan Académico
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-white" href="/home/PerfilEstudiante">
+                                    <i class="material-icons me-1" style="vertical-align: middle;">account_circle</i> Perfil del Estudiante
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Opciones de Plan Académico y Perfil del Estudiante visibles solo en pantallas pequeñas 
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link text-white" href="/home/PlanAcademico">
+                            <i class="material-icons me-1" style="vertical-align: middle;">library_books</i> Plan Académico
+                        </a>
+                    </li>
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link text-white" href="/home/PerfilEstudiante">
+                            <i class="material-icons me-1" style="vertical-align: middle;">account_circle</i> Perfil del Estudiante
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Carrusel principal -->
+    <header>
+        <div class="carousel">
+            <div class="slides">
+                <div class="slide" style="background-image: url('https://via.placeholder.com/1920x1080');">
+                    <video autoplay muted loop class="video-background">
+                        <source src="@Url.Content("~/Content/VIDEOS/videoSecundaria.MP4")" type="video/mp4">
+                    </video>
+                </div>
+                <div class="overlay">
+                    <h2>Tu futuro empieza aquí</h2>
+                    <p class="parrafo-overlay">Un nuevo viaje de aprendizaje y descubrimiento comienza aquí, prepárate para explorar, crecer y alcanzar tus metas. Juntos construimos el futuro hacia un futuro lleno de posibilidades.</p>
+                    <a href="~/Home/FormularioMatricula" class="btn-matricula">Matrícula Abierta</a>
+                </div>
+                <div class="slide" style="background-image: url(../../Content/FOTOS/.jpg);">
+                </div>
+                <div class="slide" style="background-image: url('https://via.placeholder.com/1920x1080/7f7fff');"></div>
+            </div>
+            <!--<div class="controls">
+                <button class="prev">&#10094;</button>
+                <button class="next">&#10095;</button>
+            </div>-->
+        </div>
+    </header>
+
+    <article>
+        <section class="gradient-bg">
+            <div class="container">
+                <h2>Nuestras Ofertas Educativas</h2>
+                <br>
+                <div class="news-cards-wrapper">
+                    <!-- Tarjeta 1 -->
+                    <article class="glass-card">
+                        <img src="@Url.Content("~/Content/FOTOS/primariax.jpg")"
+                             alt="Educación Primaria"
+                             loading="lazy" />                        <div>
+                            <h3>Nivel Primaria</h3>
+                            <p style="color:white">
+                                En el Colegio Arquímedes, la educación primaria está diseñada para brindar a los estudiantes una base sólida de conocimientos y habilidades que les permita desarrollarse de manera integral.
+                            </p>
+                            <a href="~/Home/seccionPrimaria" class="btn-card">Ver más</a>
+                        </div>
+                    </article>
+
+                    <!-- Tarjeta 2 -->
+                    <article class="glass-card">
+                        <picture>
+                            <img src="@Url.Content("~/Content/FOTOS/secundariafoto.jpg")"
+                                 alt="Educación Secundaria"
+                                 loading="lazy" />
+                        </picture>
+                        <div>
+                            <h3>Nivel Secundaria</h3>
+                            <p style="color:white">
+                                En la educación secundaria, fortalecemos la formación integral del estudiante, profundizando en su desarrollo académico, investigativo, emocional, ético y vocacional para guiar su proyecto de vida.
+                            </p>
+                            <a href="~/Home/secundaria" class="btn-card">Ver más</a>
+                        </div>
+                    </article>
+
+                    <!-- Tarjeta 3 -->
+                    <article class="glass-card">
+                        <img src="@Url.Content("~/Content/FOTOS/fotoprimaria.jpg")" alt="Academia">
+                        <div>
+                            <h3>Nivel Academia</h3>
+                            <p style="color:white">
+                                Los talleres y seminarios están diseñados para inspirarte a aprender de manera práctica y divertida en áreas como la ciencia, tecnología, arte, deporte y liderazgo de la mano de profesionales reconocidos.
+                            </p>
+                            <a href="~/Home/NivelAcademico" class="btn-card">Ver más</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="barra-animada">
+            <div id="mensaje" class="mensaje">Colegio Arquímedes, porque la educación se disfruta en familia</div>
+        </div>
+
+        <!-- SECCIÓN DIVISORIA: Slider Container con Miniaturas -->
+        <section>
+            <div class="slider-container">
+                <!-- Slide Items -->
+                <div class="slides">
+                    <div class="slide-item active">
+                        <video autoplay muted loop class="video-background">
+                            <source src="@Url.Content("~/Content/VIDEOS/Video1.mp4")" type="video/mp4">
+                            Tu navegador no soporta videos HTML5.
+                        </video>
+                        <div class="slide-content">
+                            <p>Arquímedes</p>
+                            <h2>Aulas</h2>
+                            <p>
+                                Un espacio vibrante y creativo, con paredes decoradas y materiales educativos que inspiran. 
+                                Las mesas ordenadas reflejan aprendizaje activo, 
+                                mientras la maestra guía con paciencia en un ambiente lleno de risas y colaboración.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="slide-item" style="background-image: url('@Url.Content("~/Content/FOTOS/lab.jpg")');">
+                        <div class="slide-content">
+                            <p>Arquímedes</p>
+                            <h2>Talleres</h2>
+                            <p>
+                                Un espacio dinámico con mesas, instrumentos científicos y materiales de experimentación. 
+                                Los estudiantes trabajan en equipo bajo la guía del docente, explorando conceptos prácticos en un ambiente seguro y estimulante.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="slide-item active">
+                        <video autoplay muted loop class="video-background">
+                            <source src="@Url.Content("~/Content/VIDEOS/Video3.mp4")" type="video/mp4">
+                            Tu navegador no soporta videos HTML5.
+                        </video>
+                        <div class="slide-content">
+                            <p>Arquímedes</p>
+                            <h2>Bullying</h2>
+                            <p>
+                                El bullying es un problema que afecta el bienestar emocional y social de los estudiantes, generando un ambiente de miedo y exclusión. 
+                                Es fundamental promover el respeto, la empatía y el diálogo para prevenirlo y garantizar un entorno escolar seguro y saludable.
+                            </p>
+                        </div>
+                    </div>
+                    <!--<div class="slide-item" style="background-image: url('@Url.Content("~/Content/FOTOS/OlimpiadasEscolares.jpg")');">
+                        <div class="slide-content">
+                            <p>Design</p>
+                            <h2>Slider 04</h2>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, neque?
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, ex.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="slide-item" style="background-image: url('@Url.Content("~/Content/FOTOS/OlimpiadasEscolares.jpg")');">
+                        <div class="slide-content">
+                            <p>Design</p>
+                            <h2>Slider 05</h2>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, neque?
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, ex.
+                            </p>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- Navigation Arrows -->
+                <div class="slider-arrows">
+                    <button id="arrow-prev" class="arrow-btn">←</button>
+                    <button id="arrow-next" class="arrow-btn">→</button>
+                </div>
+
+                <!-- Thumbnails -->
+                <div class="thumbnails">
+                    <div class="thumbnail-item active">
+                        <img src="@Url.Content("~/Content/FOTOS/Cosa.jpg")" alt="Thumbnail 01">
+                    </div>
+                    <div class="thumbnail-item">
+                        <img src="@Url.Content("~/Content/FOTOS/ExpoCiencia.jpg")" alt="Thumbnail 02">
+                    </div>
+                    <div class="thumbnail-item">
+                        <img src="@Url.Content("~/Content/FOTOS/talleresSeminario1.jpg")" alt="Thumbnail 03">
+                    </div>
+                    <!-- <div class="thumbnail-item">
+        <img src="@Url.Content("~/Content/FOTOS/OlimpiadasEscolares.jpg")" alt="Thumbnail 04">
+    </div>
+    <div class="thumbnail-item">
+        <img src="@Url.Content("~/Content/FOTOS/OlimpiadasEscolares.jpg")" alt="Thumbnail 05">
+    </div> -->
+                </div>
+            </div>
+        </section>
+
+        <div class="separador"></div>
+
+        <!-- Slider seccion últimas noticias -->
+        <section class="slider-seccion">
+            <div class="container-slider-seccion">
+                <h2 style="color:white;">Últimas Noticias</h2>
+                <div class="news-slider-wrapper" id="slider-ultimas-noticias">
+                    <button class="slider-control prev">&#10094;</button>
+                    <div class="slider-contenedor">
+                        <!-- Noticia 1 -->
+                        <article class="glass-card">
+                            <img src="@Url.Content("~/Content/FOTOS/Ganador.jpg")" alt="Educación Primaria">
+                            <div>
+                                <h3>Primer lugar Competitivo</h3>
+                                <p>
+                                    Con tan solo 8 años, este estudiante ha logrado el primer lugar en matemáticas, demostrando un talento sobresaliente y una pasión inspiradora por los números. Su éxito refleja dedicación, disciplina y el compromiso de nuestra institución por fomentar mentes brillantes. Este logro es un orgullo para su familia, docentes y comunidad. ¡Un gran aplauso para él y para nuestra institución!
+                                </p>
+                                <br />
+                                <a href="~/Home/Noticia1" class="btn-card">Ver más</a>
+                            </div>
+                        </article>
+
+                        <!-- Noticia 2 -->
+                        <article class="glass-card">
+                            <img src="@Url.Content("~/Content/FOTOS/ajedrez.jpg")" alt="Educación Secundaria">
+                            <div>
+                                <h3>Todos los Viernes</h3>
+                                <p>
+                                    Taller de Ajedrez: Todos los viernes, nuestros estudiantes pueden disfrutar de este espacio estratégico que fomenta el pensamiento lógico, la concentración y la toma de decisiones. Es una excelente oportunidad para desarrollar habilidades mientras disfrutan de este fascinante deporte. ¡Los invitamos a participar y a descubrir el emocionante mundo del ajedrez!
+                                </p>
+
+                                <br />
+                                <a href="~/Home/Noticia2" class="btn-card">Ver más</a>
+                            </div>
+                        </article>
+
+                        <!-- Noticia 3 -->
+                        <article class="glass-card">
+                            <img src="@Url.Content("~/Content/FOTOS/bullying.jpg")" alt="Talleres/Seminarios">
+                            <div>
+                                <h3>Alto al Bullying</h3>
+                                <p>
+                                    En nuestra institución educativa, decimos NO al bullying. Fomentamos un ambiente de respeto, empatía y convivencia, 
+                                    donde cada estudiante se sienta valorado y seguro. A través de campañas de sensibilización, talleres y acompañamiento 
+                                    constante, trabajamos juntos para prevenir y erradicar cualquier forma de acoso escolar. Aquí, todos somos parte de una 
+                                    comunidad que cuida y protege a sus miembros.
+                                </p>
+                                <a href="~/Home/Noticia3" class="btn-card">Ver más</a>
+                            </div>
+                        </article>
+
+                        <!-- Noticia 4 -->
+                        <article class="glass-card">
+                            <img src="@Url.Content("~/Content/FOTOS/oratoriaN.jpg")" alt="Academia">
+                            <div>
+                                <h3>Oratoria</h3>
+                                <p>
+                                    El curso de Oratoria para niños y adolescentes en el Colegio Arquímedes busca potenciar las habilidades de comunicación verbal, promoviendo la confianza, la expresión clara y la escucha activa. A través de dinámicas interactivas y ejercicios prácticos, los estudiantes desarrollarán su capacidad para hablar en público, mejorar su autoestima y aprender a expresarse con seguridad y efectividad.
+                                </p>
+                                <a href="~/Home/Noticia4" class="btn-card">Ver más</a>
+                            </div>
+                        </article>
+
+                        <!-- Noticia 5
+                        <article class="glass-card">
+                            <img src="@Url.Content("~/Content/FOTOS/talleres1.jpg")" alt="Circulo/pre">
+                            <div>
+                                <h3>Circulo/pre</h3>
+                                <p>
+                                    Los talleres están diseñados para inspirarte a aprender de manera práctica y divertida en áreas como ciencia y arte.
+                                </p>
+                                <a href="~/Home/Noticia5" class="btn-card">Ver más</a>
+                            </div>
+                        </article>
+
+                        <!-- Noticia 6 
+                        <article class="glass-card">
+                            <img src="@Url.Content("~/Content/FOTOS/talleres1.jpg")" alt="Oratoria Estrategica">
+                            <div>
+                                <h3>Oratoria Estrategica</h3>
+                                <p>
+                                    Los talleres están diseñados para inspirarte a aprender de manera práctica y divertida en áreas como ciencia y arte.
+                                </p>
+                                <a href="~/Home/Noticia6" class="btn-card">Ver más</a>
+                            </div>
+                        </article>
+
+                        <!-- Noticia 7 
+                        <article class="glass-card">
+                            <img src="@Url.Content("~/Content/FOTOS/talleres1.jpg")" alt="Deportes">
+                            <div>
+                                <h3>Deportes</h3>
+                                <p>
+                                    Los talleres están diseñados para inspirarte a aprender de manera práctica y divertida en áreas como ciencia y arte.
+                                </p>
+                                <a href="~/Home/Noticia7" class="btn-card">Ver más</a>
+                            </div>
+                        </article>
+
+                        <!-- Noticia 8 
+                        <article class="glass-card">
+                            <img src="@Url.Content("~/Content/FOTOS/talleres1.jpg")" alt="Computacion">
+                            <div>
+                                <h3>Computación</h3>
+                                <p>
+                                    Los talleres están diseñados para inspirarte a aprender de manera práctica y divertida en áreas como ciencia y arte.
+                                </p>
+                                <a href="~/Home/Noticia8" class="btn-card">Ver más</a>
+                            </div>
+                        </article>-->
+
+
+                    </div>
+                    <button class="slider-control next">&#10095;</button>
+                </div>
+            </div>
+        </section>
+    </article>
+
+    <div class="separador"></div>
+    <!-- Footer -->
+    <footer>
+        <!-- Información de Contacto -->
+        <div class="contact-info">
+            <h3 style="text-align:center">Información de Contacto</h3>
+            <p>
+                <i class="material-icons" style="color:white; vertical-align:middle;">school</i>
+                Colegio Arquímedes
+            </p>
+            <p>
+                <i class="material-icons" style="color:white; vertical-align:middle;">location_on</i>
+                Los lirios Puente Piedra 15122
+            </p>
+            <p>
+                <i class="material-icons" style="color:white; vertical-align:middle;">phone</i>
+                Teléfono:
+                <a href="tel: +51 969600013" class="text-blue-400 hover:underline">+51 969600013</a>
+            </p>
+            <p>
+                <i class="material-icons" style="color:white; vertical-align:middle;">email</i>
+                Email:
+                <a href="mailto:direccion@arquimedes-edu.com" class="text-blue-400 hover:underline">direccion@arquimedes-edu.com</a>
+            </p>
+            <p>
+                <i class="material-icons" style="color:white; vertical-align:middle;">schedule</i>
+                Horario: Lun-Vie, 7:15 AM - 9:00 PM
+            </p>
+        </div>
+
+        <br />
+        <br />
+        <!-- Redes Sociales -->
+        <div class="social-icons">
+            <h3 style="text-align:center;">Síguenos en Redes Sociales</h3>
+            <div class="d-flex justify-content-center">
+                <a href="https://www.facebook.com/arquimedescolegioiep/?locale=es_LA" target="_blank" aria-label="Facebook" class="me-3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook">
+                </a>
+                
+                <a href="https://youtu.be/Z5Cn8Jh6u5g?si=TVYCQHPqeQKnWE4Q" target="_blank" aria-label="YouTube" class="me-3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+                </a>
+                
+                
+            </div>
+            <!-- IFRAME DEL CANAL DE YOUTUBE DEBAJO DE LOS BOTONES -->
+            <div style="margin-top: 20px; text-align: center;">
+                <iframe width="320"
+                        height="225"
+                        src='@("https://www.youtube.com/embed/bNOvJcyK298?list=PL2iLnQrMEeHWqKGE-IIE3aNc4C4c7esG_")'
+                        frameborder="0"
+                        allowfullscreen>
+                </iframe>
+
+
+            </div>
+        </div>
+        </div>
+
+        <!-- Mapa de Ubicación -->
+        <div class="mapa container">
+            <h3>Nuestra Ubicación</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3905.0841454555525!2d-77.11551166086632!3d-11.82938038843909!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105d42e33537b65%3A0x8af2c7ed772d743d!2sI.E.P.%20Arqu%C3%ADmedes!5e0!3m2!1ses-419!2spe!4v1731897996880!5m2!1ses-419!2spe"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+
+        <!-- Derechos Reservados -->
+        <div class="footer-bottom">
+            &copy; 2024 Colegio Arquímedes - Todos los derechos reservados - solucionestecnologicaspro77@gmail.com.
+        </div>
+    </footer>
+
+
+    <!-- Botón Flotante de WhatsApp -->
+    <a href="https://wa.me/51969600013?text=Hola%20colegio%20Arquimedes,%20solicito%20informacion%20sobre%20el%20proceso%20de%20matricula,%20gracias."
+       id="whatsapp-btn"
+       target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp" style="width: 50px; height: 50px;">
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navbarToggler = document.querySelector('.navbar-toggler'); // Botón de la hamburguesa
+        const navbarCollapse = document.querySelector('#navbarNav'); // Menú desplegable
+        // Cerrar el menú si se hace clic fuera de él
+        document.addEventListener('click', function (event) {
+            if (!navbarToggler.contains(event.target) && !navbarCollapse.contains(event.target)) {
+                navbarCollapse.classList.remove('show');
+            }
+        });
+    });
+</script>
+
+
+    <!-- JavaScript Personalizado para el Efecto Hover Zoom en la Tarjeta -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seleccionar todas las tarjetas con la clase .glass-card
+            const glassCards = document.querySelectorAll('.glass-card');
+
+            // Función para añadir y eliminar la clase .zoom al pasar el mouse
+            function addZoomEffect(card) {
+                card.addEventListener('mouseenter', () => {
+                    card.classList.add('zoom');
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('zoom');
+                });
+            }
+
+            // Aplicar la función a cada tarjeta seleccionada
+            glassCards.forEach((card) => {
+                addZoomEffect(card);
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const newsSliderWrapper = document.getElementById('slider-ultimas-noticias');
+            const sliderContainer = newsSliderWrapper.querySelector('.slider-contenedor');
+            const cards = newsSliderWrapper.querySelectorAll('.glass-card');
+            const prevButton = newsSliderWrapper.querySelector('.slider-control.prev');
+            const nextButton = newsSliderWrapper.querySelector('.slider-control.next');
+            const cardWidth = cards[0].offsetWidth + 20; // Ancho de la tarjeta más margen
+            let currentIndex = 0;
+
+            // Clona las primeras y últimas tarjetas para el efecto infinito
+            const firstCardsClone = Array.from(cards).slice(0, 3).map(card => card.cloneNode(true));
+            const lastCardsClone = Array.from(cards).slice(-3).map(card => card.cloneNode(true));
+            firstCardsClone.forEach(clone => sliderContainer.appendChild(clone));
+            lastCardsClone.reverse().forEach(clone => sliderContainer.insertBefore(clone, sliderContainer.firstChild));
+
+            // Ajusta la posición inicial del contenedor
+            sliderContainer.style.transform = `translateX(-${3 * cardWidth}px)`;
+
+            // Función para mover el slider
+            function updateSlider() {
+                sliderContainer.style.transition = 'transform 0.5s ease';
+                sliderContainer.style.transform = `translateX(-${(currentIndex + 3) * cardWidth}px)`;
+
+                // Resetea el índice para el efecto infinito
+                sliderContainer.addEventListener('transitionend', () => {
+                    if (currentIndex < 0) {
+                        currentIndex = cards.length - 1;
+                        sliderContainer.style.transition = 'none';
+                        sliderContainer.style.transform = `translateX(-${(currentIndex + 3) * cardWidth}px)`;
+                    } else if (currentIndex >= cards.length) {
+                        currentIndex = 0;
+                        sliderContainer.style.transition = 'none';
+                        sliderContainer.style.transform = `translateX(-${(currentIndex + 3) * cardWidth}px)`;
+                    }
+                });
+            }
+
+            // Botón Siguiente
+            nextButton.addEventListener('click', () => {
+                currentIndex++;
+                updateSlider();
+            });
+
+            // Botón Anterior
+            prevButton.addEventListener('click', () => {
+                currentIndex--;
+                updateSlider();
+            });
+
+            // Autoplay
+            let autoPlay = setInterval(() => {
+                currentIndex++;
+                updateSlider();
+            }, 3000);
+
+            // Pausa en hover
+            newsSliderWrapper.addEventListener('mouseenter', () => clearInterval(autoPlay));
+            newsSliderWrapper.addEventListener('mouseleave', () => {
+                autoPlay = setInterval(() => {
+                    currentIndex++;
+                    updateSlider();
+                }, 3000);
+            });
+        });
+    </script>
+
+    <script>
+        // Footer - Actualizar Año (si tienes un elemento con id="currentYear")
+        // document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Noticias - Slider de Noticias
+        const sliderContainer = document.querySelector('.slider-contenedor');
+        const cards = document.querySelectorAll('.glass-card');
+        const prevButton = document.querySelector('.slider-control.prev');
+        const nextButton = document.querySelector('.slider-control.next');
+
+        let currentIndex = 0;
+        const cardWidth = cards[0].offsetWidth + 20; // Ancho de la tarjeta + margen
+        let visibleCards = 3;
+
+        function updateVisibleCards() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 480) {
+                visibleCards = 1;
+            } else if (screenWidth <= 768) {
+                visibleCards = 2;
+            } else {
+                visibleCards = 3;
+            }
+        }
+        updateVisibleCards();
+
+        function updateSlider() {
+            const offset = -currentIndex * cardWidth;
+            sliderContainer.style.transform = `translateX(${offset}px)`;
+        }
+
+        nextButton.addEventListener('click', () => {
+            if (currentIndex < cards.length - visibleCards) {
+                currentIndex++;
+                updateSlider();
+            }
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            updateVisibleCards();
+            currentIndex = Math.min(currentIndex, cards.length - visibleCards);
+            updateSlider();
+        });
+
+        // Carrusel Principal (Header)
+        (() => {
+            const headerCarousel = document.querySelector('.carousel');
+            const slides = headerCarousel.querySelector('.slides');
+            const slideCount = headerCarousel.querySelectorAll('.slide').length;
+            const nextButton = headerCarousel.querySelector('.next');
+            const prevButton = headerCarousel.querySelector('.prev');
+            let currentIndex = 0;
+
+            nextButton.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % slideCount;
+                updateCarousel();
+            });
+
+            prevButton.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+                updateCarousel();
+            });
+
+            function updateCarousel() {
+                const offset = -currentIndex * 100;
+                slides.style.transform = `translateX(${offset}%)`;
+                slides.style.transition = 'transform 0.5s ease-in-out';
+            }
+        })();
+
+        // Barra Animada
+        const mensaje = document.getElementById('mensaje');
+        const barra = document.querySelector('.barra-animada');
+        const anchoBarra = barra.offsetWidth;
+        const anchoMensaje = mensaje.offsetWidth;
+        let position = 0;
+        const velocidad = 2;
+
+        function moverMensaje() {
+            position -= velocidad;
+            if (position < -anchoMensaje) {
+                position = anchoBarra;
+            }
+            mensaje.style.transform = `translateX(${position}px)`;
+        }
+
+        setInterval(moverMensaje, 16);
+
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sliderItems = document.querySelectorAll('.slider-container .slide-item');
+            const nextArrow = document.getElementById('arrow-next');
+            const prevArrow = document.getElementById('arrow-prev');
+            const sliderThumbnails = document.querySelectorAll('.slider-container .thumbnail-item');
+            let currentSliderIndex = 0;
+            const totalItems = sliderItems.length;
+
+            function showSliderSlide(index) {
+                if (index >= totalItems) {
+                    currentSliderIndex = 0;
+                } else if (index < 0) {
+                    currentSliderIndex = totalItems - 1;
+                } else {
+                    currentSliderIndex = index;
+                }
+
+                sliderItems.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === currentSliderIndex);
+                });
+
+                sliderThumbnails.forEach((thumbnail, i) => {
+                    thumbnail.classList.toggle('active', i === currentSliderIndex);
+                });
+
+                const sliderSlidesContainer = document.querySelector('.slider-container .slides');
+                sliderSlidesContainer.style.transform = `translateX(-${currentSliderIndex * 100}%)`;
+                sliderSlidesContainer.style.transition = 'transform 0.5s ease-in-out';
+            }
+
+            // Flecha siguiente
+            nextArrow.addEventListener('click', () => {
+                showSliderSlide(currentSliderIndex + 1);
+            });
+
+            // Flecha anterior
+            prevArrow.addEventListener('click', () => {
+                showSliderSlide(currentSliderIndex - 1);
+            });
+
+            // Miniaturas
+            sliderThumbnails.forEach((thumbnail, index) => {
+                thumbnail.addEventListener('click', () => {
+                    showSliderSlide(index);
+                });
+            });
+
+            // Inicializa mostrando la primera diapositiva
+            showSliderSlide(0);
+
+            // Opcional: Auto-play (Descomentar si se desea)
+            // let sliderAutoPlay = setInterval(() => {
+            //     showSliderSlide(currentSliderIndex + 1);
+            // }, 5000);
+
+            // const sliderContainer = document.querySelector('.slider-container');
+            // sliderContainer.addEventListener('mouseenter', () => clearInterval(sliderAutoPlay));
+            // sliderContainer.addEventListener('mouseleave', () => {
+            //     sliderAutoPlay = setInterval(() => {
+            //         showSliderSlide(currentSliderIndex + 1);
+            //     }, 5000);
+            // });
+        });
+
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sliderContainer = document.querySelector('.slider-container');
+        const thumbnails = sliderContainer.querySelector('.thumbnails');
+
+        // Variable para rastrear el estado de las miniaturas
+        let thumbnailsVisible = false;
+
+        // Función para alternar la visibilidad de las miniaturas
+        function toggleThumbnails() {
+            if (thumbnailsVisible) {
+                thumbnails.style.opacity = '0';
+                thumbnails.style.visibility = 'hidden';
+                thumbnails.style.transform = 'translateX(-50%) translateY(20px)';
+                thumbnailsVisible = false;
+            } else {
+                thumbnails.style.opacity = '1';
+                thumbnails.style.visibility = 'visible';
+                thumbnails.style.transform = 'translateX(-50%) translateY(0)';
+                thumbnailsVisible = true;
+            }
+        }
+
+        // Añadir evento de clic/touch al slider-container
+        sliderContainer.addEventListener('click', toggleThumbnails);
+        sliderContainer.addEventListener('touchstart', toggleThumbnails);
+    });
+</script>
+
+
+
+
+</body>
+</html>

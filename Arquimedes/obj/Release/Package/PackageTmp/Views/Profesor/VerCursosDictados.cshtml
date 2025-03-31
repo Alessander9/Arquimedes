@@ -1,0 +1,100 @@
+﻿@model List<Arquimedes.Models.Curso>
+
+@{
+    ViewBag.Title = "Ver Cursos Dictados";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ver Cursos Dictados</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- CDN de Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen flex flex-col items-center">
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold mb-6 text-center text-blue-600" style="color:white">Ver Cursos Dictados</h2>
+
+        <!-- Formulario para ingresar el código del profesor -->
+        <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+            <form action="@Url.Action("VerCursosDictados", "Profesor")" method="get">
+                <div class="mb-4">
+                    <label for="idProfesor" class="block text-lg font-medium text-gray-700">
+                        <i class="fas fa-user-tie text-blue-500"></i> Ingrese el Código del Profesor:
+                    </label>
+                    <input type="text"
+                           id="idProfesor"
+                           name="idProfesor"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="Código del Profesor"
+                           required />
+                </div>
+                <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow hover:bg-blue-700">
+                    <i class="fas fa-search"></i> Buscar Cursos
+                </button>
+            </form>
+        </div>
+
+        <hr class="border-gray-300 my-6" />
+
+        <!-- Mensaje de error -->
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow" role="alert">
+                <p class="font-bold"><i class="fas fa-exclamation-triangle"></i> Error</p>
+                <p>@ViewBag.ErrorMessage</p>
+            </div>
+        }
+
+        <!-- Resultados de los cursos -->
+        @if (Model != null && Model.Any())
+        {
+            <h3 class="text-2xl font-semibold mb-4 text-center text-green-600" style="color:snow;">Cursos Asignados</h3>
+            <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+                <table class="min-w-full border-collapse border border-gray-200">
+                    <thead class="bg-blue-800 text-white">
+                        <tr>
+                            <th class="px-4 py-2 text-center">Código</th>
+                            <th class="px-4 py-2 text-center">Nombre</th>
+                            <th class="px-4 py-2 text-center">Descripción</th>
+                            <th class="px-4 py-2 text-center">Día</th>
+                            <th class="px-4 py-2 text-center">Hora</th>
+                            <th class="px-4 py-2 text-center">Nivel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var curso in Model)
+                        {
+                            <tr class="border-b hover:bg-gray-100 text-center">
+                                <td class="px-4 py-2">@curso.IdCurso</td>
+                                <td class="px-4 py-2">@curso.NombreCurso</td>
+                                <td class="px-4 py-2">@curso.DescripcionCurso</td>
+                                <td class="px-4 py-2">@curso.Dia</td>
+                                <td class="px-4 py-2">@curso.Hora</td>
+                                <td class="px-4 py-2">@curso.Nivel</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+        else if (Model != null)
+        {
+            <p class="text-center text-gray-700 mt-6">
+                <i class="fas fa-info-circle text-gray-500"></i> No se encontraron cursos asignados a este profesor.
+            </p>
+        }
+    </div>
+</body>
+</html>

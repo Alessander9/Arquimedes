@@ -1,0 +1,113 @@
+﻿@model List<Arquimedes.Models.TopPromedioViewModel>
+
+@{
+    ViewBag.Title = "Buscar Top Promedios";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 p-6">
+    <div class="container mx-auto bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold text-center text-blue-600 mb-6">Círculo Uni</h2>
+
+        <!-- Formulario de búsqueda -->
+        @using (Html.BeginForm("BuscarTopPromedios", "Evaluaciones", FormMethod.Post, new { @class = "flex flex-col gap-4" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="mb-4">
+                <label for="anioEstudiante" class="text-lg font-medium">Año:</label>
+                <input type="number"
+                       id="anioEstudiante"
+                       name="anioEstudiante"
+                       min="2"
+                       max="5"
+                       placeholder="Ejemplo: 3"
+                       required
+                       class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            </div>
+
+            <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
+                Buscar
+            </button>
+        }
+
+        <!-- Mensaje de error -->
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage as string))
+        {
+            <p class="text-red-500 font-medium mt-4">@ViewBag.ErrorMessage</p>
+        }
+
+        <!-- Resultados -->
+        @if (Model != null && Model.Count > 0)
+        {
+            <hr class="my-6 border-t border-gray-300" />
+            <h3 class="text-xl font-semibold text-green-600 mb-4">Resultados:</h3>
+            <div class="flex justify-end mb-4">
+                <button id="generate-pdf"
+                        class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
+                    Descargar PDF
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table id="result-table" class="table-auto w-full border-collapse border border-gray-200">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="border border-gray-300 px-4 py-2 text-left">Código</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">Apellido</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">Grado</th>
+                            <th class="border border-gray-300 px-4 py-2 text-center">Año</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var estudiante in Model)
+                        {
+                            <tr class="hover:bg-gray-100">
+                                <td class="border border-gray-300 px-4 py-2">@estudiante.Codigo</td>
+                                <td class="border border-gray-300 px-4 py-2">@estudiante.Nombre</td>
+                                <td class="border border-gray-300 px-4 py-2">@estudiante.Apellido</td>
+                                <td class="border border-gray-300 px-4 py-2">@estudiante.Grado</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">@estudiante.Anio</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+
+    <script>
+        document.getElementById('generate-pdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Título del documento
+            doc.setFontSize(18);
+            doc.text('Resultados de Top Promedios', 14, 20);
+
+            // Agregar tabla al PDF
+            doc.autoTable({
+                html: '#result-table',
+                startY: 30,
+                styles: {
+                    head: { fillColor: [22, 160, 133] },
+                    alternateRowStyles: { fillColor: [241, 241, 241] },
+                },
+            });
+
+            // Descargar PDF
+            doc.save('TopPromedios.pdf');
+        });
+    </script>
+</body>
+</html>

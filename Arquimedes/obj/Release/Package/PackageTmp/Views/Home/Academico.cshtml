@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Académicos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Gestión de Académicos</h1>
+
+        <div class="flex justify-center space-x-4">
+            <!-- Botón Registrar Académico -->
+            <a href="~/Academico/RegistrarAcademico"
+               class="bg-blue-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-blue-600 transition">
+                Registrar Académico
+            </a>
+
+            <!-- Botón Listar Académicos -->
+            <a href="~/Academico/ListarAcademicos"
+               class="bg-green-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-600 transition">
+                Listar Académicos
+            </a>
+        </div>
+    </div>
+</body>
+</html>

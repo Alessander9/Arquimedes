@@ -1,0 +1,107 @@
+﻿@model Arquimedes.Models.Horario
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Actualizar Horario</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+
+        .material-icons {
+            color: #2563eb; /* Tailwind Blue-600 */
+        }
+
+        .material-icons.white {
+            color: #ffffff; /* White for the icon in the button */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-r from-teal-700 via-blue-800 to-gray-900">
+    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl">
+        <h1 class="text-2xl font-bold text-center text-blue-600 mb-6 flex items-center justify-center gap-2">
+            <span class="material-icons">schedule</span> Actualizar Horario
+        </h1>
+        @using (Html.BeginForm("ActualizarHorario", "Horario", FormMethod.Post, new { id = "updateForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- ID Horario -->
+                <div>
+                    <label for="IdHorario" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons">badge</span> ID Horario
+                    </label>
+                    @Html.EditorFor(model => model.IdHorario, new { htmlAttributes = new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-50", @readonly = "readonly" } })
+                </div>
+
+                <!-- Tipo Inscripción -->
+                <div>
+                    <label for="TipoInscripcion" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons">assignment_ind</span> Tipo Inscripción
+                    </label>
+                    @Html.DropDownListFor(model => model.TipoInscripcion, (SelectList)ViewBag.TipoInscripcionOptions, "Seleccione una opción", new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-50" })
+                </div>
+
+                <!-- Código Estudiante -->
+                <div>
+                    <label for="CodEstudiante" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons">person</span> Código Estudiante
+                    </label>
+                    @Html.DropDownListFor(model => model.CodEstudiante, (SelectList)ViewBag.CodEstudianteOptions, "Seleccione un estudiante", new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-50" })
+                </div>
+
+                <!-- Código Académico -->
+                <div>
+                    <label for="CodAcademico" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons">school</span> Código Académico
+                    </label>
+                    @Html.DropDownListFor(model => model.CodAcademico, (SelectList)ViewBag.CodAcademicoOptions, "Seleccione un académico", new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-50" })
+                </div>
+
+                <!-- Curso -->
+                <div>
+                    <label for="IdCurso" class="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                        <span class="material-icons">book</span> Curso
+                    </label>
+                    @Html.DropDownListFor(model => model.IdCurso, (SelectList)ViewBag.CodCursoOptions, "Seleccione un curso", new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-50" })
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="mt-6 flex justify-end gap-4">
+                <button type="button" id="submitButton" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg shadow hover:bg-blue-600 flex items-center gap-2">
+                    <span class="material-icons white">update</span> Actualizar
+                </button>
+                <a href="@Url.Action("ListarHorarios", "Horario")" class="bg-gray-300 text-gray-700 font-bold py-2 px-6 rounded-lg shadow hover:bg-gray-400 flex items-center gap-2">
+                    <span class="material-icons">cancel</span> Cancelar
+                </a>
+            </div>
+        }
+    </div>
+
+    <script>
+        document.getElementById("submitButton").addEventListener("click", function () {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Deseas actualizar este horario?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, actualizar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("updateForm").submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

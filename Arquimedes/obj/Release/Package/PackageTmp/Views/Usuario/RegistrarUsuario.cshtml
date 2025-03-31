@@ -1,0 +1,218 @@
+﻿@model Arquimedes.Models.Usuario
+
+@{
+    ViewBag.Title = "Registrar Usuario";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col justify-center items-center">
+    <div class="bg-white rounded-lg shadow-md p-8 w-full max-w-3xl">
+        <h2 class="text-2xl font-bold text-blue-600 mb-6 text-center flex items-center justify-center">
+            <span class="material-icons text-blue-500 mr-2">
+                person_add
+            </span>
+            Registrar Usuario
+        </h2>
+
+        <!-- Barra de progreso mejorada -->
+        <div class="w-full bg-gray-300 rounded-full h-6 mb-6 overflow-hidden relative">
+            <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-indigo-600 h-6 rounded-full transition-all duration-500 ease-in-out" style="width: 0%;">
+                <span id="progressText" class="absolute left-1/2 transform -translate-x-1/2 text-xs font-medium text-white">0%</span>
+            </div>
+        </div>
+
+        <!-- Formulario -->
+        @using (Html.BeginForm("RegistrarUsuario", "Usuario", FormMethod.Post, new { id = "registerForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- ID Usuario -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2 flex items-center">
+                        <span class="material-icons text-blue-500 mr-2">
+                            id
+                        </span>
+                        Identificación de Usuario
+                    </label>
+                    @Html.TextBoxFor(m => m.IdUsuario, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", @placeholder = "Ingresa tu identificación" })
+                    @Html.ValidationMessageFor(m => m.IdUsuario, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Nombre Usuario -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2 flex items-center">
+                        <span class="material-icons text-blue-500 mr-2">
+                            person
+                        </span>
+                        Nombre de Usuario
+                    </label>
+                    @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", @placeholder = "Ingresa tu nombre" })
+                    @Html.ValidationMessageFor(m => m.NombreUsuario, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Contraseña -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2 flex items-center">
+                        <span class="material-icons text-blue-500 mr-2">
+                            lock
+                        </span>
+                        Contraseña
+                    </label>
+                    @Html.PasswordFor(m => m.Contrasenia, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", @placeholder = "Ingresa tu contraseña" })
+                    @Html.ValidationMessageFor(m => m.Contrasenia, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- Rol Usuario -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2 flex items-center">
+                        <span class="material-icons text-blue-500 mr-2">
+                            assignment_ind
+                        </span>
+                        Rol de Usuario
+                    </label>
+                    @Html.DropDownListFor(
+                        m => m.RolUsuario,
+                        new SelectList(new[]
+                        {
+                            new { Value = "Administrador", Text = "Administrador" },
+                            new { Value = "Estudiante", Text = "Estudiante" },
+                            new { Value = "Academico", Text = "Académico" },
+                            new { Value = "Profesor", Text = "Profesor" },
+                            new { Value = "Asistente", Text = "Asistente" }
+                        }, "Value", "Text"),
+                        "Selecciona un rol",
+                        new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300" }
+                    )
+                    @Html.ValidationMessageFor(m => m.RolUsuario, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- ID Relacionado -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2 flex items-center">
+                        <span class="material-icons text-blue-500 mr-2">
+                            link
+                        </span>
+                        ID Relacionado
+                    </label>
+                    @Html.TextBoxFor(m => m.IdRelacionado, new { @class = "w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300", @placeholder = "Ingresa el ID relacionado" })
+                    @Html.ValidationMessageFor(m => m.IdRelacionado, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+            </div>
+
+            <!-- Botón de registrar -->
+            <div class="mt-6 flex justify-end">
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition flex items-center">
+                    <span class="material-icons mr-2">
+                        save
+                    </span>
+                    Registrar
+                </button>
+            </div>
+
+            <!-- Botón Volver con Gradiente Rojo a Morado -->
+            <div class="mt-4 flex justify-end">
+                <a href="@Url.Action("vistaAdministrador", "Administrador")" class="px-4 py-2 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg shadow-md hover:from-red-600 hover:to-purple-700 flex items-center gap-2 transition-colors duration-300">
+                    <span class="material-icons">
+                        arrow_back
+                    </span>
+                    Salir al menú
+                </a>
+            </div>
+        }
+
+        <!-- Mensaje -->
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <p class="mt-4 text-green-500 font-bold text-center">@ViewBag.Message</p>
+        }
+
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.getElementById('registerForm');
+                const progressBar = document.getElementById('progressBar');
+                const progressText = document.getElementById('progressText');
+                const inputs = form.querySelectorAll('input, select, textarea');
+
+                // Calcular el progreso inicial
+                calculateProgress();
+
+                // Añadir eventos a los campos del formulario
+                inputs.forEach(input => {
+                    input.addEventListener('input', calculateProgress);
+                    input.addEventListener('change', calculateProgress);
+                });
+
+                function calculateProgress() {
+                    let total = inputs.length;
+                    let filled = 0;
+
+                    inputs.forEach(input => {
+                        if (input.type === 'checkbox' || input.type === 'radio') {
+                            if (input.checked) filled++;
+                        } else if (input.value.trim() !== '') {
+                            filled++;
+                        }
+                    });
+
+                    let percent = Math.round((filled / total) * 100);
+                    percent = percent > 100 ? 100 : percent; // Limitar al 100%
+                    progressBar.style.width = percent + '%';
+                    progressText.textContent = percent + '%';
+                }
+
+                // Manejar la respuesta del servidor para mostrar SweetAlert
+                @if (!string.IsNullOrEmpty(ViewBag.Message))
+                {
+                    <text>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: '@ViewBag.Message',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'OK'
+                        });
+                    </text>
+                }
+
+                @if (!string.IsNullOrEmpty(ViewBag.Error))
+                {
+                    <text>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: '@ViewBag.Error',
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'OK'
+                        });
+                    </text>
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

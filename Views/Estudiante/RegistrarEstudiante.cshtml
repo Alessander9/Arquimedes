@@ -1,0 +1,118 @@
+﻿@model Estudiante
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registrar Estudiante</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container mt-5">
+            <h4><i class="fas fa-user-plus"></i> Registrar Estudiante</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"><i class="fas fa-id-card"></i> Código</label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.CodEstudiante, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CodEstudiante, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"><i class="fas fa-user"></i> Nombre</label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.NombreEstudiante, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NombreEstudiante, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"><i class="fas fa-user-tag"></i> Apellido</label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.ApellidoEstudiante, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ApellidoEstudiante, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"><i class="fas fa-birthday-cake"></i> Edad</label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.EdadEstudiante, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EdadEstudiante, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"><i class="fas fa-calendar-alt"></i> Año</label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.AnioEstudiante, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AnioEstudiante, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"><i class="fas fa-chalkboard-teacher"></i> Sección</label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.SeccionEstudiante, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SeccionEstudiante, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"><i class="fas fa-school"></i> Grado Académico</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.GradoAcademico, (SelectList)ViewData["GradoAcademicoOptions"], "Seleccione un grado", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GradoAcademico, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"><i class="fas fa-phone-alt"></i> Teléfono</label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"><i class="fas fa-map-marker-alt"></i> Dirección</label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"><i class="fas fa-user-check"></i> Estado Estudiante</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.EstadoEstudiante, (SelectList)ViewData["EstadoEstudianteOptions"], "Seleccione un estado", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.EstadoEstudiante, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4 offset-md-2">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Registrar</button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="container mt-3">
+        <a href="@Url.Action("ListarEstudiantes")" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Volver a la Lista</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+﻿@model Arquimedes.Models.Horario
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Horario</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
+        <h1 class="text-2xl font-bold mb-4 text-gray-800 flex items-center">
+            <span class="material-icons text-blue-500 mr-2">search</span> Buscar Horario
+        </h1>
+
+        @using (Html.BeginForm("VerHorario", "Horario", FormMethod.Get))
+        {
+
+            <!-- Código Estudiante -->
+            <div class="mb-4">
+                <label for="codEstudiante" class="block text-sm font-medium text-gray-700 flex items-center">
+                    <span class="material-icons text-blue-500 mr-2">person</span> Código Estudiante
+                </label>
+                <input type="text"
+                       id="codEstudiante"
+                       name="codEstudiante"
+                       class="mt-1 block w-1/2 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Código Académico -->
+            <div class="mb-4">
+                <label for="codAcademico" class="block text-sm font-medium text-gray-700 flex items-center">
+                    <span class="material-icons text-blue-500 mr-2">school</span> Código Académico
+                </label>
+                <input type="text"
+                       id="codAcademico"
+                       name="codAcademico"
+                       class="mt-1 block w-1/2 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Botón Buscar -->
+            <button type="submit"
+                    class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 flex items-center">
+                <span class="material-icons text-white mr-2">search</span> Buscar Horario
+            </button>
+        }
+    </div>
+</body>
+</html>

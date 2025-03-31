@@ -1,0 +1,201 @@
+﻿@model IEnumerable<Arquimedes.Models.Academico>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Listar Académicos</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+
+        div#academicosTable_info.dataTables_info {
+            color: white;
+        }
+
+        /* Estilos para el cuadro de búsqueda */
+        .dataTables_filter input {
+            color: black !important;
+            background-color: white !important;
+            border: 1px solid #4b5563 !important;
+            border-radius: 8px;
+            padding: 6px 12px;
+        }
+
+            .dataTables_filter input:focus {
+                outline: none;
+                border-color: #2563eb !important; /* Azul */
+            }
+
+        /* Estilos para la paginación */
+        .dataTables_paginate .paginate_button {
+            color: black !important;
+            background-color: white !important;
+            border: 1px solid #4b5563 !important;
+            border-radius: 8px;
+            margin: 0 5px;
+            padding: 6px 12px;
+        }
+
+            .dataTables_paginate .paginate_button:hover {
+                background-color: white !important;
+                color: black !important;
+            }
+
+            .dataTables_paginate .paginate_button.current {
+                background-color: white !important;
+                color: white !important;
+            }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.7/css/buttons.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.7/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.7/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.7/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-white mb-6 text-center">Lista de Académicos</h1>
+
+        <!-- Botones -->
+        <div class="mb-4 flex justify-end space-x-4">
+            @Html.ActionLink("Crear Nuevo", "RegistrarAcademico", null, new { @class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow" })
+            <button id="exportPdf" class="bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow">
+                Exportar PDF
+            </button>
+        </div>
+
+        <!-- Tabla -->
+        <table id="academicosTable" class="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden">
+            <thead class="bg-blue-500 text-white">
+                <tr>
+                    <th class="px-4 py-2 text-left">Código</th>
+                    <th class="px-4 py-2 text-left">Nombre</th>
+                    <th class="px-4 py-2 text-left">Apellido</th>
+                    <th class="px-4 py-2 text-left">Edad</th>
+                    <th class="px-4 py-2 text-left">Período</th>
+                    <th class="px-4 py-2 text-left">Teléfono</th>
+                    <th class="px-4 py-2 text-left">Dirección</th>
+                    <th class="px-4 py-2 text-left">Estado</th>
+                    <th class="px-4 py-2 text-lg-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="border-b hover:bg-gray-100">
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.CodAcademico)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.NombreAcademico)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.ApellidoAcademico)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.EdadAcademico)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.PeriodoAcademico)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.TelefonoAcademico)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.DireccionAcademico)</td>
+                        <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.EstadoAcademico)</td>
+                        <td class="px-4 py-2 flex space-x-2">
+                            @Html.ActionLink("Editar", "ActualizarAcademico", new { codAcademico = item.CodAcademico }, new { @class = "text-blue-500 hover:underline" })
+                            <span>|</span>
+                            @Html.ActionLink("Detalles", "DetalleAcademico", new { codAcademico = item.CodAcademico }, new { @class = "text-green-500 hover:underline" })
+                            <span>|</span>
+                            @Html.ActionLink("Eliminar", "EliminarAcademico", new { codAcademico = item.CodAcademico }, new { @class = "text-red-500 hover:underline" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!-- Botón Volver con Gradiente Rojo a Morado -->
+        <div class="mt-4 flex justify-content-lg-start space-x-4">
+
+            <a href="@Url.Action("vistaAdministrador", "Administrador")" class="px-4 py-2 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg shadow-md hover:from-red-600 hover:to-purple-700 flex items-center gap-2 transition-colors duration-300">
+                <span class="material-icons">arrow_back</span> Salir al menú
+            </a>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#academicosTable').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        text: 'Copiar',
+                        className: 'bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Excel',
+                        className: 'bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'PDF',
+                        className: 'bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600',
+                        orientation: 'landscape',
+                        pageSize: 'A4'
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Imprimir',
+                        className: 'bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600'
+                    }
+                ],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+                }
+            });
+
+            // Exportar PDF con jsPDF
+            $('#exportPdf').on('click', function () {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('landscape');
+
+                // Encabezados
+                const headers = [["Código", "Nombre", "Apellido", "Edad", "Período", "Teléfono", "Dirección", "Estado"]];
+
+                // Extraer datos de la tabla
+                const rows = [];
+                $('#academicosTable tbody tr').each(function () {
+                    const row = [];
+                    $(this).find('td').each(function () {
+                        row.push($(this).text().trim());
+                    });
+                    rows.push(row);
+                });
+
+                // Generar tabla en el PDF
+                doc.autoTable({
+                    head: headers,
+                    body: rows,
+                    styles: { fontSize: 10, cellPadding: 4 },
+                    margin: { top: 20 },
+                    theme: 'grid',
+                    didDrawPage: function (data) {
+                        doc.setFontSize(14);
+                        doc.text("Lista de Académicos", data.settings.margin.left, 15);
+                    },
+                });
+
+                // Guardar archivo PDF
+                doc.save('Lista_Academicos.pdf');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Nosotros";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #f1c40f;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .navbar, .footer {
+            background-color: #000;
+            border-bottom: 2px solid #f1c40f;
+        }
+
+        .nav-link, .navbar-brand {
+            color: #f1c40f !important;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+            .nav-link:hover, .navbar-brand:hover {
+                color: rgba(241, 196, 15, 0.8) !important;
+                transform: scale(1.05);
+            }
+
+        .card {
+            background-color: #222;
+            color: #f1c40f;
+            border: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 20px rgba(241, 196, 15, 0.5);
+            }
+
+        .footer {
+            background-color: #111;
+            border-top: 2px solid #f1c40f;
+        }
+
+        .social-icons a {
+            color: #f1c40f;
+            margin: 0 10px;
+            font-size: 24px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+            .social-icons a:hover {
+                color: rgba(241, 196, 15, 0.8);
+                transform: rotate(10deg);
+            }
+
+        .hover-effect:hover {
+            color: rgba(241, 196, 15, 0.8);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand hover-effect" href="#">Nosotros</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link hover-effect" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link hover-effect" href="#">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link hover-effect" href="#">Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container mt-5">
+        <h2 id="titulo">Nosotros</h2>
+        <p class="mt-4">Bienvenido a nuestra sección de 'Nosotros'. En nuestro sitio, nos enorgullecemos de ofrecer una experiencia única a nuestros clientes, combinando profesionalismo y un entorno acogedor. Nuestro equipo está comprometido a proporcionar el mejor servicio posible y asegurar la satisfacción de cada visitante.</p>
+
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nuestra Misión</h5>
+                        <p class="card-text">
+                            ¿Por qué elegir el Colegio Arquímedes?
+
+                            Con más de 15 años de experiencia, el Colegio Arquímedes se enfoca en la formación integral de cada estudiante, impulsando el desarrollo de sus capacidades cognitivas, artísticas y deportivas. Fomentamos un ambiente de cooperación y ciudadanía activa, donde nuestros estudiantes no solo aprenden, sino que también son protagonistas de su aprendizaje.
+
+                            Nuestro compromiso es formar ciudadanos con valores, sensibilidad y compromiso, preparados para enfrentar los desafíos de la vida y contribuir al desarrollo de su comunidad y nuestro país.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nuestros Valores</h5>
+                        <p class="card-text">Integridad, compromiso y pasión por lo que hacemos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer text-white mt-5 p-4 text-center">
+        <div class="social-icons mb-3">
+            <a href="#" class="text-white hover-effect"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-white hover-effect"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-white hover-effect"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-white hover-effect"><i class="bi bi-linkedin"></i></a>
+        </div>
+        <p>&copy; 2024 Nosotros. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

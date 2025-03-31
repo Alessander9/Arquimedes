@@ -1,0 +1,125 @@
+﻿@model Arquimedes.Models.Evaluacion
+
+@{
+    ViewBag.Title = "Actualizar Evaluación";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold text-gray-700 mb-6 flex items-center gap-2">
+            <span class="material-icons text-blue-500">edit</span> @ViewBag.Title
+        </h2>
+        @using (Html.BeginForm("ActualizarEvaluacion", "Evaluaciones", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- IdEvaluacion -->
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">badge</span> ID Evaluación
+                    </label>
+                    @Html.EditorFor(m => m.IdEvaluacion, new { htmlAttributes = new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500", @readonly = "readonly" } })
+                </div>
+
+                <!-- CodEstudiante -->
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">person</span> Estudiante
+                    </label>
+                    @Html.DropDownListFor(m => m.CodEstudiante, (SelectList)ViewBag.CodEstudianteOptions, "Seleccione un estudiante", new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" })
+                </div>
+
+                <!-- CodAcademico -->
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">school</span> Académico
+                    </label>
+                    @Html.DropDownListFor(m => m.CodAcademico, (SelectList)ViewBag.CodAcademicoOptions, "Seleccione un académico", new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" })
+                </div>
+
+                <!-- IdCurso -->
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">menu_book</span> Curso
+                    </label>
+                    @Html.DropDownListFor(m => m.IdCurso, (SelectList)ViewBag.CodCursoOptions, "Seleccione un curso", new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" })
+                </div>
+
+                <!-- Bimestre -->
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">calendar_today</span> Bimestre
+                    </label>
+                    @Html.DropDownListFor(m => m.Bimestre, (SelectList)ViewBag.BimestreOptions, "Seleccione un bimestre", new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" })
+                </div>
+
+                <!-- Tareas -->
+                <div class="col-span-2 text-lg font-semibold text-gray-600 mt-4">
+                    <span class="material-icons text-blue-500">assignment</span> Tareas
+                </div>
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">check_circle</span> Tarea 1 (T1)
+                    </label>
+                    @Html.TextBoxFor(m => m.T1, new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500", placeholder = "Ingrese la nota T1" })
+                </div>
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">check_circle</span> Tarea 2 (T2)
+                    </label>
+                    @Html.TextBoxFor(m => m.T2, new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500", placeholder = "Ingrese la nota T2" })
+                </div>
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">check_circle</span> Tarea 3 (T3)
+                    </label>
+                    @Html.TextBoxFor(m => m.T3, new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500", placeholder = "Ingrese la nota T3" })
+                </div>
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">check_circle</span> Tarea 4 (T4)
+                    </label>
+                    @Html.TextBoxFor(m => m.T4, new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500", placeholder = "Ingrese la nota T4" })
+                </div>
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">check_circle</span> Tarea 5 (T5)
+                    </label>
+                    @Html.TextBoxFor(m => m.T5, new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500", placeholder = "Ingrese la nota T5" })
+                </div>
+
+                <!-- PromedioLetra -->
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-blue-500">spellcheck</span> Promedio en Letras
+                    </label>
+                    @Html.EditorFor(m => m.PromedioLetra, new { htmlAttributes = new { @class = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500", @readonly = "readonly", placeholder = "Promedio calculado automáticamente" } })
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="mt-4 flex justify-between items-center">
+                <!-- Botón Guardar -->
+                <button type="submit" class="px-6 py-2 bg-blue-500 text-white font-medium rounded-lg shadow hover:bg-blue-600 flex items-center gap-2">
+                    <span class="material-icons">save</span> Guardar
+                </button>
+
+                <!-- Botón Volver -->
+                <a href="@Url.Action("ListarEvaluaciones")" class="px-6 py-2 bg-gray-300 text-gray-800 rounded-lg shadow-md hover:bg-gray-400 flex items-center gap-2">
+                    <span class="material-icons">arrow_back</span> Volver a la Lista
+                </a>
+            </div>
+
+        }
+    </div>
+</body>
+</html>

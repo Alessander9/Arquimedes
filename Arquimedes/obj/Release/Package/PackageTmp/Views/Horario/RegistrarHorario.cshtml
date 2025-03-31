@@ -1,0 +1,99 @@
+﻿@model Arquimedes.Models.Horario
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registrar Horario</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #5e7d82, #3c6c7c, #185a79, #004774, #00326a, #002863, #031d5b, #081252, #08114f, #08104d, #070e4a, #070d48);
+        }
+    </style>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl">
+            <h2 class="text-2xl font-bold text-center text-blue-600 mb-6 flex items-center justify-center">
+                <span class="material-icons text-blue-600 mr-2">schedule</span>
+                Registrar Horario
+            </h2>
+            @Html.ValidationSummary(true, "", new { @class = "text-red-500 text-sm mb-4" })
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- IdHorario -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center">
+                        <span class="material-icons text-blue-600 mr-2">badge</span> ID Horario
+                    </label>
+                    @Html.EditorFor(model => model.IdHorario, new { htmlAttributes = new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" } })
+                    @Html.ValidationMessageFor(model => model.IdHorario, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- TipoInscripcion -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center">
+                        <span class="material-icons text-blue-600 mr-2">assignment_ind</span> Tipo de Inscripción
+                    </label>
+                    @Html.DropDownListFor(model => model.TipoInscripcion, new SelectList(new[]
+                    {
+                        new { Value = "Estudiante", Text = "Estudiante" },
+                        new { Value = "Academico", Text = "Académico" }
+                    }, "Value", "Text"), "Seleccione el tipo de inscripción", new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" })
+                    @Html.ValidationMessageFor(model => model.TipoInscripcion, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- CodEstudiante -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center">
+                        <span class="material-icons text-blue-600 mr-2">person</span> Seleccionar Estudiante
+                    </label>
+                    @Html.DropDownListFor(model => model.CodEstudiante, (IEnumerable<SelectListItem>)ViewBag.CodEstudianteOptions, "Seleccione un estudiante", new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" })
+                    @Html.ValidationMessageFor(model => model.CodEstudiante, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- CodAcademico -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center">
+                        <span class="material-icons text-blue-600 mr-2">school</span> Seleccionar Académico
+                    </label>
+                    @Html.DropDownListFor(model => model.CodAcademico, (IEnumerable<SelectListItem>)ViewBag.CodAcademicoOptions, "Seleccione un académico", new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" })
+                    @Html.ValidationMessageFor(model => model.CodAcademico, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+
+                <!-- IdCurso -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center">
+                        <span class="material-icons text-blue-600 mr-2">book</span> Seleccionar Curso
+                    </label>
+                    @Html.DropDownListFor(model => model.IdCurso, (IEnumerable<SelectListItem>)ViewBag.CodCursoOptions, "Seleccione un curso", new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" })
+                    @Html.ValidationMessageFor(model => model.IdCurso, "", new { @class = "text-red-500 text-sm mt-1" })
+                </div>
+            </div>
+
+            <div class="flex justify-end mt-6">
+                <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-6 rounded shadow hover:bg-blue-700 flex items-center">
+                    <span class="material-icons text-white mr-2">save</span> Crear
+                </button>
+            </div>
+
+            <div class="flex justify-end mt-6">
+                <a href="@Url.Action("ListarHorarios", "Horario")" class="bg-yellow-500 text-white font-bold py-2 px-4 rounded shadow hover:bg-yellow-600 flex items-center">
+                    <span class="material-icons text-white mr-2">arrow_back</span> Volver a la lista
+                </a>
+            </div>
+        </div>
+    }
+</body>
+</html>
